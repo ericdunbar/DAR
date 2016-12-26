@@ -3,8 +3,13 @@ package ca.tdsb.dunbar.dailyattendancereport;
 import java.awt.Desktop;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.PrintStream;
+import java.sql.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.List;
 
@@ -35,13 +40,21 @@ import javafx.stage.Stage;
 
 public class DAR extends Application {
 
+	public class TextDAR extends Text {
+		public final void setTextWithDate(String s) {
+			// https://www.mkyong.com/java/java-how-to-get-current-date-time-date-and-calender/
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			Date date = new Date(System.currentTimeMillis());
+			setText(dateFormat.format(date) + ": \n" + s);}
+	}
+
 	// JavaFX variables
-	private Text errorStatusFX;
+	private TextDAR errorStatusFX;
 	private Text destinationDirFX;
 	private Text masterUsefulDARFX;
 	private Text masterUselessDARFX;
 
-	private static final String titleTxtFX = "Daily Attendance Report processor version 2016.12.23";
+	private static final String formTitleFX = "Daily Attendance Report processor version 2016.12.24";
 
 	// PREFERENCES variables
 	DARProperties preferences = new DARProperties("DAR.config");
@@ -56,26 +69,45 @@ public class DAR extends Application {
 	/**
 	 * The two types of daily attendance record PDF.
 	 * 
-	 * @author 094360
+	 * @author ED
 	 *
 	 */
 	enum DARType {
 		Useless, Useful
 	}
 
+	static PrintStream ps = null; // log file for System.out and StackTrace
+
 	public static void main(String[] args) {
+
+		// http://stackoverflow.com/questions/8043356/file-write-printstream-append
+		// http://stackoverflow.com/questions/12053075/how-do-i-write-the-exception-from-printstacktrace-into-a-text-file-in-java
+		try {
+			ps = new PrintStream(
+					new FileOutputStream(System.getProperty("java.io.tmpdir") + "\\" + "DAR_log.txt", true));
+			System.setOut(ps);
+		} catch (Exception e) {
+			e.printStackTrace(ps);
+		}
+
+		// https://www.mkyong.com/java/java-how-to-get-current-date-time-date-and-calender/
+		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		Date date = new Date(System.currentTimeMillis());
+		System.out.print("Launched at: ");
+		System.out.println(dateFormat.format(date));
+
 		Application.launch(args);
 	}
 
 	/**
-	 * Recursively deletes the contents of a directory. //
+	 * Recursively deletes the contents of a directory.
 	 * http://stackoverflow.com/questions/20281835/how-to-delete-a-folder-with-files-using-java
 	 * 
 	 * @param file
 	 *            directory to empty
 	 * @return
 	 */
-	boolean deleteDir(File file) {
+	private boolean deleteDir(File file) {
 		File[] contents = file.listFiles();
 		if (contents != null) {
 			for (File f : contents) {
@@ -86,8 +118,8 @@ public class DAR extends Application {
 	}
 
 	/**
-	 * Creates or empties a temporary directory with name in the system's temp
-	 * directory structure.
+	 * Creates or empties a temporary directory with the given name in the
+	 * system's temp directory structure.
 	 * 
 	 * @param name
 	 *            Name of temporary directory to create or empty
@@ -126,14 +158,28 @@ public class DAR extends Application {
 	 *            String to be wrapped in quotations
 	 * @return String wrapped in quotations
 	 */
-	private String quoteWrap(String s) {
+	private String quotesWrap(String s) {
 		return "\"" + s + "\"";
 	}
 
+	/**
+	 * Splits the PDF given the String array of DOS command-line arguments, the
+	 * base directory (as type File) in which to run sejda. It throws an
+	 * IOException if a problem occurs when the console (cmd.exe) is run or the
+	 * given directory does not exist.
+	 * 
+	 * @param cmdAndArgs
+	 *            array of command line arguments
+	 * @param baseDir
+	 *            directory in which sejda is run
+	 * @throws IOException
+	 *             thrown if directory missing or console failed
+	 */
 	private void sejdaSplitDAR(List<String> cmdAndArgs, File baseDir) throws IOException {
 		// troubleshooting
+
+		System.out.println("Parameters for sejda console launch:");
 		for (String string : cmdAndArgs) {
-			// System.out.print(string + " ");
 			System.out.println("         Param: _" + string + "_");
 		}
 
@@ -152,7 +198,7 @@ public class DAR extends Application {
 			}
 			input.close();
 		} catch (Exception err) {
-			err.printStackTrace();
+			err.printStackTrace(ps);
 		}
 	}
 
@@ -182,9 +228,9 @@ public class DAR extends Application {
 		// http://stackoverflow.com/questions/357315/get-list-of-passed-arguments-in-windows-batch-script-bat
 		// http://stackoverflow.com/questions/19103570/run-batch-file-from-java-code
 
-		List<String> cmdAndArgs = Arrays.asList("cmd", "/c", "call", quoteWrap(sejdaS), "splitbytext", "-f",
-				quoteWrap(sourceFile), "--top", c[0], "--left", c[1], "--width", c[2], "--height", c[3], "-o",
-				quoteWrap(destinationDirectory), "-p", "[TEXT]", "--existingOutput", "overwrite");
+		List<String> cmdAndArgs = Arrays.asList("cmd", "/c", "call", quotesWrap(sejdaS), "splitbytext", "-f",
+				quotesWrap(sourceFile), "--top", c[0], "--left", c[1], "--width", c[2], "--height", c[3], "-o",
+				quotesWrap(destinationDirectory), "-p", "[TEXT]", "--existingOutput", "overwrite");
 
 		sejdaSplitDAR(cmdAndArgs, tempDir);
 
@@ -266,10 +312,10 @@ public class DAR extends Application {
 
 		// http://stackoverflow.com/questions/357315/get-list-of-passed-arguments-in-windows-batch-script-bat
 		// http://stackoverflow.com/questions/19103570/run-batch-file-from-java-code
-		List<String> cmdAndArgs = Arrays.asList("cmd", "/c", "call", quoteWrap(sejdaS), "splitbytext", "-f",
-				quoteWrap(sourceFile), "--top", teacherNameCoordinates[0], "--left", teacherNameCoordinates[1],
+		List<String> cmdAndArgs = Arrays.asList("cmd", "/c", "call", quotesWrap(sejdaS), "splitbytext", "-f",
+				quotesWrap(sourceFile), "--top", teacherNameCoordinates[0], "--left", teacherNameCoordinates[1],
 				"--width", teacherNameCoordinates[2], "--height", teacherNameCoordinates[3], "-o",
-				quoteWrap(destinationDirectory), "-p", "[TEXT]", "--existingOutput", "overwrite");
+				quotesWrap(destinationDirectory), "-p", "[TEXT]", "--existingOutput", "overwrite");
 
 		sejdaSplitDAR(cmdAndArgs, tempDir);
 
@@ -283,7 +329,7 @@ public class DAR extends Application {
 			System.out.println("    " + tempDir.getAbsolutePath() + "\\" + string);
 		}
 
-		//Attempted fix for constantly refreshing archive directory
+		// Attempted fix for constantly refreshing archive directory
 		File archiveDir = new File(preferences.getProperty(prefOutputPath) + "\\Archive\\");
 		archiveDir.mkdir();
 		archiveDir = new File(preferences.getProperty(prefOutputPath) + "\\Archive\\" + dateForDAR);
@@ -330,9 +376,7 @@ public class DAR extends Application {
 	public void start(Stage primaryStage) {
 		System.out.println(preferences.getFileName());
 
-		primaryStage.setTitle(titleTxtFX);
-
-		System.out.println("I'm here");
+		primaryStage.setTitle(formTitleFX);
 
 		// Window label
 		Label label = new Label("Daily Attendance Report");
@@ -372,10 +416,10 @@ public class DAR extends Application {
 		buttonHb5.getChildren().addAll(btn5);
 
 		// Status message text
-		errorStatusFX = new Text();
+		errorStatusFX = new TextDAR();
 		errorStatusFX.setFont(Font.font("Calibri", FontWeight.NORMAL, 14));
 		errorStatusFX.setFill(Color.FIREBRICK);
-		errorStatusFX.setText("");
+		errorStatusFX.setTextWithDate("");
 
 		// Destination message text
 		masterUsefulDARFX = new Text();
@@ -422,7 +466,15 @@ public class DAR extends Application {
 	}
 
 	private void resetErrorStatus() {
-		errorStatusFX.setText("");
+		errorStatusFX.setTextWithDate("");
+	}
+
+	private void deleteFiles(String filesToBeDeletedList[], String filter, String extension) {
+
+		for (String string : filesToBeDeletedList) {
+			new File(preferences.getProperty(prefOutputPath) + "\\" + string).delete();
+		}
+
 	}
 
 	private class SplitDARFcButtonListener implements EventHandler<ActionEvent> {
@@ -432,16 +484,17 @@ public class DAR extends Application {
 			resetErrorStatus();
 
 			try {
-				errorStatusFX.setText("Start DAR processing...");
+				errorStatusFX.setTextWithDate("Start DAR processing...");
+
+				if (!(new File(preferences.getProperty(prefOutputPath)).exists())) {
+					throw new IOException("Destination directory unavailable");
+				}
 
 				String filesToBeDeletedList[] = new File(preferences.getProperty(prefOutputPath))
 						.list(new SuffixFileFilter(".pdf"));
 
 				// delete existing PDFs
-
-				for (String string : filesToBeDeletedList) {
-					new File(preferences.getProperty(prefOutputPath) + "\\" + string).delete();
-				}
+				deleteFiles(filesToBeDeletedList, null, null);
 
 				File masterUselessDAR = new File(preferences.getProperty(prefMasterUselessDAR));
 				File masterUsefulDAR = new File(preferences.getProperty(prefMasterUsefulDAR));
@@ -473,13 +526,14 @@ public class DAR extends Application {
 					else if (missing[1])
 						throw new IOException(masterUsefulDAR.getAbsolutePath() + " missing.");
 				}
-				
-				errorStatusFX.setText("Both DARs successfully processed.");
+
+				errorStatusFX.setTextWithDate("Both DARs successfully processed.");
 
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
-				e1.printStackTrace();
-				errorStatusFX.setText(e1.getMessage());
+				e1.printStackTrace(ps);
+
+				errorStatusFX.setTextWithDate(e1.getMessage());
 			}
 		}
 	}
