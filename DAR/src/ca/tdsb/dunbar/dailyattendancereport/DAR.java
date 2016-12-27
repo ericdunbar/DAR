@@ -1,24 +1,18 @@
 package ca.tdsb.dunbar.dailyattendancereport;
 
-import java.awt.Desktop;
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.sql.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.List;
 
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.FilenameUtils;
-import org.apache.commons.io.filefilter.SuffixFileFilter;
-
+import ca.tdsb.dunbar.dailyattendancereport.SejdaSupport;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -28,6 +22,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -37,15 +32,18 @@ import javafx.scene.text.Text;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 public class DAR extends Application {
 
-	public class TextDAR extends Text {
+	// TODO: describe TextDAR and MOVE
+	public class TextDAR extends TextArea {
 		public final void setTextWithDate(String s) {
 			// https://www.mkyong.com/java/java-how-to-get-current-date-time-date-and-calender/
 			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			Date date = new Date(System.currentTimeMillis());
-			setText(dateFormat.format(date) + ": \n" + s);}
+			setText( dateFormat.format(date) + ": " + s + "\n" + this.getText());
+		}
 	}
 
 	// JavaFX variables
@@ -59,11 +57,12 @@ public class DAR extends Application {
 	// PREFERENCES variables
 	DARProperties preferences = new DARProperties("DAR.config");
 
-	public final String prefInputPath = "input_path";
-	public final String prefOutputPath = "output_path";
-	public final String prefMasterUsefulDAR = "master_useful_DAR_PowerBuilder";
-	public final String prefMasterUselessDAR = "master_useless_DAR_Teacher_Class_Attendance_";
-	public final String prefSejdaLocation = "sejda";
+	public final static String prefInputPath = "input_path";
+	public final static String prefOutputPath = "output_path";
+	public final static String prefMasterUsefulDAR = "master_useful_DAR_PowerBuilder";
+	public final static String prefMasterUselessDAR = "master_useless_DAR_Teacher_Class_Attendance_";
+	public final static String prefSejdaLocation = "sejda";
+	private Text clockFX;
 
 	// CLASS or INSTANCE variables
 	/**
@@ -76,7 +75,9 @@ public class DAR extends Application {
 		Useless, Useful
 	}
 
+	// TODO: Organize logging code
 	static PrintStream ps = null; // log file for System.out and StackTrace
+	static boolean working = false;
 
 	public static void main(String[] args) {
 
@@ -97,279 +98,6 @@ public class DAR extends Application {
 		System.out.println(dateFormat.format(date));
 
 		Application.launch(args);
-	}
-
-	/**
-	 * Recursively deletes the contents of a directory.
-	 * http://stackoverflow.com/questions/20281835/how-to-delete-a-folder-with-files-using-java
-	 * 
-	 * @param file
-	 *            directory to empty
-	 * @return
-	 */
-	private boolean deleteDir(File file) {
-		File[] contents = file.listFiles();
-		if (contents != null) {
-			for (File f : contents) {
-				deleteDir(f);
-			}
-		}
-		return file.delete();
-	}
-
-	/**
-	 * Creates or empties a temporary directory with the given name in the
-	 * system's temp directory structure.
-	 * 
-	 * @param name
-	 *            Name of temporary directory to create or empty
-	 * @return File object pointing to the directory
-	 */
-	private File createTempDir(String name) {
-		// http://stackoverflow.com/questions/31154727/saving-files-to-temp-folder
-		String tempDirS = System.getProperty("java.io.tmpdir") + name;
-		System.out.println("temp directory: " + tempDirS);
-		File tempDir = new File(tempDirS);
-		System.out.println("Info. Successful temp dir creation?: " + tempDir.mkdir() + " " + tempDirS);
-		if (!tempDir.exists())
-			tempDir = null;
-		else {
-			for (File f : tempDir.listFiles()) {
-				f.delete();
-			}
-		}
-		return tempDir;
-	}
-
-	/**
-	 * Default temporary directory.
-	 * 
-	 * @return File object pointing to the directory. Note that calling method
-	 *         needs to check for its existence.
-	 */
-	private File createTempDir() {
-		return createTempDir("DARv20161223");
-	}
-
-	/**
-	 * Wrap given String in quotations. Helpful for DOS command line arguments.
-	 * 
-	 * @param s
-	 *            String to be wrapped in quotations
-	 * @return String wrapped in quotations
-	 */
-	private String quotesWrap(String s) {
-		return "\"" + s + "\"";
-	}
-
-	/**
-	 * Splits the PDF given the String array of DOS command-line arguments, the
-	 * base directory (as type File) in which to run sejda. It throws an
-	 * IOException if a problem occurs when the console (cmd.exe) is run or the
-	 * given directory does not exist.
-	 * 
-	 * @param cmdAndArgs
-	 *            array of command line arguments
-	 * @param baseDir
-	 *            directory in which sejda is run
-	 * @throws IOException
-	 *             thrown if directory missing or console failed
-	 */
-	private void sejdaSplitDAR(List<String> cmdAndArgs, File baseDir) throws IOException {
-		// troubleshooting
-
-		System.out.println("Parameters for sejda console launch:");
-		for (String string : cmdAndArgs) {
-			System.out.println("         Param: _" + string + "_");
-		}
-
-		// call the sejda processor
-		ProcessBuilder pb = new ProcessBuilder(cmdAndArgs);
-		pb.directory(new File(FilenameUtils.getFullPath(preferences.getProperty(prefSejdaLocation))));
-		Process p = pb.start();
-
-		// process the console output to prevent application from hanging
-		// http://stackoverflow.com/questions/3774432/starting-a-process-in-java
-		try {
-			String line;
-			BufferedReader input = new BufferedReader(new InputStreamReader(p.getInputStream()));
-			while ((line = input.readLine()) != null) {
-				System.out.println(line);
-			}
-			input.close();
-		} catch (Exception err) {
-			err.printStackTrace(ps);
-		}
-	}
-
-	public String getPDFDate(String sourceFile, DARType darT) throws IOException {
-		File tempDir = createTempDir("sejda_date_extraction");
-		if (tempDir == null)
-			throw new IOException(
-					"Temp date directory could not be created. Try again. \nIf error persists logout and login or restart.");
-
-		String sejdaS = preferences.getProperty(prefSejdaLocation);
-
-		// PREPARE SEDJA
-		// TEXT COORDINATES:
-		// String c[] = {"--top", "--left", "--width", "--height"};
-		String c[];
-
-		if (darT == DARType.Useful)
-			c = new String[] { "514", "61", "75", "22" }; // coords for USEFUL
-															// split by DATE
-		else
-			c = new String[] { "340", "55", "75", "22" }; // coords for USELESS
-		// split by DATE
-
-		// DESTINATION DIRECTORY
-		String destinationDirectory = tempDir.getAbsolutePath();
-
-		// http://stackoverflow.com/questions/357315/get-list-of-passed-arguments-in-windows-batch-script-bat
-		// http://stackoverflow.com/questions/19103570/run-batch-file-from-java-code
-
-		List<String> cmdAndArgs = Arrays.asList("cmd", "/c", "call", quotesWrap(sejdaS), "splitbytext", "-f",
-				quotesWrap(sourceFile), "--top", c[0], "--left", c[1], "--width", c[2], "--height", c[3], "-o",
-				quotesWrap(destinationDirectory), "-p", "[TEXT]", "--existingOutput", "overwrite");
-
-		sejdaSplitDAR(cmdAndArgs, tempDir);
-
-		File fL[] = tempDir.listFiles();
-
-		if (fL.length != 1) {
-			// do not delete dir for troublshooting purposes
-			return "date_error";
-		}
-
-		deleteDir(tempDir);
-		return FilenameUtils.removeExtension(fL[0].getName());
-	}
-
-	/**
-	 * Splits the DAR.
-	 * 
-	 * @throws IOException
-	 */
-	public void splitDAR(DARType whichDAR) throws IOException {
-
-		// SET PREFS
-		// TODO: MOVE ELSEWHERE
-		preferences.setProperty(prefSejdaLocation,
-				"C:\\Users\\094360\\Dropbox\\Riverdale at TDSB\\ICS General\\DAR\\sejda-console-2.10.4-bin\\sejda-console-2.10.4\\bin\\sejda-console");
-		preferences.setProperty("test",
-				"C:\\Users\\094360\\Dropbox\\Riverdale at TDSB\\ICS General\\DAR\\sejda-console-2.10.4-bin\\sejda-console-2.10.4\\bin\\a.bat");
-
-		/*
-		 * List of tasks to do: 1. prepare temporary directory by emptying it 2.
-		 * prepare arguments to pass to sejda for DATE getDateFromPDF(File f) 3.
-		 * run sejda for DATE 4. read DATE into a variable dateVar 5. write
-		 * dateVar to file 6. delete PDF
-		 */
-
-		String sejdaS = preferences.getProperty(prefSejdaLocation);
-
-		// 0. PREPARE SEDJA
-
-		// 1. TEXT COORDINATES & type of preferences file
-		// String c[] = {"--top", "--left", "--width", "--height"};
-
-		String localPrefDARLocation;
-
-		String teacherNameCoordinates[];
-
-		String describeDAR = whichDAR.name();
-
-		if (whichDAR == DARType.Useful) {
-			localPrefDARLocation = prefMasterUsefulDAR;
-
-			// USEFUL split by TEACHERNAME
-			teacherNameCoordinates = new String[] { "86", "84", "200", "22" };
-		} else {
-			localPrefDARLocation = prefMasterUselessDAR;
-
-			// USELESS split by TEACHERNAME
-			teacherNameCoordinates = new String[] { "105", "71", "200", "22" };
-		}
-
-		System.out.println("ENUM NAME: " + describeDAR);
-
-		// SOURCE FILE
-		String sourceFile = preferences.getProperty(localPrefDARLocation);
-
-		// DATE
-		String dateForDAR = getPDFDate(sourceFile, whichDAR);
-		System.out.println("THE DATE: " + dateForDAR);
-
-		// DESTINATION DIRECTORY
-		// Prepare temporary directory
-		File tempDir = createTempDir();
-		if (tempDir == null)
-			throw new IOException("Temp process directory could not be created. Try again.");
-
-		String destinationDirectory = tempDir.getAbsolutePath();
-
-		// PERFORM THE SPLIT
-
-		// http://stackoverflow.com/questions/357315/get-list-of-passed-arguments-in-windows-batch-script-bat
-		// http://stackoverflow.com/questions/19103570/run-batch-file-from-java-code
-		List<String> cmdAndArgs = Arrays.asList("cmd", "/c", "call", quotesWrap(sejdaS), "splitbytext", "-f",
-				quotesWrap(sourceFile), "--top", teacherNameCoordinates[0], "--left", teacherNameCoordinates[1],
-				"--width", teacherNameCoordinates[2], "--height", teacherNameCoordinates[3], "-o",
-				quotesWrap(destinationDirectory), "-p", "[TEXT]", "--existingOutput", "overwrite");
-
-		sejdaSplitDAR(cmdAndArgs, tempDir);
-
-		String newFileList[] = tempDir.list(new SuffixFileFilter(".pdf"));
-
-		// MOVE and COPY PDFs
-
-		System.out.println("TROUBLESHOOTING: tempDir.getAbsolutePath() = " + tempDir.getAbsolutePath());
-
-		for (String string : newFileList) {
-			System.out.println("    " + tempDir.getAbsolutePath() + "\\" + string);
-		}
-
-		// Attempted fix for constantly refreshing archive directory
-		File archiveDir = new File(preferences.getProperty(prefOutputPath) + "\\Archive\\");
-		archiveDir.mkdir();
-		archiveDir = new File(preferences.getProperty(prefOutputPath) + "\\Archive\\" + dateForDAR);
-		archiveDir.mkdir();
-
-		System.out.println();
-		System.out.println("Start: MOVE and ARCHIVE FILES");
-		for (String s : newFileList) {
-			String oldFile = tempDir.getAbsolutePath() + "\\" + s;
-
-			String newName = FilenameUtils.getBaseName(s) + " " + describeDAR + ".pdf";
-			String newArchivalName = FilenameUtils.getBaseName(s) + " " + describeDAR + " " + dateForDAR + ".pdf";
-
-			String newFile = preferences.getProperty(prefOutputPath) + "\\" + newName;
-			String archiveFile = archiveDir.getAbsolutePath() + "\\" + newArchivalName;
-
-			darMoveFile(oldFile, newFile, archiveFile);
-		}
-		System.out.println("End: MOVE and ARCHIVE FILES");
-
-		// MOVE master DAR to ARCHIVE
-		String FROM = preferences.getProperty(localPrefDARLocation);
-		String TO = preferences.getProperty(prefOutputPath) + "\\Archive\\Masters\\" + "Master_DAR_" + describeDAR + "_"
-				+ dateForDAR + ".pdf";
-		darMoveFile(FROM, TO);
-		System.out.println("End: MOVE and ARCHIVE MASTER for " + describeDAR);
-	}
-
-	private void darMoveFile(String oldFile, String newFile) throws IOException {
-		darMoveFile(oldFile, newFile, null);
-	}
-
-	private void darMoveFile(String oldFile, String newFile, String secondNewFile) throws IOException {
-		new File(newFile).delete();
-
-		if (secondNewFile != null) {
-			new File(secondNewFile).delete();
-			FileUtils.copyFile(FileUtils.getFile(oldFile), FileUtils.getFile(secondNewFile));
-		}
-		FileUtils.moveFile(FileUtils.getFile(oldFile), FileUtils.getFile(newFile));
 	}
 
 	@Override
@@ -418,26 +146,38 @@ public class DAR extends Application {
 		// Status message text
 		errorStatusFX = new TextDAR();
 		errorStatusFX.setFont(Font.font("Calibri", FontWeight.NORMAL, 14));
-		errorStatusFX.setFill(Color.FIREBRICK);
-		errorStatusFX.setTextWithDate("");
+		//TODO Should this be a TextArea?
+		//errorStatusFX.setFill(Color.FIREBRICK);
+		errorStatusFX.setTextWithDate("No actions taken yet.");
+
+		// Status message text
+		clockFX = new Text();
+		clockFX.setFont(Font.font("Calibri", FontWeight.NORMAL, 14));
+		clockFX.setFill(Color.DARKSLATEBLUE);
+		clockFX.setText("");
 
 		// Destination message text
 		masterUsefulDARFX = new Text();
 		masterUsefulDARFX.setFont(Font.font("Calibri", FontWeight.NORMAL, 14));
 		masterUsefulDARFX.setFill(Color.DARKGREEN);
-		masterUsefulDARFX.setText("Master Useful DAR:\n    " + preferences.getProperty(prefMasterUsefulDAR));
+		masterUsefulDARFX.setText(
+				"Master " + DARType.Useful.toString() + " DAR:\n    " + preferences.getProperty(prefMasterUsefulDAR));
 
 		// Destination message text
 		masterUselessDARFX = new Text();
 		masterUselessDARFX.setFont(Font.font("Calibri", FontWeight.NORMAL, 14));
 		masterUselessDARFX.setFill(Color.DARKGREEN);
-		masterUselessDARFX.setText("Master Useless DAR:\n    " + preferences.getProperty(prefMasterUselessDAR));
+		masterUselessDARFX.setText(
+				"Master " + DARType.Useful.toString() + " DAR:\n    " + preferences.getProperty(prefMasterUselessDAR));
 
 		// Destination message text
 		destinationDirFX = new Text();
 		destinationDirFX.setFont(Font.font("Calibri", FontWeight.NORMAL, 14));
 		destinationDirFX.setFill(Color.DARKGREEN);
 		destinationDirFX.setText("Destination directory:\n    " + preferences.getProperty(prefOutputPath));
+
+		// TODO Status updates and labels
+		// http://stackoverflow.com/questions/19968012/javafx-update-ui-label-asynchronously-with-messages-while-application-different
 
 		// Separator
 		Separator separator2 = new Separator();
@@ -452,92 +192,73 @@ public class DAR extends Application {
 		;
 
 		vbox.getChildren().addAll(labelHb, buttonHb4, separator2, buttonHb1, buttonHb3, separator3, buttonHb5,
-				errorStatusFX, masterUsefulDARFX, masterUselessDARFX, destinationDirFX);
+				errorStatusFX, clockFX, masterUsefulDARFX, masterUselessDARFX, destinationDirFX);
+
+		// Create clock
+		Timeline fiveSecondsWonder = new Timeline(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
+
+			private int dots = 0;
+
+			@Override
+			public void handle(ActionEvent event) {
+				DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
+				Date date = new Date(System.currentTimeMillis());
+				String workingS = "idle";
+				if (DAR.working) {
+					workingS = "processing";
+					for (int i = 0; i < dots % 6; i++) {
+						workingS += ".";
+					}
+					dots++;
+				}
+
+				clockFX.setText("Current time:\n  " + dateFormat.format(date) + "\nStatus:\n  " + workingS);
+
+			}
+		}));
+
+		fiveSecondsWonder.setCycleCount(Timeline.INDEFINITE);
+		fiveSecondsWonder.play();
 
 		// Scene
 		Scene scene = new Scene(vbox, 600, 700); // w x h
 		primaryStage.setScene(scene);
 		primaryStage.show();
 
+		// TODO Automate the process if valid DAR is available
 		boolean success = false;
 
 		if (success)
 			Platform.exit();
 	}
 
+	// TODO Describe resetErrorStatus
 	private void resetErrorStatus() {
-		errorStatusFX.setTextWithDate("");
+		//TODO What does this do?
+//		errorStatusFX.setTextWithDate("");
 	}
 
-	private void deleteFiles(String filesToBeDeletedList[], String filter, String extension) {
-
-		for (String string : filesToBeDeletedList) {
-			new File(preferences.getProperty(prefOutputPath) + "\\" + string).delete();
-		}
-
-	}
-
+	// TODO Describe SplitDARFcB
 	private class SplitDARFcButtonListener implements EventHandler<ActionEvent> {
+		//// http://stackoverflow.com/questions/26554814/javafx-updating-gui
+
 		@Override
 		public void handle(ActionEvent e) {
-
-			resetErrorStatus();
-
-			try {
-				errorStatusFX.setTextWithDate("Start DAR processing...");
-
-				if (!(new File(preferences.getProperty(prefOutputPath)).exists())) {
-					throw new IOException("Destination directory unavailable");
+			Task<Void> task = new Task<Void>() {
+				@Override
+				public Void call() {
+					SejdaSupport r = new SejdaSupport(preferences, ps);
+					r.runMe(errorStatusFX);
+					return null;
 				}
-
-				String filesToBeDeletedList[] = new File(preferences.getProperty(prefOutputPath))
-						.list(new SuffixFileFilter(".pdf"));
-
-				// delete existing PDFs
-				deleteFiles(filesToBeDeletedList, null, null);
-
-				File masterUselessDAR = new File(preferences.getProperty(prefMasterUselessDAR));
-				File masterUsefulDAR = new File(preferences.getProperty(prefMasterUsefulDAR));
-
-				boolean missing[] = { false, false };
-
-				// PERFORM SPLIT
-				if (masterUselessDAR.exists()) {
-					// Process the useless DAR
-					splitDAR(DARType.Useless);
-				} else
-					missing[0] = true;
-
-				if (masterUsefulDAR.exists()) {
-					// Process the useful DAR
-					splitDAR(DARType.Useful);
-				} else
-					missing[1] = true;
-
-				// THROW EXCEPTIONS
-				if (missing[0] && missing[1])
-					throw new IOException("Both master DAR files missing.");
-				else if (!missing[0] || !missing[1]) {
-					Desktop desktop = Desktop.getDesktop();
-					desktop.open(new File(preferences.getProperty(prefOutputPath)));
-					System.out.println("I opened the file explorer");
-					if (missing[0])
-						throw new IOException(masterUselessDAR.getAbsolutePath() + " missing.");
-					else if (missing[1])
-						throw new IOException(masterUsefulDAR.getAbsolutePath() + " missing.");
-				}
-
-				errorStatusFX.setTextWithDate("Both DARs successfully processed.");
-
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace(ps);
-
-				errorStatusFX.setTextWithDate(e1.getMessage());
-			}
+			};
+			task.messageProperty()
+					.addListener((obs, oldMessage, newMessage) -> errorStatusFX.setTextWithDate(newMessage));
+			new Thread(task).start();
 		}
 	}
 
+	// TODO Name properly
 	private class SingleFcButtonListener implements EventHandler<ActionEvent> {
 		@Override
 		public void handle(ActionEvent e) {
@@ -551,7 +272,7 @@ public class DAR extends Application {
 		@Override
 		public void handle(ActionEvent e) {
 			resetErrorStatus();
-			showDirPicker();
+			showDestinationDirChooser();
 		}
 	}
 
@@ -571,11 +292,11 @@ public class DAR extends Application {
 
 		if (selectedFile != null) {
 			preferences.setProperty(prefMasterUsefulDAR, selectedFile.getAbsolutePath());
-			masterUsefulDARFX
-					.setText("Master Useful DAR (updated):\n    " + preferences.getProperty(prefMasterUsefulDAR));
+			masterUsefulDARFX.setText("Master " + DARType.Useful.toString() + " DAR (updated):\n    "
+					+ preferences.getProperty(prefMasterUsefulDAR));
 		}
 
-		fileChooser.setTitle("Open useless DAR, aka Teacher Class Attendance .pdf");
+		fileChooser.setTitle("Open " + DARType.Useless.toString() + " DAR, aka \"Teacher Class Attendance .pdf\"");
 		File selectedFile2 = fileChooser.showOpenDialog(null);
 
 		if (selectedFile2 != null) {
@@ -589,9 +310,9 @@ public class DAR extends Application {
 	 * Obtains and sets the destination directory.
 	 * 
 	 */
-	private void showDirPicker() {
+	private void showDestinationDirChooser() {
 		DirectoryChooser chooser = new DirectoryChooser();
-		chooser.setTitle("Pick destination directory for split DARs");
+		chooser.setTitle("Pick destination directory for split DARs. Hint: use folder on TeacherShare.");
 		File defaultDirectory = new File(System.getenv("userprofile") + "\\Desktop");
 		chooser.setInitialDirectory(defaultDirectory);
 		File selectedDirectory = chooser.showDialog(null);
