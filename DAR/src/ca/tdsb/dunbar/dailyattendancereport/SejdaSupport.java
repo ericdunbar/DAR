@@ -355,20 +355,18 @@ public class SejdaSupport {
 
 			// TODO Eliminate Apache
 			// TODO RENAME variable
+			// TODO catch unset preference
 
-			File masterUselessDAR = new File("\\\\NowhereInParticularJunkDir");
-			File masterUsefulDAR = new File("\\\\NowhereInParticularJunkDir");
-			
-			String pfmul = preferences.getProperty(DAR.prefMasterUselessDAR);
-			String pfmuf = preferences.getProperty(DAR.prefMasterUsefulDAR);
+			File masterUselessDAR = new File("\\\\(No_" + DARType.Useless.toString() + "_file_has_been_selected)");
+			File masterUsefulDAR = new File("\\\\(No_" + DARType.Useful.toString() + "_file_has_been_selected)");
 
-			DAR.minorln(pfmul);
-			DAR.minorln(pfmuf);
+			String pathMstrUselDAR = preferences.getProperty(DAR.prefMasterUselessDAR);
+			String pathMastUsefDARf = preferences.getProperty(DAR.prefMasterUsefulDAR);
 
 			boolean missing[] = { false, false };
 
 			try {
-				masterUselessDAR = new File(pfmul);
+				masterUselessDAR = new File(pathMstrUselDAR);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -376,20 +374,23 @@ public class SejdaSupport {
 			}
 
 			try {
-				masterUsefulDAR = new File(pfmuf);
+				masterUsefulDAR = new File(pathMastUsefDARf);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 				missing[1] = true;
 			}
 
-
 			// PERFORM SPLIT
+			DAR.minorln("Try processing: " + pathMstrUselDAR);
+
 			if (masterUselessDAR.exists()) {
 				// Process the useless DAR
 				splitDAR(DARType.Useless);
 			} else
 				missing[0] = true;
+
+			DAR.minorln("Try processing: " + pathMastUsefDARf);
 
 			if (masterUsefulDAR.exists()) {
 				// Process the useful DAR
@@ -400,22 +401,22 @@ public class SejdaSupport {
 			// THROW EXCEPTIONS
 			if (missing[0] && missing[1])
 				throw new IOException(
-						"Both master DAR files missing. Use CutePDF to print new ones and/or choose the master DAR PDFs.");
+						"Both master DAR PDF files missing from their specified locations. Check the locations listed below. Use CutePDF to print new ones and/or choose the master DAR PDFs.");
 			else if (!missing[0] || !missing[1]) {
 				Desktop desktop = Desktop.getDesktop();
 				desktop.open(new File(preferences.getProperty(DAR.prefOutputPath)));
 				System.out.println("I opened the file explorer");
+				String commonMessage = " DAR. Note: if you press Cancel to one of the \"Choose master DAR...\" dialog boxes the relevant preference will not be changed but you can still set the other preference.";
 				if (missing[0])
 					throw new IOException("Only one DAR processed. " + masterUselessDAR.getName() + " ("
-							+ DARType.Useless.toString() + ")" + " is missing. Use CutePDF to print a new "
+							+ DARType.Useless.toString() + " master PDF)" + " is missing. Use CutePDF to print a new "
 							+ DARType.Useless.toString() + " DAR and/or choose a new master "
-							+ DARType.Useless.toString()
-							+ " DAR. Note: if you press Cancel to one of the \"Choose master DAR...\" dialog boxes the relevant preference will not be changed.");
+							+ DARType.Useless.toString() + commonMessage);
 				else if (missing[1])
 					throw new IOException("Only one DAR processed. " + masterUsefulDAR.getName() + " ("
-							+ DARType.Useful.toString() + ")" + " is missing. Use CutePDF to print a new "
+							+ DARType.Useful.toString() + " master PDF)" + " is missing. Use CutePDF to print a new "
 							+ DARType.Useful.toString() + " DAR and/or choose a new master " + DARType.Useful.toString()
-							+ " DAR. Note: if you press Cancel to one of the \"Choose master DAR...\" dialog boxes the relevant preference will not be changed.");
+							+ commonMessage);
 			}
 
 			errorStatusFX.prependTextWithDate("Both DARs successfully processed.");
@@ -429,6 +430,40 @@ public class SejdaSupport {
 		}
 
 		DAR.working = false;
+	}
+
+	private boolean attemptSplit(DARType d) throws IOException {
+		File masterDAR = new File("[FYI No_" + d.toString() + " file of type PDF has been selected]");
+
+		String prefKey = null;
+
+		if (d == DARType.Useful)
+			prefKey = DAR.prefMasterUsefulDAR;
+		else if (d == DARType.Useless)
+			prefKey = DAR.prefMasterUselessDAR;
+
+		String pathToMasterDAR = preferences.getProperty(prefKey);
+
+		boolean missing = false;
+
+		try {
+			masterDAR = new File(pathToMasterDAR);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			missing = true;
+		}
+
+		// PERFORM SPLIT
+		DAR.minorln("Try processing: " + pathToMasterDAR);
+
+		if (masterDAR.exists()) {
+			// Process the DAR
+			splitDAR(d);
+		} else
+			missing = true;
+
+		return missing;
 	}
 
 }
