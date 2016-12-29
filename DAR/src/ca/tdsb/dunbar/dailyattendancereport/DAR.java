@@ -2,7 +2,6 @@ package ca.tdsb.dunbar.dailyattendancereport;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.PrintStream;
 import java.sql.Date;
 import java.text.DateFormat;
@@ -12,7 +11,6 @@ import ca.tdsb.dunbar.dailyattendancereport.SejdaSupport;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -22,7 +20,6 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.Labeled;
 import javafx.scene.control.Separator;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.HBox;
@@ -38,70 +35,7 @@ import javafx.util.Duration;
 
 public class DAR extends Application {
 
-	// TODO: describe TextDAR and MOVE
-	public class TextDAR extends TextArea {
-		public final void setTextWithDate(String s) {
-			// https://www.mkyong.com/java/java-how-to-get-current-date-time-date-and-calender/
-			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-			Date date = new Date(System.currentTimeMillis());
-			setText(dateFormat.format(date) + ": " + s + "\n" + this.getText());
-		}
-	}
-
-	public static class TextLbl extends Text {
-		private String descriptor;
-		private String pref;
-
-		public TextLbl(String descriptor, String pref) {
-			this.descriptor = descriptor;
-			this.pref = pref;
-			initialize();
-		}
-
-		private void setTextValue(boolean update) {
-			String s = "";
-			String updateS = "";
-
-			if (update)
-				updateS = " (update)";
-			s = descriptor + updateS + ": " + preferences.getProperty(pref);
-			this.setText(s);
-		}
-
-		public void initialize() {
-			setTextValue(false);
-		}
-
-		public void update() {
-			setTextValue(true);
-		}
-
-		private String generateMsgMasterDARLocation(DARType d, boolean update) {
-			String s = "";
-			String key = "AN ERROR OCCURRED";
-			String u = "";
-
-			if (d == DARType.Useless)
-				key = preferences.getProperty(prefMasterUselessDAR);
-			else if (d == DARType.Useful)
-				key = preferences.getProperty(prefMasterUsefulDAR);
-			if (update)
-				u = " (update)";
-
-			s = "Master " + d.toString() + " DAR" + u + ": " + key;
-			return s;
-		}
-	}
-
-	// JavaFX variables
-	private TextDAR programUpdatesFX;
-	private TextLbl destinationDirFX;
-	private TextLbl masterUsefulDARFX;
-	private TextLbl masterUselessDARFX;
-
-	private static final String formTitleFX = "Daily Attendance Report processor version 2016.12.24";
-
-	// PREFERENCES variables
+	// PREFERENCES fields
 	static DARProperties preferences = new DARProperties("DAR.config");
 
 	public final static String prefInputPath = "input_path";
@@ -110,6 +44,15 @@ public class DAR extends Application {
 	public final static String prefMasterUselessDAR = "master_useless_DAR_Teacher_Class_Attendance_";
 	public final static String prefSejdaDirectory = "sejda";
 	public final static String prefSejdaLocation = "sejda_console";
+
+	// JavaFX objects and fields
+	private TextDAR programUpdatesFX;
+	private TextLbl destinationDirFX;
+	private TextLbl masterUsefulDARFX;
+	private TextLbl masterUselessDARFX;
+
+	private static final String formTitleFX = "Daily Attendance Report processor version 2016.12.24";
+
 	private TextLbl clockFX;
 	private TextLbl sedjaDARFX;
 	private Button btnMasterDAR;
@@ -120,7 +63,7 @@ public class DAR extends Application {
 
 	private Button[] buttons;
 
-	// CLASS or INSTANCE variables
+	// GENERAL INSTANCE fields
 	/**
 	 * The two types of daily attendance record PDF.
 	 * 
@@ -131,14 +74,16 @@ public class DAR extends Application {
 		Useless, Useful
 	}
 
-	// TODO: Organize logging code
+	// CLASS fields
 	static PrintStream ps = null; // log file for System.out and StackTrace
 
 	// TODO: Get rid of working. Such an ugly solution.
-	static boolean working = false;
+	static boolean working = false; // used to determine status updates
+	protected static boolean firstRun = true; // prevents invisible text
 
 	public static void main(String[] args) {
 
+		// CONFIGURE LOGGING
 		// http://stackoverflow.com/questions/8043356/file-write-printstream-append
 		// http://stackoverflow.com/questions/12053075/how-do-i-write-the-exception-from-printstacktrace-into-a-text-file-in-java
 		try {
@@ -153,15 +98,17 @@ public class DAR extends Application {
 		// https://www.mkyong.com/java/java-how-to-get-current-date-time-date-and-calender/
 		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		Date date = new Date(System.currentTimeMillis());
+		System.out.println("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
 		System.out.print("DAR Splitter launched: ");
 		System.out.println(dateFormat.format(date));
+		System.out.println("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
 
 		Application.launch(args);
 	}
 
 	@Override
 	public void start(Stage primaryStage) {
-		System.out.println(preferences.getFileName());
+		minorln("Preferences file: " + preferences.getFileName());
 
 		primaryStage.setTitle(formTitleFX);
 
@@ -210,8 +157,6 @@ public class DAR extends Application {
 		// Status message text
 		programUpdatesFX = new TextDAR();
 		programUpdatesFX.setFont(Font.font("Calibri", FontWeight.NORMAL, 14));
-		// TODO Should this be a TextArea?
-		// errorStatusFX.setFill(Color.FIREBRICK);
 		programUpdatesFX.setText("");
 		programUpdatesFX.setEditable(false);
 		programUpdatesFX.setWrapText(true);
@@ -249,7 +194,7 @@ public class DAR extends Application {
 				clockFX, masterUsefulDARFX, masterUselessDARFX, destinationDirFX, sedjaDARFX);
 
 		// Create clock
-		Timeline fiveSecondsWonder = new Timeline(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
+		Timeline statusUpdateEvt = new Timeline(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
 
 			private int dots = 0;
 
@@ -267,12 +212,11 @@ public class DAR extends Application {
 				}
 
 				clockFX.setText("Status at " + dateFormat.format(date) + ": " + workingS);
-
 			}
 		}));
 
-		fiveSecondsWonder.setCycleCount(Timeline.INDEFINITE);
-		fiveSecondsWonder.play();
+		statusUpdateEvt.setCycleCount(Timeline.INDEFINITE);
+		statusUpdateEvt.play();
 
 		// Scene
 		Scene scene = new Scene(vbox, 800, 600); // w x h
@@ -283,17 +227,13 @@ public class DAR extends Application {
 		btnSplitDAR.fire();
 
 		// TODO Automate the process if valid DAR is available
-		boolean success = false;
-
-		if (success)
-			Platform.exit();
 	}
 
-	private static TextLbl createTextFX(String descriptor, String prefString) {
+	private TextLbl createTextFX(String descriptor, String prefString) {
 		return createTextFX(Font.font("Calibri", FontWeight.NORMAL, 14), Color.DARKGREEN, descriptor, prefString);
 	}
 
-	private static TextLbl createTextFX(Font f, Color c, String descriptor, String prefString) {
+	private TextLbl createTextFX(Font f, Color c, String descriptor, String prefString) {
 		TextLbl newTextFX = new TextLbl(descriptor, prefString);
 		newTextFX.setFont(f);
 		newTextFX.setFill(c);
@@ -310,7 +250,7 @@ public class DAR extends Application {
 	// TODO Describe SplitDARFcB
 	private class SplitDARFcButtonListener implements EventHandler<ActionEvent> {
 		//// http://stackoverflow.com/questions/26554814/javafx-updating-gui
-//TODO
+		// TODO
 		@Override
 		public void handle(ActionEvent e) {
 			Task<Void> task = new Task<Void>() {
@@ -320,7 +260,51 @@ public class DAR extends Application {
 					for (Button button : buttons) {
 						button.setDisable(true);
 					}
+					minorln("Buttons disabled");
 
+					// TODO: Determine why TextArea (TextDAR) is not updating if
+					// prefs file failure occurs too early in program launch
+
+					// Solves problem with invisible but selectable text
+					if (DAR.firstRun) {
+						firstRun = false;
+						try {
+							Thread.sleep(2000);
+						} catch (InterruptedException ex) {
+							Thread.currentThread().interrupt();
+						}
+
+						// Stack Trace for invisible but selectable text
+
+						/*
+						 * java.lang.NullPointerException at
+						 * java.io.File.<init>(Unknown Source) at
+						 * ca.tdsb.dunbar.dailyattendancereport.SejdaSupport.
+						 * runMe(SejdaSupport.java:362) at
+						 * ca.tdsb.dunbar.dailyattendancereport.
+						 * DAR$SplitDARFcButtonListener$1.call(DAR.java:339) at
+						 * ca.tdsb.dunbar.dailyattendancereport.
+						 * DAR$SplitDARFcButtonListener$1.call(DAR.java:1) at
+						 * javafx.concurrent.Task$TaskCallable.call(Task.java:
+						 * 1423) at java.util.concurrent.FutureTask.run(Unknown
+						 * Source) at java.lang.Thread.run(Unknown Source)
+						 * java.lang.Exception: Program failure. Have all
+						 * preferences been set? at
+						 * ca.tdsb.dunbar.dailyattendancereport.SejdaSupport.
+						 * runMe(SejdaSupport.java:367) at
+						 * ca.tdsb.dunbar.dailyattendancereport.
+						 * DAR$SplitDARFcButtonListener$1.call(DAR.java:339) at
+						 * ca.tdsb.dunbar.dailyattendancereport.
+						 * DAR$SplitDARFcButtonListener$1.call(DAR.java:1) at
+						 * javafx.concurrent.Task$TaskCallable.call(Task.java:
+						 * 1423) at java.util.concurrent.FutureTask.run(Unknown
+						 * Source) at java.lang.Thread.run(Unknown Source) DAR
+						 * Splitter launched: 2016/12/29 05:44:08
+						 * C:\Users\094360\AppData\Roaming\DAR.config iiii
+						 * round,round,round,round,round,
+						 */
+
+					}
 					SejdaSupport r = null;
 					try {
 						r = new SejdaSupport(preferences, ps, programUpdatesFX);
@@ -328,23 +312,22 @@ public class DAR extends Application {
 					} catch (Exception e) {
 						// TODO Auto-generated catch block
 						if (e.getMessage() == null) {
-							programUpdatesFX.setTextWithDate("Possible problem with preferences. Please set them.");
+							programUpdatesFX.prependTextWithDate("Possible problem with preferences. Please set them.");
 						} else
-							programUpdatesFX.setTextWithDate(e.getMessage());
+							programUpdatesFX.prependTextWithDate(e.getMessage());
 						e.printStackTrace(ps);
 					}
 
-					System.out.println("iiii");
 					for (Button button : buttons) {
-						System.out.print("round,");
 						button.setDisable(false);
 					}
+					DAR.minorln("Buttons enabled");
 
 					return null;
 				}
 			};
 			task.messageProperty()
-					.addListener((obs, oldMessage, newMessage) -> programUpdatesFX.setTextWithDate(newMessage));
+					.addListener((obs, oldMessage, newMessage) -> programUpdatesFX.prependTextWithDate(newMessage));
 			new Thread(task).start();
 		}
 	}
@@ -383,6 +366,71 @@ public class DAR extends Application {
 		}
 	}
 
+	/**
+	 * Class that extends TextArea to include a method to prepend date & time to
+	 * the text.
+	 * 
+	 * @author 094360
+	 *
+	 */
+	public class TextDAR extends TextArea {
+		public final void prependTextWithDate(String s) {
+			// https://www.mkyong.com/java/java-how-to-get-current-date-time-date-and-calender/
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			Date date = new Date(System.currentTimeMillis());
+			setText(dateFormat.format(date) + ": " + s + "\n" + this.getText());
+		}
+	}
+
+	/**
+	 * Class that displays preference values in a pre-determined format in a
+	 * JavaFX Text field.
+	 * 
+	 * @author 094360
+	 *
+	 */
+	public class TextLbl extends Text {
+		private String prefDescriptor;
+		private String pref;
+
+		public TextLbl(String descriptor, String pref) {
+			this.prefDescriptor = descriptor;
+			this.pref = pref;
+			initialize();
+		}
+
+		/**
+		 * Sets the Text contents to the description (similar to the key) of the
+		 * property and the value of the property.
+		 * 
+		 * @param update
+		 *            whether to include the notice (update)
+		 */
+		private void setTextValue(boolean update) {
+			String s = "";
+			String updateS = "";
+
+			if (update)
+				updateS = " (update)";
+			s = prefDescriptor + updateS + ": " + DAR.preferences.getProperty(pref);
+			this.setText(s);
+		}
+
+		/**
+		 * Set the initial Text contents to forced value
+		 */
+		public void initialize() {
+			setTextValue(false);
+		}
+
+		/**
+		 * Force an update to the forced value of the Text contents
+		 */
+		public void update() {
+			setTextValue(true);
+		}
+	}
+
 	private void showSedjaChooser() {
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setInitialDirectory(new File(System.getenv("userprofile")));
@@ -399,6 +447,24 @@ public class DAR extends Application {
 			// + "\n " + preferences.getProperty(prefSejdaLocation));
 			sedjaDARFX.update();
 		}
+	}
+
+	/**
+	 * Provide a minor program update.
+	 * 
+	 * @param string
+	 */
+	public static void minor(String string) {
+		System.out.print(string);
+	}
+
+	/**
+	 * Provide a minor program update.
+	 * 
+	 * @param string
+	 */
+	public static void minorln(String string) {
+		minor(string + "\n");
 	}
 
 	private void showDARFileChooser() {

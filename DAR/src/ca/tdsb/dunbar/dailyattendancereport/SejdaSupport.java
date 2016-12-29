@@ -162,7 +162,7 @@ public class SejdaSupport {
 				+ "_" + dateForDAR + ".pdf";
 		darMoveFile(FROM, TO);
 		System.out.println("End: MOVE and ARCHIVE MASTER for " + describeDAR);
-		messageFX.setTextWithDate("MOVE and ARCHIVE MASTER for " + describeDAR);
+		messageFX.prependTextWithDate("MOVE and ARCHIVE MASTER for " + describeDAR);
 	}
 
 	/**
@@ -356,18 +356,33 @@ public class SejdaSupport {
 			// TODO Eliminate Apache
 			// TODO RENAME variable
 
-			File masterUselessDAR;
-			File masterUsefulDAR;
+			File masterUselessDAR = new File("\\\\NowhereInParticularJunkDir");
+			File masterUsefulDAR = new File("\\\\NowhereInParticularJunkDir");
+			
+			String pfmul = preferences.getProperty(DAR.prefMasterUselessDAR);
+			String pfmuf = preferences.getProperty(DAR.prefMasterUsefulDAR);
+
+			DAR.minorln(pfmul);
+			DAR.minorln(pfmuf);
+
+			boolean missing[] = { false, false };
+
 			try {
-				masterUselessDAR = new File(preferences.getProperty(DAR.prefMasterUselessDAR));
-				masterUsefulDAR = new File(preferences.getProperty(DAR.prefMasterUsefulDAR));
+				masterUselessDAR = new File(pfmul);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-				throw new Exception("Program failure. Have all preferences been set?");
+				missing[0] = true;
 			}
 
-			boolean missing[] = { false, false };
+			try {
+				masterUsefulDAR = new File(pfmuf);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				missing[1] = true;
+			}
+
 
 			// PERFORM SPLIT
 			if (masterUselessDAR.exists()) {
@@ -385,7 +400,7 @@ public class SejdaSupport {
 			// THROW EXCEPTIONS
 			if (missing[0] && missing[1])
 				throw new IOException(
-						"Both master DAR files missing. Use CutePDF to print new ones and/or choose new master DAR PDFs.");
+						"Both master DAR files missing. Use CutePDF to print new ones and/or choose the master DAR PDFs.");
 			else if (!missing[0] || !missing[1]) {
 				Desktop desktop = Desktop.getDesktop();
 				desktop.open(new File(preferences.getProperty(DAR.prefOutputPath)));
@@ -403,13 +418,13 @@ public class SejdaSupport {
 							+ " DAR. Note: if you press Cancel to one of the \"Choose master DAR...\" dialog boxes the relevant preference will not be changed.");
 			}
 
-			errorStatusFX.setTextWithDate("Both DARs successfully processed.");
+			errorStatusFX.prependTextWithDate("Both DARs successfully processed.");
 
 		} catch (Exception e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 
-			errorStatusFX.setTextWithDate(e1.getMessage());
+			errorStatusFX.prependTextWithDate(e1.getMessage());
 			DAR.working = false;
 		}
 
