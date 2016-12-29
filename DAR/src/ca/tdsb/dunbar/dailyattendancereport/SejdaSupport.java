@@ -23,13 +23,22 @@ public class SejdaSupport {
 	 * 
 	 * @param prefs
 	 * @param printStream
+	 * @throws IOException
+	 *             File not found
 	 */
-	public SejdaSupport(DARProperties prefs, PrintStream printStream) {
+	public SejdaSupport(DARProperties prefs, PrintStream printStream, TextDAR msgFX) throws IOException {
 		// Initialize variables
 		this.preferences = prefs;
 		this.ps = printStream;
+		this.messageFX = msgFX;
+		File sejdaF = new File(prefs.getProperty(DAR.prefSejdaLocation));
+		if (!sejdaF.exists()) {
+			throw new IOException("sejda not found. Ensure correct application is available.");
+		}
 	}
 
+	TextDAR messageFX;
+	File sejdaF;
 	PrintStream ps;
 	DARProperties preferences;
 
@@ -39,13 +48,6 @@ public class SejdaSupport {
 	 * @throws IOException
 	 */
 	public void splitDAR(DARType whichDAR) throws IOException {
-
-		// SET PREFS
-		// TODO: MOVE ELSEWHERE
-		preferences.setProperty(DAR.prefSejdaLocation,
-				"C:\\Users\\094360\\Dropbox\\Riverdale at TDSB\\ICS General\\DAR\\sejda-console-2.10.4-bin\\sejda-console-2.10.4\\bin\\sejda-console");
-		preferences.setProperty("test",
-				"C:\\Users\\094360\\Dropbox\\Riverdale at TDSB\\ICS General\\DAR\\sejda-console-2.10.4-bin\\sejda-console-2.10.4\\bin\\a.bat");
 
 		/*
 		 * List of tasks to do: 1. prepare temporary directory by emptying it 2.
@@ -160,6 +162,7 @@ public class SejdaSupport {
 				+ "_" + dateForDAR + ".pdf";
 		darMoveFile(FROM, TO);
 		System.out.println("End: MOVE and ARCHIVE MASTER for " + describeDAR);
+		messageFX.setTextWithDate("MOVE and ARCHIVE MASTER for " + describeDAR);
 	}
 
 	/**
@@ -198,7 +201,7 @@ public class SejdaSupport {
 			}
 			input.close();
 		} catch (Exception err) {
-			err.printStackTrace(ps);
+			err.printStackTrace();
 		}
 	}
 
@@ -339,61 +342,77 @@ public class SejdaSupport {
 	}
 
 	//// http://stackoverflow.com/questions/26554814/javafx-updating-gui
-	
+
 	void runMe(TextDAR errorStatusFX) {
 		DAR.working = true;
-	
+
 		try {
 			// TODO Have errorStatusFX update before processing
-	
+
 			if (!(new File(preferences.getProperty(DAR.prefOutputPath)).exists())) {
 				throw new IOException("Destination directory unavailable");
 			}
-	
+
 			// TODO Eliminate Apache
 			// TODO RENAME variable
-	
-			File masterUselessDAR = new File(preferences.getProperty(DAR.prefMasterUselessDAR));
-			File masterUsefulDAR = new File(preferences.getProperty(DAR.prefMasterUsefulDAR));
-	
+
+			File masterUselessDAR;
+			File masterUsefulDAR;
+			try {
+				masterUselessDAR = new File(preferences.getProperty(DAR.prefMasterUselessDAR));
+				masterUsefulDAR = new File(preferences.getProperty(DAR.prefMasterUsefulDAR));
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				throw new Exception("Program failure. Have all preferences been set?");
+			}
+
 			boolean missing[] = { false, false };
-	
+
 			// PERFORM SPLIT
 			if (masterUselessDAR.exists()) {
 				// Process the useless DAR
 				splitDAR(DARType.Useless);
 			} else
 				missing[0] = true;
-	
+
 			if (masterUsefulDAR.exists()) {
 				// Process the useful DAR
 				splitDAR(DARType.Useful);
 			} else
 				missing[1] = true;
-	
+
 			// THROW EXCEPTIONS
 			if (missing[0] && missing[1])
-				throw new IOException("Both master DAR files missing. Use CutePDF to print new ones or choose new master DAR PDFs.");
+				throw new IOException(
+						"Both master DAR files missing. Use CutePDF to print new ones and/or choose new master DAR PDFs.");
 			else if (!missing[0] || !missing[1]) {
 				Desktop desktop = Desktop.getDesktop();
 				desktop.open(new File(preferences.getProperty(DAR.prefOutputPath)));
 				System.out.println("I opened the file explorer");
 				if (missing[0])
-					throw new IOException(masterUselessDAR.getAbsolutePath() + " missing.");
+					throw new IOException("Only one DAR processed. " + masterUselessDAR.getName() + " ("
+							+ DARType.Useless.toString() + ")" + " is missing. Use CutePDF to print a new "
+							+ DARType.Useless.toString() + " DAR and/or choose a new master "
+							+ DARType.Useless.toString()
+							+ " DAR. Note: if you press Cancel to one of the \"Choose master DAR...\" dialog boxes the relevant preference will not be changed.");
 				else if (missing[1])
-					throw new IOException(masterUsefulDAR.getAbsolutePath() + " missing.");
+					throw new IOException("Only one DAR processed. " + masterUsefulDAR.getName() + " ("
+							+ DARType.Useful.toString() + ")" + " is missing. Use CutePDF to print a new "
+							+ DARType.Useful.toString() + " DAR and/or choose a new master " + DARType.Useful.toString()
+							+ " DAR. Note: if you press Cancel to one of the \"Choose master DAR...\" dialog boxes the relevant preference will not be changed.");
 			}
-	
+
 			errorStatusFX.setTextWithDate("Both DARs successfully processed.");
-	
+
 		} catch (Exception e1) {
 			// TODO Auto-generated catch block
-			e1.printStackTrace(ps);
-	
+			e1.printStackTrace();
+
 			errorStatusFX.setTextWithDate(e1.getMessage());
 			DAR.working = false;
 		}
-		
+
 		DAR.working = false;
 	}
 

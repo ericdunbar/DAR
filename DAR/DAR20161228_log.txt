@@ -1,0 +1,569 @@
+DAR Splitter launched: 2016/12/28 10:10:45
+C:\Users\094360\AppData\Roaming\DAR.config
+ReWriting Key : master_useful_DAR_PowerBuilder, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\PowerBuilder.pdf
+ReWriting Key : output_path, Value : C:\Users\094360\Desktop\SomeSejdaDARs
+ReWriting Key : master_useless_DAR_Teacher_Class_Attendance_, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\Teacher Class Attendance .pdf
+ReWriting Key : sejda_console, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin\sejda-console
+ReWriting Key : master_DAR_Location, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\PowerBuilder.pdf
+ReWriting Key : test, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin\a.bat
+ReWriting Key : sejda, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin
+  Writing Key : test, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin\a.bat
+Done setProperty()
+ENUM NAME: Useless
+temp directory: C:\Users\094360\AppData\Local\Temp\sejda_date_extraction
+Info. Successful temp dir creation?: true C:\Users\094360\AppData\Local\Temp\sejda_date_extraction
+Parameters for sejda console launch:
+         Param: _cmd_
+         Param: _/c_
+         Param: _call_
+         Param: _"C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin\sejda-console"_
+         Param: _splitbytext_
+         Param: _-f_
+         Param: _"C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\Teacher Class Attendance .pdf"_
+         Param: _--top_
+         Param: _340_
+         Param: _--left_
+         Param: _55_
+         Param: _--width_
+         Param: _75_
+         Param: _--height_
+         Param: _22_
+         Param: _-o_
+         Param: _"C:\Users\094360\AppData\Local\Temp\sejda_date_extraction"_
+         Param: _-p_
+         Param: _[TEXT]_
+         Param: _--existingOutput_
+         Param: _overwrite_
+Configuring Sejda 2.10.4
+Loading Sejda configuration form default sejda.xml
+Starting execution with arguments: 'splitbytext -f C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\Teacher Class Attendance .pdf --top 340 --left 55 --width 75 --height 22 -o C:\Users\094360\AppData\Local\Temp\sejda_date_extraction -p [TEXT] --existingOutput overwrite'
+Java version: '1.8.0_92'
+Validating parameters.
+Starting task (org.sejda.impl.sambox.SplitByTextContentTask@40a4337a) execution.
+Opening C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\Teacher Class Attendance .pdf
+Found 0 inherited images and 0 inherited fonts potentially unused
+No Unicode mapping for checkbld (1) in font ODNMDG+TT10Ct00
+Starting to split by text content
+Starting split at page 1 of the original document
+Created output temporary buffer C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer3266218987676455333.pdf
+Task progress: 14% done
+Task progress: 29% done
+Task progress: 43% done
+Task progress: 57% done
+Task progress: 71% done
+Task progress: 86% done
+Task progress: 100% done
+Filtering annotations
+Merging acroforms with policy MERGE
+Merged AcroForm dictionary
+Ending split at page 7 of the original document, generated document size is 47.80 KB
+Moving C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer3266218987676455333.pdf to C:\Users\094360\AppData\Local\Temp\sejda_date_extraction\2016 NOV 02.pdf.
+Input documents split and written to C:\Users\094360\AppData\Local\Temp\sejda_date_extraction
+Task (org.sejda.impl.sambox.SplitByTextContentTask@40a4337a) executed in 1 second
+Completed execution
+THE DATE: 2016 NOV 02
+temp directory: C:\Users\094360\AppData\Local\Temp\DARv20161223
+Info. Successful temp dir creation?: false C:\Users\094360\AppData\Local\Temp\DARv20161223
+Parameters for sejda console launch:
+         Param: _cmd_
+         Param: _/c_
+         Param: _call_
+         Param: _"C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin\sejda-console"_
+         Param: _splitbytext_
+         Param: _-f_
+         Param: _"C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\Teacher Class Attendance .pdf"_
+         Param: _--top_
+         Param: _105_
+         Param: _--left_
+         Param: _71_
+         Param: _--width_
+         Param: _200_
+         Param: _--height_
+         Param: _22_
+         Param: _-o_
+         Param: _"C:\Users\094360\AppData\Local\Temp\DARv20161223"_
+         Param: _-p_
+         Param: _[TEXT]_
+         Param: _--existingOutput_
+         Param: _overwrite_
+Configuring Sejda 2.10.4
+Loading Sejda configuration form default sejda.xml
+Starting execution with arguments: 'splitbytext -f C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\Teacher Class Attendance .pdf --top 105 --left 71 --width 200 --height 22 -o C:\Users\094360\AppData\Local\Temp\DARv20161223 -p [TEXT] --existingOutput overwrite'
+Java version: '1.8.0_92'
+Validating parameters.
+Starting task (org.sejda.impl.sambox.SplitByTextContentTask@40a4337a) execution.
+Opening C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\Teacher Class Attendance .pdf
+Found 0 inherited images and 0 inherited fonts potentially unused
+No Unicode mapping for checkbld (1) in font ODNMDG+TT10Ct00
+Text changed from Aviles-Wood, Flor to Bain, Benjamin on page 3 in area: TopLeftRectangularBox[left=105,top=71,width=200,height=22]
+Text changed from Bain, Benjamin to Bradley, David on page 4 in area: TopLeftRectangularBox[left=105,top=71,width=200,height=22]
+Text changed from Bradley, David to Broumas, Matina on page 5 in area: TopLeftRectangularBox[left=105,top=71,width=200,height=22]
+Text changed from Broumas, Matina to Bryan, Deonne on page 6 in area: TopLeftRectangularBox[left=105,top=71,width=200,height=22]
+Starting to split by text content
+Starting split at page 1 of the original document
+Created output temporary buffer C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer4522733971678437562.pdf
+Task progress: 14% done
+Task progress: 29% done
+Filtering annotations
+Merging acroforms with policy MERGE
+Merged AcroForm dictionary
+Ending split at page 2 of the original document, generated document size is 25.80 KB
+Starting split at page 3 of the original document
+Created output temporary buffer C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer6119021334081700391.pdf
+Task progress: 43% done
+Filtering annotations
+Merging acroforms with policy MERGE
+Merged AcroForm dictionary
+Ending split at page 3 of the original document, generated document size is 17.54 KB
+Starting split at page 4 of the original document
+Created output temporary buffer C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer1946695071026260468.pdf
+Task progress: 57% done
+Filtering annotations
+Merging acroforms with policy MERGE
+Merged AcroForm dictionary
+Ending split at page 4 of the original document, generated document size is 17.60 KB
+Starting split at page 5 of the original document
+Created output temporary buffer C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer6825435571492165356.pdf
+Task progress: 71% done
+Filtering annotations
+Merging acroforms with policy MERGE
+Merged AcroForm dictionary
+Ending split at page 5 of the original document, generated document size is 17.42 KB
+Starting split at page 6 of the original document
+Created output temporary buffer C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer3574191444000665340.pdf
+Task progress: 86% done
+Task progress: 100% done
+Filtering annotations
+Merging acroforms with policy MERGE
+Merged AcroForm dictionary
+Ending split at page 7 of the original document, generated document size is 22.17 KB
+Moving C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer4522733971678437562.pdf to C:\Users\094360\AppData\Local\Temp\DARv20161223\Aviles-Wood Flor.pdf.
+Moving C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer6119021334081700391.pdf to C:\Users\094360\AppData\Local\Temp\DARv20161223\Bain Benjamin.pdf.
+Moving C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer3574191444000665340.pdf to C:\Users\094360\AppData\Local\Temp\DARv20161223\Bryan Deonne.pdf.
+Moving C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer1946695071026260468.pdf to C:\Users\094360\AppData\Local\Temp\DARv20161223\Bradley David.pdf.
+Moving C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer6825435571492165356.pdf to C:\Users\094360\AppData\Local\Temp\DARv20161223\Broumas Matina.pdf.
+Input documents split and written to C:\Users\094360\AppData\Local\Temp\DARv20161223
+Task (org.sejda.impl.sambox.SplitByTextContentTask@40a4337a) executed in 2 seconds
+Completed execution
+TROUBLESHOOTING: tempDir.getAbsolutePath() = C:\Users\094360\AppData\Local\Temp\DARv20161223
+    C:\Users\094360\AppData\Local\Temp\DARv20161223\Aviles-Wood Flor.pdf
+    C:\Users\094360\AppData\Local\Temp\DARv20161223\Bain Benjamin.pdf
+    C:\Users\094360\AppData\Local\Temp\DARv20161223\Bradley David.pdf
+    C:\Users\094360\AppData\Local\Temp\DARv20161223\Broumas Matina.pdf
+    C:\Users\094360\AppData\Local\Temp\DARv20161223\Bryan Deonne.pdf
+
+Start: MOVE and ARCHIVE FILES
+End: MOVE and ARCHIVE FILES
+End: MOVE and ARCHIVE MASTER for Useless
+ReWriting Key : output_path, Value : C:\Users\094360\Desktop\SomeSejdaDARs
+ReWriting Key : master_useful_DAR_PowerBuilder, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\PowerBuilder.pdf
+ReWriting Key : sejda_console, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin\sejda-console
+ReWriting Key : master_useless_DAR_Teacher_Class_Attendance_, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\Teacher Class Attendance .pdf
+ReWriting Key : master_DAR_Location, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\PowerBuilder.pdf
+ReWriting Key : sejda, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin
+ReWriting Key : test, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin\a.bat
+  Writing Key : test, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin\a.bat
+Done setProperty()
+ENUM NAME: Useful
+temp directory: C:\Users\094360\AppData\Local\Temp\sejda_date_extraction
+Info. Successful temp dir creation?: true C:\Users\094360\AppData\Local\Temp\sejda_date_extraction
+Parameters for sejda console launch:
+         Param: _cmd_
+         Param: _/c_
+         Param: _call_
+         Param: _"C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin\sejda-console"_
+         Param: _splitbytext_
+         Param: _-f_
+         Param: _"C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\PowerBuilder.pdf"_
+         Param: _--top_
+         Param: _514_
+         Param: _--left_
+         Param: _61_
+         Param: _--width_
+         Param: _75_
+         Param: _--height_
+         Param: _22_
+         Param: _-o_
+         Param: _"C:\Users\094360\AppData\Local\Temp\sejda_date_extraction"_
+         Param: _-p_
+         Param: _[TEXT]_
+         Param: _--existingOutput_
+         Param: _overwrite_
+Configuring Sejda 2.10.4
+Loading Sejda configuration form default sejda.xml
+Starting execution with arguments: 'splitbytext -f C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\PowerBuilder.pdf --top 514 --left 61 --width 75 --height 22 -o C:\Users\094360\AppData\Local\Temp\sejda_date_extraction -p [TEXT] --existingOutput overwrite'
+Java version: '1.8.0_92'
+Validating parameters.
+Starting task (org.sejda.impl.sambox.SplitByTextContentTask@40a4337a) execution.
+Opening C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\PowerBuilder.pdf
+Found 0 inherited images and 0 inherited fonts potentially unused
+Starting to split by text content
+Starting split at page 1 of the original document
+Created output temporary buffer C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer7304653784697444580.pdf
+Task progress: 14% done
+Task progress: 29% done
+Task progress: 43% done
+Task progress: 57% done
+Task progress: 71% done
+Task progress: 86% done
+Task progress: 100% done
+Filtering annotations
+Merging acroforms with policy MERGE
+Merged AcroForm dictionary
+Ending split at page 7 of the original document, generated document size is 83.83 KB
+Moving C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer7304653784697444580.pdf to C:\Users\094360\AppData\Local\Temp\sejda_date_extraction\2016 Nov 02.pdf.
+Input documents split and written to C:\Users\094360\AppData\Local\Temp\sejda_date_extraction
+Task (org.sejda.impl.sambox.SplitByTextContentTask@40a4337a) executed in 2 seconds
+Completed execution
+THE DATE: 2016 Nov 02
+temp directory: C:\Users\094360\AppData\Local\Temp\DARv20161223
+Info. Successful temp dir creation?: false C:\Users\094360\AppData\Local\Temp\DARv20161223
+Parameters for sejda console launch:
+         Param: _cmd_
+         Param: _/c_
+         Param: _call_
+         Param: _"C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin\sejda-console"_
+         Param: _splitbytext_
+         Param: _-f_
+         Param: _"C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\PowerBuilder.pdf"_
+         Param: _--top_
+         Param: _86_
+         Param: _--left_
+         Param: _84_
+         Param: _--width_
+         Param: _200_
+         Param: _--height_
+         Param: _22_
+         Param: _-o_
+         Param: _"C:\Users\094360\AppData\Local\Temp\DARv20161223"_
+         Param: _-p_
+         Param: _[TEXT]_
+         Param: _--existingOutput_
+         Param: _overwrite_
+Configuring Sejda 2.10.4
+Loading Sejda configuration form default sejda.xml
+Starting execution with arguments: 'splitbytext -f C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\PowerBuilder.pdf --top 86 --left 84 --width 200 --height 22 -o C:\Users\094360\AppData\Local\Temp\DARv20161223 -p [TEXT] --existingOutput overwrite'
+Java version: '1.8.0_92'
+Validating parameters.
+Starting task (org.sejda.impl.sambox.SplitByTextContentTask@40a4337a) execution.
+Opening C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\PowerBuilder.pdf
+Found 0 inherited images and 0 inherited fonts potentially unused
+Text changed from AVILES-WOOD, FLOR to BAIN, BENJAMIN on page 3 in area: TopLeftRectangularBox[left=86,top=84,width=200,height=22]
+Text changed from BAIN, BENJAMIN to BRADLEY, DAVID on page 4 in area: TopLeftRectangularBox[left=86,top=84,width=200,height=22]
+Text changed from BRADLEY, DAVID to BROUMAS, MATINA on page 5 in area: TopLeftRectangularBox[left=86,top=84,width=200,height=22]
+Text changed from BROUMAS, MATINA to BRYAN, DEONNE on page 6 in area: TopLeftRectangularBox[left=86,top=84,width=200,height=22]
+Starting to split by text content
+Starting split at page 1 of the original document
+Created output temporary buffer C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer5348323835034230795.pdf
+Task progress: 14% done
+Task progress: 29% done
+Filtering annotations
+Merging acroforms with policy MERGE
+Merged AcroForm dictionary
+Ending split at page 2 of the original document, generated document size is 38.68 KB
+Starting split at page 3 of the original document
+Created output temporary buffer C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer5997632227238583770.pdf
+Task progress: 43% done
+Filtering annotations
+Merging acroforms with policy MERGE
+Merged AcroForm dictionary
+Ending split at page 3 of the original document, generated document size is 19.59 KB
+Starting split at page 4 of the original document
+Created output temporary buffer C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer3692246561514540037.pdf
+Task progress: 57% done
+Filtering annotations
+Merging acroforms with policy MERGE
+Merged AcroForm dictionary
+Ending split at page 4 of the original document, generated document size is 18.75 KB
+Starting split at page 5 of the original document
+Created output temporary buffer C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer5347503157246792239.pdf
+Task progress: 71% done
+Filtering annotations
+Merging acroforms with policy MERGE
+Merged AcroForm dictionary
+Ending split at page 5 of the original document, generated document size is 19.90 KB
+Starting split at page 6 of the original document
+Created output temporary buffer C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer3801988367734529448.pdf
+Task progress: 86% done
+Task progress: 100% done
+Filtering annotations
+Merging acroforms with policy MERGE
+Merged AcroForm dictionary
+Ending split at page 7 of the original document, generated document size is 30.56 KB
+Moving C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer3692246561514540037.pdf to C:\Users\094360\AppData\Local\Temp\DARv20161223\BRADLEY DAVID.pdf.
+Moving C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer5997632227238583770.pdf to C:\Users\094360\AppData\Local\Temp\DARv20161223\BAIN BENJAMIN.pdf.
+Moving C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer5348323835034230795.pdf to C:\Users\094360\AppData\Local\Temp\DARv20161223\AVILES-WOOD FLOR.pdf.
+Moving C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer5347503157246792239.pdf to C:\Users\094360\AppData\Local\Temp\DARv20161223\BROUMAS MATINA.pdf.
+Moving C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer3801988367734529448.pdf to C:\Users\094360\AppData\Local\Temp\DARv20161223\BRYAN DEONNE.pdf.
+Input documents split and written to C:\Users\094360\AppData\Local\Temp\DARv20161223
+Task (org.sejda.impl.sambox.SplitByTextContentTask@40a4337a) executed in 1 second
+Completed execution
+TROUBLESHOOTING: tempDir.getAbsolutePath() = C:\Users\094360\AppData\Local\Temp\DARv20161223
+    C:\Users\094360\AppData\Local\Temp\DARv20161223\AVILES-WOOD FLOR.pdf
+    C:\Users\094360\AppData\Local\Temp\DARv20161223\BAIN BENJAMIN.pdf
+    C:\Users\094360\AppData\Local\Temp\DARv20161223\BRADLEY DAVID.pdf
+    C:\Users\094360\AppData\Local\Temp\DARv20161223\BROUMAS MATINA.pdf
+    C:\Users\094360\AppData\Local\Temp\DARv20161223\BRYAN DEONNE.pdf
+
+Start: MOVE and ARCHIVE FILES
+End: MOVE and ARCHIVE FILES
+End: MOVE and ARCHIVE MASTER for Useful
+I opened the file explorer
+DAR Splitter launched: 2016/12/28 10:12:52
+C:\Users\094360\AppData\Roaming\DAR.config
+java.lang.NullPointerException
+	at java.io.File.<init>(Unknown Source)
+	at ca.tdsb.dunbar.dailyattendancereport.SejdaSupport.<init>(SejdaSupport.java:33)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:331)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:1)
+	at javafx.concurrent.Task$TaskCallable.call(Task.java:1423)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+java.lang.NullPointerException
+	at java.io.File.<init>(Unknown Source)
+	at ca.tdsb.dunbar.dailyattendancereport.SejdaSupport.<init>(SejdaSupport.java:33)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:331)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:1)
+	at javafx.concurrent.Task$TaskCallable.call(Task.java:1423)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+java.lang.NullPointerException
+	at java.io.File.<init>(Unknown Source)
+	at ca.tdsb.dunbar.dailyattendancereport.SejdaSupport.<init>(SejdaSupport.java:33)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:326)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:1)
+	at javafx.concurrent.Task$TaskCallable.call(Task.java:1423)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+java.lang.NullPointerException
+	at java.io.File.<init>(Unknown Source)
+	at ca.tdsb.dunbar.dailyattendancereport.SejdaSupport.<init>(SejdaSupport.java:33)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:326)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:1)
+	at javafx.concurrent.Task$TaskCallable.call(Task.java:1423)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+java.lang.NullPointerException
+	at java.io.File.<init>(Unknown Source)
+	at ca.tdsb.dunbar.dailyattendancereport.SejdaSupport.<init>(SejdaSupport.java:33)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:326)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:1)
+	at javafx.concurrent.Task$TaskCallable.call(Task.java:1423)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+java.lang.NullPointerException
+	at java.io.File.<init>(Unknown Source)
+	at ca.tdsb.dunbar.dailyattendancereport.SejdaSupport.<init>(SejdaSupport.java:33)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:326)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:1)
+	at javafx.concurrent.Task$TaskCallable.call(Task.java:1423)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+java.lang.NullPointerException
+	at java.io.File.<init>(Unknown Source)
+	at ca.tdsb.dunbar.dailyattendancereport.SejdaSupport.<init>(SejdaSupport.java:33)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:326)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:1)
+	at javafx.concurrent.Task$TaskCallable.call(Task.java:1423)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+java.lang.NullPointerException
+	at java.io.File.<init>(Unknown Source)
+	at ca.tdsb.dunbar.dailyattendancereport.SejdaSupport.<init>(SejdaSupport.java:33)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:326)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:1)
+	at javafx.concurrent.Task$TaskCallable.call(Task.java:1423)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+java.lang.NullPointerException
+	at java.io.File.<init>(Unknown Source)
+	at ca.tdsb.dunbar.dailyattendancereport.SejdaSupport.<init>(SejdaSupport.java:33)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:329)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:1)
+	at javafx.concurrent.Task$TaskCallable.call(Task.java:1423)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+java.lang.NullPointerException
+	at java.io.File.<init>(Unknown Source)
+	at ca.tdsb.dunbar.dailyattendancereport.SejdaSupport.<init>(SejdaSupport.java:33)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:326)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:1)
+	at javafx.concurrent.Task$TaskCallable.call(Task.java:1423)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+java.lang.NullPointerException
+	at java.io.File.<init>(Unknown Source)
+	at ca.tdsb.dunbar.dailyattendancereport.SejdaSupport.<init>(SejdaSupport.java:33)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:326)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:1)
+	at javafx.concurrent.Task$TaskCallable.call(Task.java:1423)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+java.lang.NullPointerException
+	at java.io.File.<init>(Unknown Source)
+	at ca.tdsb.dunbar.dailyattendancereport.SejdaSupport.<init>(SejdaSupport.java:33)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:326)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:1)
+	at javafx.concurrent.Task$TaskCallable.call(Task.java:1423)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+java.lang.NullPointerException
+	at java.io.File.<init>(Unknown Source)
+	at ca.tdsb.dunbar.dailyattendancereport.SejdaSupport.<init>(SejdaSupport.java:33)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:326)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:1)
+	at javafx.concurrent.Task$TaskCallable.call(Task.java:1423)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+java.lang.NullPointerException
+	at java.io.File.<init>(Unknown Source)
+	at ca.tdsb.dunbar.dailyattendancereport.SejdaSupport.<init>(SejdaSupport.java:33)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:326)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:1)
+	at javafx.concurrent.Task$TaskCallable.call(Task.java:1423)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+java.lang.NullPointerException
+	at java.io.File.<init>(Unknown Source)
+	at ca.tdsb.dunbar.dailyattendancereport.SejdaSupport.<init>(SejdaSupport.java:33)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:326)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:1)
+	at javafx.concurrent.Task$TaskCallable.call(Task.java:1423)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+java.lang.NullPointerException
+	at java.io.File.<init>(Unknown Source)
+	at ca.tdsb.dunbar.dailyattendancereport.SejdaSupport.<init>(SejdaSupport.java:34)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:326)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:1)
+	at javafx.concurrent.Task$TaskCallable.call(Task.java:1423)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+java.lang.NullPointerException
+	at java.io.File.<init>(Unknown Source)
+	at ca.tdsb.dunbar.dailyattendancereport.SejdaSupport.<init>(SejdaSupport.java:34)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:326)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:1)
+	at javafx.concurrent.Task$TaskCallable.call(Task.java:1423)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+java.lang.NullPointerException
+	at java.io.File.<init>(Unknown Source)
+	at ca.tdsb.dunbar.dailyattendancereport.SejdaSupport.<init>(SejdaSupport.java:34)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:326)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:1)
+	at javafx.concurrent.Task$TaskCallable.call(Task.java:1423)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+java.lang.NullPointerException
+	at java.io.File.<init>(Unknown Source)
+	at ca.tdsb.dunbar.dailyattendancereport.SejdaSupport.<init>(SejdaSupport.java:34)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:326)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:1)
+	at javafx.concurrent.Task$TaskCallable.call(Task.java:1423)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+java.lang.NullPointerException
+	at java.io.File.<init>(Unknown Source)
+	at ca.tdsb.dunbar.dailyattendancereport.SejdaSupport.<init>(SejdaSupport.java:34)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:326)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:1)
+	at javafx.concurrent.Task$TaskCallable.call(Task.java:1423)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+java.lang.NullPointerException
+	at java.io.File.<init>(Unknown Source)
+	at ca.tdsb.dunbar.dailyattendancereport.SejdaSupport.<init>(SejdaSupport.java:34)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:326)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:1)
+	at javafx.concurrent.Task$TaskCallable.call(Task.java:1423)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+java.lang.NullPointerException
+	at java.io.File.<init>(Unknown Source)
+	at ca.tdsb.dunbar.dailyattendancereport.SejdaSupport.<init>(SejdaSupport.java:34)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:326)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:1)
+	at javafx.concurrent.Task$TaskCallable.call(Task.java:1423)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+java.lang.NullPointerException
+	at java.io.File.<init>(Unknown Source)
+	at ca.tdsb.dunbar.dailyattendancereport.SejdaSupport.<init>(SejdaSupport.java:34)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:326)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:1)
+	at javafx.concurrent.Task$TaskCallable.call(Task.java:1423)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+java.lang.NullPointerException
+	at java.io.File.<init>(Unknown Source)
+	at ca.tdsb.dunbar.dailyattendancereport.SejdaSupport.<init>(SejdaSupport.java:34)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:326)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:1)
+	at javafx.concurrent.Task$TaskCallable.call(Task.java:1423)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+java.lang.NullPointerException
+	at java.io.File.<init>(Unknown Source)
+	at ca.tdsb.dunbar.dailyattendancereport.SejdaSupport.<init>(SejdaSupport.java:34)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:326)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:1)
+	at javafx.concurrent.Task$TaskCallable.call(Task.java:1423)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+java.lang.NullPointerException
+	at java.io.File.<init>(Unknown Source)
+	at ca.tdsb.dunbar.dailyattendancereport.SejdaSupport.<init>(SejdaSupport.java:34)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:326)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:1)
+	at javafx.concurrent.Task$TaskCallable.call(Task.java:1423)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+java.lang.NullPointerException
+	at java.io.File.<init>(Unknown Source)
+	at ca.tdsb.dunbar.dailyattendancereport.SejdaSupport.<init>(SejdaSupport.java:34)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:326)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:1)
+	at javafx.concurrent.Task$TaskCallable.call(Task.java:1423)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+java.lang.NullPointerException
+	at java.io.File.<init>(Unknown Source)
+	at ca.tdsb.dunbar.dailyattendancereport.SejdaSupport.<init>(SejdaSupport.java:34)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:326)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:1)
+	at javafx.concurrent.Task$TaskCallable.call(Task.java:1423)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+java.lang.NullPointerException
+	at java.io.File.<init>(Unknown Source)
+	at ca.tdsb.dunbar.dailyattendancereport.SejdaSupport.<init>(SejdaSupport.java:34)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:326)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:1)
+	at javafx.concurrent.Task$TaskCallable.call(Task.java:1423)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+java.lang.NullPointerException
+	at java.io.File.<init>(Unknown Source)
+	at ca.tdsb.dunbar.dailyattendancereport.SejdaSupport.<init>(SejdaSupport.java:34)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:326)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:1)
+	at javafx.concurrent.Task$TaskCallable.call(Task.java:1423)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+java.lang.NullPointerException
+	at java.io.File.<init>(Unknown Source)
+	at ca.tdsb.dunbar.dailyattendancereport.SejdaSupport.<init>(SejdaSupport.java:34)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:326)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:1)
+	at javafx.concurrent.Task$TaskCallable.call(Task.java:1423)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+java.lang.NullPointerException
+	at java.io.File.<init>(Unknown Source)
+	at ca.tdsb.dunbar.dailyattendancereport.SejdaSupport.<init>(SejdaSupport.java:34)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:326)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:1)
+	at javafx.concurrent.Task$TaskCallable.call(Task.java:1423)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)

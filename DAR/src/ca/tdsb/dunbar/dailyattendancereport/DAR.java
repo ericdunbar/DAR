@@ -2,6 +2,7 @@ package ca.tdsb.dunbar.dailyattendancereport;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.PrintStream;
 import java.sql.Date;
 import java.text.DateFormat;
@@ -21,6 +22,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Labeled;
 import javafx.scene.control.Separator;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.HBox;
@@ -42,27 +44,81 @@ public class DAR extends Application {
 			// https://www.mkyong.com/java/java-how-to-get-current-date-time-date-and-calender/
 			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			Date date = new Date(System.currentTimeMillis());
-			setText( dateFormat.format(date) + ": " + s + "\n" + this.getText());
+			setText(dateFormat.format(date) + ": " + s + "\n" + this.getText());
+		}
+	}
+
+	public static class TextLbl extends Text {
+		private String descriptor;
+		private String pref;
+
+		public TextLbl(String descriptor, String pref) {
+			this.descriptor = descriptor;
+			this.pref = pref;
+			initialize();
+		}
+
+		private void setTextValue(boolean update) {
+			String s = "";
+			String updateS = "";
+
+			if (update)
+				updateS = " (update)";
+			s = descriptor + updateS + ": " + preferences.getProperty(pref);
+			this.setText(s);
+		}
+
+		public void initialize() {
+			setTextValue(false);
+		}
+
+		public void update() {
+			setTextValue(true);
+		}
+
+		private String generateMsgMasterDARLocation(DARType d, boolean update) {
+			String s = "";
+			String key = "AN ERROR OCCURRED";
+			String u = "";
+
+			if (d == DARType.Useless)
+				key = preferences.getProperty(prefMasterUselessDAR);
+			else if (d == DARType.Useful)
+				key = preferences.getProperty(prefMasterUsefulDAR);
+			if (update)
+				u = " (update)";
+
+			s = "Master " + d.toString() + " DAR" + u + ": " + key;
+			return s;
 		}
 	}
 
 	// JavaFX variables
-	private TextDAR errorStatusFX;
-	private Text destinationDirFX;
-	private Text masterUsefulDARFX;
-	private Text masterUselessDARFX;
+	private TextDAR programUpdatesFX;
+	private TextLbl destinationDirFX;
+	private TextLbl masterUsefulDARFX;
+	private TextLbl masterUselessDARFX;
 
 	private static final String formTitleFX = "Daily Attendance Report processor version 2016.12.24";
 
 	// PREFERENCES variables
-	DARProperties preferences = new DARProperties("DAR.config");
+	static DARProperties preferences = new DARProperties("DAR.config");
 
 	public final static String prefInputPath = "input_path";
 	public final static String prefOutputPath = "output_path";
 	public final static String prefMasterUsefulDAR = "master_useful_DAR_PowerBuilder";
 	public final static String prefMasterUselessDAR = "master_useless_DAR_Teacher_Class_Attendance_";
-	public final static String prefSejdaLocation = "sejda";
-	private Text clockFX;
+	public final static String prefSejdaDirectory = "sejda";
+	public final static String prefSejdaLocation = "sejda_console";
+	private TextLbl clockFX;
+	private TextLbl sedjaDARFX;
+	private Button btnMasterDAR;
+	private Button btnDestDir;
+	private Button btnSedjaConsole;
+	private Button btnSplitDAR;
+	private Button btnExit;
+
+	private Button[] buttons;
 
 	// CLASS or INSTANCE variables
 	/**
@@ -77,6 +133,8 @@ public class DAR extends Application {
 
 	// TODO: Organize logging code
 	static PrintStream ps = null; // log file for System.out and StackTrace
+
+	// TODO: Get rid of working. Such an ugly solution.
 	static boolean working = false;
 
 	public static void main(String[] args) {
@@ -84,17 +142,18 @@ public class DAR extends Application {
 		// http://stackoverflow.com/questions/8043356/file-write-printstream-append
 		// http://stackoverflow.com/questions/12053075/how-do-i-write-the-exception-from-printstacktrace-into-a-text-file-in-java
 		try {
-			ps = new PrintStream(
-					new FileOutputStream(System.getProperty("java.io.tmpdir") + "\\" + "DAR_log.txt", true));
-			System.setOut(ps);
+			ps = new PrintStream(new FileOutputStream("DAR20161228_log.txt", true));
+			// new FileOutputStream(System.getProperty("java.io.tmpdir") + "\\"
+			// + "DAR_log.txt", true));
+			// System.setOut(ps);
 		} catch (Exception e) {
-			e.printStackTrace(ps);
+			e.printStackTrace();
 		}
 
 		// https://www.mkyong.com/java/java-how-to-get-current-date-time-date-and-calender/
 		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		Date date = new Date(System.currentTimeMillis());
-		System.out.print("Launched at: ");
+		System.out.print("DAR Splitter launched: ");
 		System.out.println(dateFormat.format(date));
 
 		Application.launch(args);
@@ -115,66 +174,61 @@ public class DAR extends Application {
 		labelHb.getChildren().add(label);
 
 		// Buttons
-		Button btn1MasterDAR = new Button("Choose _master DAR files...");
-		btn1MasterDAR.setOnAction(new SingleFcButtonListener());
-		btn1MasterDAR.setMnemonicParsing(true);
+		btnMasterDAR = new Button("Choose master DAR files...");
+		btnMasterDAR.setOnAction(new SingleFcButtonListener());
+		btnMasterDAR.setMnemonicParsing(true);
 		HBox buttonHb1 = new HBox(10);
 		buttonHb1.setAlignment(Pos.CENTER);
-		buttonHb1.getChildren().addAll(btn1MasterDAR);
+		buttonHb1.getChildren().addAll(btnMasterDAR);
 
-		Button btn3 = new Button("Choose destination _directory...");
-		btn3.setOnAction(new DestinationDirFcButtonListener());
-		btn3.setMnemonicParsing(true);
-		HBox buttonHb3 = new HBox(10);
-		buttonHb3.setAlignment(Pos.CENTER);
-		buttonHb3.getChildren().addAll(btn3);
+		btnDestDir = new Button("Choose destination directory...");
+		btnDestDir.setOnAction(new DestinationDirFcButtonListener());
+		btnDestDir.setMnemonicParsing(true);
+		buttonHb1.getChildren().addAll(btnDestDir);
 
-		Button btn4 = new Button("_Split master DAR");
-		btn4.setOnAction(new SplitDARFcButtonListener());
-		btn4.setMnemonicParsing(true);
+		btnSedjaConsole = new Button("Choose \"sedja-console\"...");
+		btnSedjaConsole.setOnAction(new SedjaDirFcButtonListener());
+		btnSedjaConsole.setMnemonicParsing(true);
+		buttonHb1.getChildren().addAll(btnSedjaConsole);
+
+		btnSplitDAR = new Button("_Split master DAR");
+		btnSplitDAR.setOnAction(new SplitDARFcButtonListener());
+		btnSplitDAR.setMnemonicParsing(true);
 		HBox buttonHb4 = new HBox(10);
 		buttonHb4.setAlignment(Pos.CENTER);
-		buttonHb4.getChildren().addAll(btn4);
+		buttonHb4.getChildren().addAll(btnSplitDAR);
 
-		Button btn5 = new Button("E_xit");
-		btn5.setOnAction(new ExitFcButtonListener());
-		btn5.setMnemonicParsing(true);
+		btnExit = new Button("E_xit");
+		btnExit.setOnAction(new ExitFcButtonListener());
+		btnExit.setMnemonicParsing(true);
 		HBox buttonHb5 = new HBox(10);
 		buttonHb5.setAlignment(Pos.CENTER);
-		buttonHb5.getChildren().addAll(btn5);
+		buttonHb5.getChildren().addAll(btnExit);
+
+		buttons = new Button[] { btnDestDir, btnMasterDAR, btnSedjaConsole, btnExit, btnSplitDAR };
 
 		// Status message text
-		errorStatusFX = new TextDAR();
-		errorStatusFX.setFont(Font.font("Calibri", FontWeight.NORMAL, 14));
-		//TODO Should this be a TextArea?
-		//errorStatusFX.setFill(Color.FIREBRICK);
-		errorStatusFX.setTextWithDate("No actions taken yet.");
+		programUpdatesFX = new TextDAR();
+		programUpdatesFX.setFont(Font.font("Calibri", FontWeight.NORMAL, 14));
+		// TODO Should this be a TextArea?
+		// errorStatusFX.setFill(Color.FIREBRICK);
+		programUpdatesFX.setText("");
+		programUpdatesFX.setEditable(false);
+		programUpdatesFX.setWrapText(true);
 
 		// Status message text
-		clockFX = new Text();
-		clockFX.setFont(Font.font("Calibri", FontWeight.NORMAL, 14));
-		clockFX.setFill(Color.DARKSLATEBLUE);
-		clockFX.setText("");
+		clockFX = createTextFX(Font.font("Calibri", FontWeight.NORMAL, 14), Color.DARKSLATEBLUE, "", "");
+		clockFX.setWrappingWidth(0);
 
-		// Destination message text
-		masterUsefulDARFX = new Text();
-		masterUsefulDARFX.setFont(Font.font("Calibri", FontWeight.NORMAL, 14));
-		masterUsefulDARFX.setFill(Color.DARKGREEN);
-		masterUsefulDARFX.setText(
-				"Master " + DARType.Useful.toString() + " DAR:\n    " + preferences.getProperty(prefMasterUsefulDAR));
+		// Source location
+		masterUsefulDARFX = createTextFX("Master " + DARType.Useful.toString() + " DAR", prefMasterUsefulDAR);
+		masterUselessDARFX = createTextFX("Master " + DARType.Useless.toString() + " DAR", prefMasterUselessDAR);
 
-		// Destination message text
-		masterUselessDARFX = new Text();
-		masterUselessDARFX.setFont(Font.font("Calibri", FontWeight.NORMAL, 14));
-		masterUselessDARFX.setFill(Color.DARKGREEN);
-		masterUselessDARFX.setText(
-				"Master " + DARType.Useful.toString() + " DAR:\n    " + preferences.getProperty(prefMasterUselessDAR));
+		// Destination location
+		destinationDirFX = createTextFX("Destination directory", prefOutputPath);
 
-		// Destination message text
-		destinationDirFX = new Text();
-		destinationDirFX.setFont(Font.font("Calibri", FontWeight.NORMAL, 14));
-		destinationDirFX.setFill(Color.DARKGREEN);
-		destinationDirFX.setText("Destination directory:\n    " + preferences.getProperty(prefOutputPath));
+		// sejda-console location
+		sedjaDARFX = createTextFX("sedja app", (prefSejdaLocation));
 
 		// TODO Status updates and labels
 		// http://stackoverflow.com/questions/19968012/javafx-update-ui-label-asynchronously-with-messages-while-application-different
@@ -191,8 +245,8 @@ public class DAR extends Application {
 		vbox.setPadding(new Insets(25, 25, 25, 25));
 		;
 
-		vbox.getChildren().addAll(labelHb, buttonHb4, separator2, buttonHb1, buttonHb3, separator3, buttonHb5,
-				errorStatusFX, clockFX, masterUsefulDARFX, masterUselessDARFX, destinationDirFX);
+		vbox.getChildren().addAll(labelHb, buttonHb4, separator2, buttonHb1, separator3, buttonHb5, programUpdatesFX,
+				clockFX, masterUsefulDARFX, masterUselessDARFX, destinationDirFX, sedjaDARFX);
 
 		// Create clock
 		Timeline fiveSecondsWonder = new Timeline(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
@@ -201,7 +255,7 @@ public class DAR extends Application {
 
 			@Override
 			public void handle(ActionEvent event) {
-				DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
+				DateFormat dateFormat = new SimpleDateFormat("HH:mm");
 				Date date = new Date(System.currentTimeMillis());
 				String workingS = "idle";
 				if (DAR.working) {
@@ -212,7 +266,7 @@ public class DAR extends Application {
 					dots++;
 				}
 
-				clockFX.setText("Current time:\n  " + dateFormat.format(date) + "\nStatus:\n  " + workingS);
+				clockFX.setText("Status at " + dateFormat.format(date) + ": " + workingS);
 
 			}
 		}));
@@ -221,9 +275,12 @@ public class DAR extends Application {
 		fiveSecondsWonder.play();
 
 		// Scene
-		Scene scene = new Scene(vbox, 600, 700); // w x h
+		Scene scene = new Scene(vbox, 800, 600); // w x h
 		primaryStage.setScene(scene);
 		primaryStage.show();
+
+		// Trigger split button
+		btnSplitDAR.fire();
 
 		// TODO Automate the process if valid DAR is available
 		boolean success = false;
@@ -232,10 +289,22 @@ public class DAR extends Application {
 			Platform.exit();
 	}
 
+	private static TextLbl createTextFX(String descriptor, String prefString) {
+		return createTextFX(Font.font("Calibri", FontWeight.NORMAL, 14), Color.DARKGREEN, descriptor, prefString);
+	}
+
+	private static TextLbl createTextFX(Font f, Color c, String descriptor, String prefString) {
+		TextLbl newTextFX = new TextLbl(descriptor, prefString);
+		newTextFX.setFont(f);
+		newTextFX.setFill(c);
+		newTextFX.setWrappingWidth(700);
+		return newTextFX;
+	}
+
 	// TODO Describe resetErrorStatus
 	private void resetErrorStatus() {
-		//TODO What does this do?
-//		errorStatusFX.setTextWithDate("");
+		// TODO What does this do?
+		// errorStatusFX.setTextWithDate("");
 	}
 
 	// TODO Describe SplitDARFcB
@@ -247,13 +316,35 @@ public class DAR extends Application {
 			Task<Void> task = new Task<Void>() {
 				@Override
 				public Void call() {
-					SejdaSupport r = new SejdaSupport(preferences, ps);
-					r.runMe(errorStatusFX);
+
+					for (Button button : buttons) {
+						button.setDisable(true);
+					}
+
+					SejdaSupport r = null;
+					try {
+						r = new SejdaSupport(preferences, ps, programUpdatesFX);
+						r.runMe(programUpdatesFX);
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						if (e.getMessage() == null) {
+							programUpdatesFX.setTextWithDate("Possible problem with preferences. Please set them.");
+						} else
+							programUpdatesFX.setTextWithDate(e.getMessage());
+						e.printStackTrace(ps);
+					}
+
+					System.out.println("iiii");
+					for (Button button : buttons) {
+						System.out.print("round,");
+						button.setDisable(false);
+					}
+
 					return null;
 				}
 			};
 			task.messageProperty()
-					.addListener((obs, oldMessage, newMessage) -> errorStatusFX.setTextWithDate(newMessage));
+					.addListener((obs, oldMessage, newMessage) -> programUpdatesFX.setTextWithDate(newMessage));
 			new Thread(task).start();
 		}
 	}
@@ -276,6 +367,14 @@ public class DAR extends Application {
 		}
 	}
 
+	private class SedjaDirFcButtonListener implements EventHandler<ActionEvent> {
+		@Override
+		public void handle(ActionEvent e) {
+			resetErrorStatus();
+			showSedjaChooser();
+		}
+	}
+
 	private class ExitFcButtonListener implements EventHandler<ActionEvent> {
 		@Override
 		public void handle(ActionEvent e) {
@@ -284,16 +383,37 @@ public class DAR extends Application {
 		}
 	}
 
+	private void showSedjaChooser() {
+		FileChooser fileChooser = new FileChooser();
+		fileChooser.setInitialDirectory(new File(System.getenv("userprofile")));
+		fileChooser.setTitle(
+				"Select and open \"sedja-console\" from within \"sejda-console-2.10.4-bin\\sejda-console-2.10.4\\bin\"");
+		// fileChooser.setSelectedExtensionFilter(filter);
+		File selectedFile = fileChooser.showOpenDialog(null);
+
+		if (selectedFile != null) {
+			preferences.setProperty(prefSejdaDirectory, selectedFile.getParent());
+			preferences.setProperty(prefSejdaLocation, selectedFile.getAbsolutePath());
+			// sedjaDARFX.setText("sejda application" + " (updated):\n " +
+			// preferences.getProperty(prefSejdaDirectory)
+			// + "\n " + preferences.getProperty(prefSejdaLocation));
+			sedjaDARFX.update();
+		}
+	}
+
 	private void showDARFileChooser() {
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setInitialDirectory(new File(System.getenv("userprofile")));
-		fileChooser.setTitle("Open useful DAR, aka PowerBuilder.pdf");
+		fileChooser.setTitle("Open useful DAR, aka \"PowerBuilder.pdf\"");
 		File selectedFile = fileChooser.showOpenDialog(null);
 
 		if (selectedFile != null) {
 			preferences.setProperty(prefMasterUsefulDAR, selectedFile.getAbsolutePath());
-			masterUsefulDARFX.setText("Master " + DARType.Useful.toString() + " DAR (updated):\n    "
-					+ preferences.getProperty(prefMasterUsefulDAR));
+			// TODO update object
+			// masterUsefulDARFX.setText("Master " + DARType.Useful.toString() +
+			// " DAR (updated):\n "
+			// + preferences.getProperty(prefMasterUsefulDAR));
+			masterUsefulDARFX.update();
 		}
 
 		fileChooser.setTitle("Open " + DARType.Useless.toString() + " DAR, aka \"Teacher Class Attendance .pdf\"");
@@ -301,8 +421,10 @@ public class DAR extends Application {
 
 		if (selectedFile2 != null) {
 			preferences.setProperty(prefMasterUselessDAR, selectedFile2.getAbsolutePath());
-			masterUselessDARFX
-					.setText("Master Useless DAR (updated):\n    " + preferences.getProperty(prefMasterUselessDAR));
+			masterUselessDARFX.update();
+			// masterUselessDARFX
+			// .setText("Master Useless DAR (updated):\n " +
+			// preferences.getProperty(prefMasterUselessDAR));
 		}
 	}
 
@@ -321,7 +443,8 @@ public class DAR extends Application {
 			String messageS = null;
 			messageS = selectedDirectory.getAbsolutePath();
 			preferences.setProperty(prefOutputPath, messageS);
-			destinationDirFX.setText("Destination directory:\n    " + messageS);
+			destinationDirFX.update();
+			// destinationDirFX.setText("Destination directory:\n " + messageS);
 		}
 	}
 }

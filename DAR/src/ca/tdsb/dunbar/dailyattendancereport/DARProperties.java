@@ -106,7 +106,7 @@ public class DARProperties {
 		try {
 			input = new FileInputStream(prefsFile);
 			prop.load(input);
-		} catch (IOException ex) {
+		} catch (Exception ex) {
 			ex.printStackTrace();
 		} finally {
 			if (input != null) {

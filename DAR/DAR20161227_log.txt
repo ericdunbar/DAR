@@ -1,0 +1,1876 @@
+Launched at: 2016/12/27 14:49:25
+C:\Users\094360\AppData\Roaming\DAR.config
+Launched at: 2016/12/27 14:51:51
+C:\Users\094360\AppData\Roaming\DAR.config
+Launched at: 2016/12/27 15:18:29
+C:\Users\094360\AppData\Roaming\DAR.config
+java.io.IOException: sejda not found. Ensure correct application is available.
+	at ca.tdsb.dunbar.dailyattendancereport.SejdaSupport.<init>(SejdaSupport.java:34)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:258)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:1)
+	at javafx.concurrent.Task$TaskCallable.call(Task.java:1423)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+java.io.IOException: sejda not found. Ensure correct application is available.
+	at ca.tdsb.dunbar.dailyattendancereport.SejdaSupport.<init>(SejdaSupport.java:34)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:258)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:1)
+	at javafx.concurrent.Task$TaskCallable.call(Task.java:1423)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+java.io.IOException: sejda not found. Ensure correct application is available.
+	at ca.tdsb.dunbar.dailyattendancereport.SejdaSupport.<init>(SejdaSupport.java:34)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:258)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:1)
+	at javafx.concurrent.Task$TaskCallable.call(Task.java:1423)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+java.io.IOException: sejda not found. Ensure correct application is available.
+	at ca.tdsb.dunbar.dailyattendancereport.SejdaSupport.<init>(SejdaSupport.java:34)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:258)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:1)
+	at javafx.concurrent.Task$TaskCallable.call(Task.java:1423)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+java.io.IOException: sejda not found. Ensure correct application is available.
+	at ca.tdsb.dunbar.dailyattendancereport.SejdaSupport.<init>(SejdaSupport.java:34)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:258)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:1)
+	at javafx.concurrent.Task$TaskCallable.call(Task.java:1423)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+java.io.IOException: sejda not found. Ensure correct application is available.
+	at ca.tdsb.dunbar.dailyattendancereport.SejdaSupport.<init>(SejdaSupport.java:34)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:258)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:1)
+	at javafx.concurrent.Task$TaskCallable.call(Task.java:1423)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+java.io.IOException: sejda not found. Ensure correct application is available.
+	at ca.tdsb.dunbar.dailyattendancereport.SejdaSupport.<init>(SejdaSupport.java:34)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:258)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:1)
+	at javafx.concurrent.Task$TaskCallable.call(Task.java:1423)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+Launched at: 2016/12/27 15:21:37
+C:\Users\094360\AppData\Roaming\DAR.config
+java.io.IOException: sejda not found. Ensure correct application is available.
+	at ca.tdsb.dunbar.dailyattendancereport.SejdaSupport.<init>(SejdaSupport.java:34)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:261)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:1)
+	at javafx.concurrent.Task$TaskCallable.call(Task.java:1423)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+Launched at: 2016/12/27 15:36:31
+C:\Users\094360\AppData\Roaming\DAR.config
+Launched at: 2016/12/27 15:36:54
+C:\Users\094360\AppData\Roaming\DAR.config
+java.io.IOException: sejda not found. Ensure correct application is available.
+	at ca.tdsb.dunbar.dailyattendancereport.SejdaSupport.<init>(SejdaSupport.java:34)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:269)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:1)
+	at javafx.concurrent.Task$TaskCallable.call(Task.java:1423)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+ReWriting Key : output_path, Value : C:\Users\094360\Desktop\SomeSejdaDARs
+ReWriting Key : master_useful_DAR_PowerBuilder, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\PowerBuilder.pdf
+ReWriting Key : master_useless_DAR_Teacher_Class_Attendance_, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\Teacher Class Attendance .pdf
+ReWriting Key : master_DAR_Location, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\PowerBuilder.pdf
+ReWriting Key : sejda, Value : \sejda-console-2.10.4-bin\sejda-console-2.10.4\bin\sejda-console
+ReWriting Key : test, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin\a.bat
+  Writing Key : sejda, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin\sejda-console
+Done setProperty()
+java.io.IOException: sejda not found. Ensure correct application is available.
+	at ca.tdsb.dunbar.dailyattendancereport.SejdaSupport.<init>(SejdaSupport.java:34)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:269)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:1)
+	at javafx.concurrent.Task$TaskCallable.call(Task.java:1423)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+java.io.IOException: sejda not found. Ensure correct application is available.
+	at ca.tdsb.dunbar.dailyattendancereport.SejdaSupport.<init>(SejdaSupport.java:34)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:269)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:1)
+	at javafx.concurrent.Task$TaskCallable.call(Task.java:1423)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+java.io.IOException: sejda not found. Ensure correct application is available.
+	at ca.tdsb.dunbar.dailyattendancereport.SejdaSupport.<init>(SejdaSupport.java:34)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:269)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:1)
+	at javafx.concurrent.Task$TaskCallable.call(Task.java:1423)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+java.io.IOException: sejda not found. Ensure correct application is available.
+	at ca.tdsb.dunbar.dailyattendancereport.SejdaSupport.<init>(SejdaSupport.java:34)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:269)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:1)
+	at javafx.concurrent.Task$TaskCallable.call(Task.java:1423)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+java.io.IOException: sejda not found. Ensure correct application is available.
+	at ca.tdsb.dunbar.dailyattendancereport.SejdaSupport.<init>(SejdaSupport.java:34)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:269)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:1)
+	at javafx.concurrent.Task$TaskCallable.call(Task.java:1423)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+Launched at: 2016/12/27 21:24:16
+C:\Users\094360\AppData\Roaming\DAR.config
+java.io.IOException: sejda not found. Ensure correct application is available.
+	at ca.tdsb.dunbar.dailyattendancereport.SejdaSupport.<init>(SejdaSupport.java:34)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:270)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:1)
+	at javafx.concurrent.Task$TaskCallable.call(Task.java:1423)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+Launched at: 2016/12/27 21:25:32
+C:\Users\094360\AppData\Roaming\DAR.config
+Launched at: 2016/12/27 21:26:15
+C:\Users\094360\AppData\Roaming\DAR.config
+Launched at: 2016/12/27 21:26:29
+C:\Users\094360\AppData\Roaming\DAR.config
+Launched at: 2016/12/27 21:26:46
+C:\Users\094360\AppData\Roaming\DAR.config
+ReWriting Key : master_useful_DAR_PowerBuilder, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\PowerBuilder.pdf
+ReWriting Key : output_path, Value : C:\Users\094360\Desktop\SomeSejdaDARs
+ReWriting Key : master_useless_DAR_Teacher_Class_Attendance_, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\Teacher Class Attendance .pdf
+ReWriting Key : master_DAR_Location, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\PowerBuilder.pdf
+ReWriting Key : test, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin\a.bat
+ReWriting Key : sejda, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin\sejda-console
+  Writing Key : sejda_console, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin
+Done setProperty()
+ReWriting Key : output_path, Value : C:\Users\094360\Desktop\SomeSejdaDARs
+ReWriting Key : master_useful_DAR_PowerBuilder, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\PowerBuilder.pdf
+ReWriting Key : sejda_console, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin
+ReWriting Key : master_useless_DAR_Teacher_Class_Attendance_, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\Teacher Class Attendance .pdf
+ReWriting Key : master_DAR_Location, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\PowerBuilder.pdf
+ReWriting Key : sejda, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin\sejda-console
+ReWriting Key : test, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin\a.bat
+  Writing Key : sejda, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin\sejda-console
+Done setProperty()
+java.io.IOException: sejda not found. Ensure correct application is available.
+	at ca.tdsb.dunbar.dailyattendancereport.SejdaSupport.<init>(SejdaSupport.java:34)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:270)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:1)
+	at javafx.concurrent.Task$TaskCallable.call(Task.java:1423)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+java.io.IOException: sejda not found. Ensure correct application is available.
+	at ca.tdsb.dunbar.dailyattendancereport.SejdaSupport.<init>(SejdaSupport.java:34)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:270)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:1)
+	at javafx.concurrent.Task$TaskCallable.call(Task.java:1423)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+java.io.IOException: sejda not found. Ensure correct application is available.
+	at ca.tdsb.dunbar.dailyattendancereport.SejdaSupport.<init>(SejdaSupport.java:34)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:270)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:1)
+	at javafx.concurrent.Task$TaskCallable.call(Task.java:1423)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+java.io.IOException: sejda not found. Ensure correct application is available.
+	at ca.tdsb.dunbar.dailyattendancereport.SejdaSupport.<init>(SejdaSupport.java:34)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:270)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:1)
+	at javafx.concurrent.Task$TaskCallable.call(Task.java:1423)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+java.io.IOException: sejda not found. Ensure correct application is available.
+	at ca.tdsb.dunbar.dailyattendancereport.SejdaSupport.<init>(SejdaSupport.java:34)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:270)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:1)
+	at javafx.concurrent.Task$TaskCallable.call(Task.java:1423)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+Launched at: 2016/12/27 21:27:12
+C:\Users\094360\AppData\Roaming\DAR.config
+ReWriting Key : master_useful_DAR_PowerBuilder, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\PowerBuilder.pdf
+ReWriting Key : output_path, Value : C:\Users\094360\Desktop\SomeSejdaDARs
+ReWriting Key : master_useless_DAR_Teacher_Class_Attendance_, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\Teacher Class Attendance .pdf
+ReWriting Key : sejda_console, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin
+ReWriting Key : master_DAR_Location, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\PowerBuilder.pdf
+ReWriting Key : test, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin\a.bat
+ReWriting Key : sejda, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin\sejda-console
+  Writing Key : sejda_console, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin
+Done setProperty()
+ReWriting Key : output_path, Value : C:\Users\094360\Desktop\SomeSejdaDARs
+ReWriting Key : master_useful_DAR_PowerBuilder, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\PowerBuilder.pdf
+ReWriting Key : sejda_console, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin
+ReWriting Key : master_useless_DAR_Teacher_Class_Attendance_, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\Teacher Class Attendance .pdf
+ReWriting Key : master_DAR_Location, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\PowerBuilder.pdf
+ReWriting Key : sejda, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin\sejda-console
+ReWriting Key : test, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin\a.bat
+  Writing Key : sejda, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin\sejda-console
+Done setProperty()
+java.io.IOException: sejda not found. Ensure correct application is available.
+	at ca.tdsb.dunbar.dailyattendancereport.SejdaSupport.<init>(SejdaSupport.java:34)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:270)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:1)
+	at javafx.concurrent.Task$TaskCallable.call(Task.java:1423)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+Launched at: 2016/12/27 21:28:04
+C:\Users\094360\AppData\Roaming\DAR.config
+ReWriting Key : master_useful_DAR_PowerBuilder, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\PowerBuilder.pdf
+ReWriting Key : output_path, Value : C:\Users\094360\Desktop\SomeSejdaDARs
+ReWriting Key : master_useless_DAR_Teacher_Class_Attendance_, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\Teacher Class Attendance .pdf
+ReWriting Key : sejda_console, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin
+ReWriting Key : master_DAR_Location, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\PowerBuilder.pdf
+ReWriting Key : test, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin\a.bat
+ReWriting Key : sejda, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin\sejda-console
+  Writing Key : sejda, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin
+Done setProperty()
+ReWriting Key : output_path, Value : C:\Users\094360\Desktop\SomeSejdaDARs
+ReWriting Key : master_useful_DAR_PowerBuilder, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\PowerBuilder.pdf
+ReWriting Key : sejda_console, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin
+ReWriting Key : master_useless_DAR_Teacher_Class_Attendance_, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\Teacher Class Attendance .pdf
+ReWriting Key : master_DAR_Location, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\PowerBuilder.pdf
+ReWriting Key : sejda, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin
+ReWriting Key : test, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin\a.bat
+  Writing Key : sejda_console, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin\sejda-console
+Done setProperty()
+ReWriting Key : master_useful_DAR_PowerBuilder, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\PowerBuilder.pdf
+ReWriting Key : output_path, Value : C:\Users\094360\Desktop\SomeSejdaDARs
+ReWriting Key : master_useless_DAR_Teacher_Class_Attendance_, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\Teacher Class Attendance .pdf
+ReWriting Key : sejda_console, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin\sejda-console
+ReWriting Key : master_DAR_Location, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\PowerBuilder.pdf
+ReWriting Key : test, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin\a.bat
+ReWriting Key : sejda, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin
+  Writing Key : test, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin\a.bat
+Done setProperty()
+ENUM NAME: Useless
+temp directory: C:\Users\094360\AppData\Local\Temp\sejda_date_extraction
+Info. Successful temp dir creation?: false C:\Users\094360\AppData\Local\Temp\sejda_date_extraction
+Parameters for sejda console launch:
+         Param: _cmd_
+         Param: _/c_
+         Param: _call_
+         Param: _"C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin"_
+         Param: _splitbytext_
+         Param: _-f_
+         Param: _"C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\Teacher Class Attendance .pdf"_
+         Param: _--top_
+         Param: _340_
+         Param: _--left_
+         Param: _55_
+         Param: _--width_
+         Param: _75_
+         Param: _--height_
+         Param: _22_
+         Param: _-o_
+         Param: _"C:\Users\094360\AppData\Local\Temp\sejda_date_extraction"_
+         Param: _-p_
+         Param: _[TEXT]_
+         Param: _--existingOutput_
+         Param: _overwrite_
+THE DATE: date_error
+temp directory: C:\Users\094360\AppData\Local\Temp\DARv20161223
+Info. Successful temp dir creation?: false C:\Users\094360\AppData\Local\Temp\DARv20161223
+Parameters for sejda console launch:
+         Param: _cmd_
+         Param: _/c_
+         Param: _call_
+         Param: _"C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin"_
+         Param: _splitbytext_
+         Param: _-f_
+         Param: _"C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\Teacher Class Attendance .pdf"_
+         Param: _--top_
+         Param: _105_
+         Param: _--left_
+         Param: _71_
+         Param: _--width_
+         Param: _200_
+         Param: _--height_
+         Param: _22_
+         Param: _-o_
+         Param: _"C:\Users\094360\AppData\Local\Temp\DARv20161223"_
+         Param: _-p_
+         Param: _[TEXT]_
+         Param: _--existingOutput_
+         Param: _overwrite_
+TROUBLESHOOTING: tempDir.getAbsolutePath() = C:\Users\094360\AppData\Local\Temp\DARv20161223
+
+Start: MOVE and ARCHIVE FILES
+End: MOVE and ARCHIVE FILES
+End: MOVE and ARCHIVE MASTER for Useless
+ReWriting Key : output_path, Value : C:\Users\094360\Desktop\SomeSejdaDARs
+ReWriting Key : master_useful_DAR_PowerBuilder, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\PowerBuilder.pdf
+ReWriting Key : sejda_console, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin\sejda-console
+ReWriting Key : master_useless_DAR_Teacher_Class_Attendance_, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\Teacher Class Attendance .pdf
+ReWriting Key : master_DAR_Location, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\PowerBuilder.pdf
+ReWriting Key : sejda, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin
+ReWriting Key : test, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin\a.bat
+  Writing Key : test, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin\a.bat
+Done setProperty()
+ENUM NAME: Useful
+temp directory: C:\Users\094360\AppData\Local\Temp\sejda_date_extraction
+Info. Successful temp dir creation?: false C:\Users\094360\AppData\Local\Temp\sejda_date_extraction
+Parameters for sejda console launch:
+         Param: _cmd_
+         Param: _/c_
+         Param: _call_
+         Param: _"C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin"_
+         Param: _splitbytext_
+         Param: _-f_
+         Param: _"C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\PowerBuilder.pdf"_
+         Param: _--top_
+         Param: _514_
+         Param: _--left_
+         Param: _61_
+         Param: _--width_
+         Param: _75_
+         Param: _--height_
+         Param: _22_
+         Param: _-o_
+         Param: _"C:\Users\094360\AppData\Local\Temp\sejda_date_extraction"_
+         Param: _-p_
+         Param: _[TEXT]_
+         Param: _--existingOutput_
+         Param: _overwrite_
+THE DATE: date_error
+temp directory: C:\Users\094360\AppData\Local\Temp\DARv20161223
+Info. Successful temp dir creation?: false C:\Users\094360\AppData\Local\Temp\DARv20161223
+Parameters for sejda console launch:
+         Param: _cmd_
+         Param: _/c_
+         Param: _call_
+         Param: _"C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin"_
+         Param: _splitbytext_
+         Param: _-f_
+         Param: _"C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\PowerBuilder.pdf"_
+         Param: _--top_
+         Param: _86_
+         Param: _--left_
+         Param: _84_
+         Param: _--width_
+         Param: _200_
+         Param: _--height_
+         Param: _22_
+         Param: _-o_
+         Param: _"C:\Users\094360\AppData\Local\Temp\DARv20161223"_
+         Param: _-p_
+         Param: _[TEXT]_
+         Param: _--existingOutput_
+         Param: _overwrite_
+TROUBLESHOOTING: tempDir.getAbsolutePath() = C:\Users\094360\AppData\Local\Temp\DARv20161223
+
+Start: MOVE and ARCHIVE FILES
+End: MOVE and ARCHIVE FILES
+End: MOVE and ARCHIVE MASTER for Useful
+I opened the file explorer
+java.io.IOException: Both master DAR files missing. Use CutePDF to print new ones or choose new master DAR PDFs.
+	at ca.tdsb.dunbar.dailyattendancereport.SejdaSupport.runMe(SejdaSupport.java:382)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:276)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:1)
+	at javafx.concurrent.Task$TaskCallable.call(Task.java:1423)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+Launched at: 2016/12/27 21:30:10
+C:\Users\094360\AppData\Roaming\DAR.config
+ReWriting Key : master_useful_DAR_PowerBuilder, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\PowerBuilder.pdf
+ReWriting Key : output_path, Value : C:\Users\094360\Desktop\SomeSejdaDARs
+ReWriting Key : master_useless_DAR_Teacher_Class_Attendance_, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\Teacher Class Attendance .pdf
+ReWriting Key : sejda_console, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin\sejda-console
+ReWriting Key : master_DAR_Location, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\PowerBuilder.pdf
+ReWriting Key : test, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin\a.bat
+ReWriting Key : sejda, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin
+  Writing Key : sejda, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin
+Done setProperty()
+ReWriting Key : output_path, Value : C:\Users\094360\Desktop\SomeSejdaDARs
+ReWriting Key : master_useful_DAR_PowerBuilder, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\PowerBuilder.pdf
+ReWriting Key : sejda_console, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin\sejda-console
+ReWriting Key : master_useless_DAR_Teacher_Class_Attendance_, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\Teacher Class Attendance .pdf
+ReWriting Key : master_DAR_Location, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\PowerBuilder.pdf
+ReWriting Key : sejda, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin
+ReWriting Key : test, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin\a.bat
+  Writing Key : sejda_console, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin\sejda-console
+Done setProperty()
+java.io.IOException: Both master DAR files missing. Use CutePDF to print new ones or choose new master DAR PDFs.
+	at ca.tdsb.dunbar.dailyattendancereport.SejdaSupport.runMe(SejdaSupport.java:382)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:276)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:1)
+	at javafx.concurrent.Task$TaskCallable.call(Task.java:1423)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+java.io.IOException: Both master DAR files missing. Use CutePDF to print new ones or choose new master DAR PDFs.
+	at ca.tdsb.dunbar.dailyattendancereport.SejdaSupport.runMe(SejdaSupport.java:382)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:276)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:1)
+	at javafx.concurrent.Task$TaskCallable.call(Task.java:1423)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+java.io.IOException: Both master DAR files missing. Use CutePDF to print new ones or choose new master DAR PDFs.
+	at ca.tdsb.dunbar.dailyattendancereport.SejdaSupport.runMe(SejdaSupport.java:382)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:276)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:1)
+	at javafx.concurrent.Task$TaskCallable.call(Task.java:1423)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+java.io.IOException: Both master DAR files missing. Use CutePDF to print new ones or choose new master DAR PDFs.
+	at ca.tdsb.dunbar.dailyattendancereport.SejdaSupport.runMe(SejdaSupport.java:382)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:276)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:1)
+	at javafx.concurrent.Task$TaskCallable.call(Task.java:1423)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+java.io.IOException: Both master DAR files missing. Use CutePDF to print new ones or choose new master DAR PDFs.
+	at ca.tdsb.dunbar.dailyattendancereport.SejdaSupport.runMe(SejdaSupport.java:382)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:270)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:1)
+	at javafx.concurrent.Task$TaskCallable.call(Task.java:1423)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+DAR Splitter launched: 2016/12/27 21:58:44
+C:\Users\094360\AppData\Roaming\DAR.config
+DAR Splitter launched: 2016/12/27 22:01:36
+C:\Users\094360\AppData\Roaming\DAR.config
+java.io.IOException: Both master DAR files missing. Use CutePDF to print new ones or choose new master DAR PDFs.
+	at ca.tdsb.dunbar.dailyattendancereport.SejdaSupport.runMe(SejdaSupport.java:382)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:273)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:1)
+	at javafx.concurrent.Task$TaskCallable.call(Task.java:1423)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+DAR Splitter launched: 2016/12/27 22:02:53
+C:\Users\094360\AppData\Roaming\DAR.config
+java.io.IOException: Both master DAR files missing. Use CutePDF to print new ones or choose new master DAR PDFs.
+	at ca.tdsb.dunbar.dailyattendancereport.SejdaSupport.runMe(SejdaSupport.java:382)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:273)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:1)
+	at javafx.concurrent.Task$TaskCallable.call(Task.java:1423)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+java.io.IOException: Both master DAR files missing. Use CutePDF to print new ones or choose new master DAR PDFs.
+	at ca.tdsb.dunbar.dailyattendancereport.SejdaSupport.runMe(SejdaSupport.java:382)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:273)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:1)
+	at javafx.concurrent.Task$TaskCallable.call(Task.java:1423)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+DAR Splitter launched: 2016/12/27 22:03:36
+C:\Users\094360\AppData\Roaming\DAR.config
+ReWriting Key : master_useful_DAR_PowerBuilder, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\PowerBuilder.pdf
+ReWriting Key : output_path, Value : C:\Users\094360\Desktop\SomeSejdaDARs
+ReWriting Key : master_useless_DAR_Teacher_Class_Attendance_, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\Teacher Class Attendance .pdf
+ReWriting Key : sejda_console, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin\sejda-console
+ReWriting Key : master_DAR_Location, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\PowerBuilder.pdf
+ReWriting Key : test, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin\a.bat
+ReWriting Key : sejda, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin
+  Writing Key : test, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin\a.bat
+Done setProperty()
+ENUM NAME: Useless
+temp directory: C:\Users\094360\AppData\Local\Temp\sejda_date_extraction
+Info. Successful temp dir creation?: true C:\Users\094360\AppData\Local\Temp\sejda_date_extraction
+Parameters for sejda console launch:
+         Param: _cmd_
+         Param: _/c_
+         Param: _call_
+         Param: _"C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin\sejda-console"_
+         Param: _splitbytext_
+         Param: _-f_
+         Param: _"C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\Teacher Class Attendance .pdf"_
+         Param: _--top_
+         Param: _340_
+         Param: _--left_
+         Param: _55_
+         Param: _--width_
+         Param: _75_
+         Param: _--height_
+         Param: _22_
+         Param: _-o_
+         Param: _"C:\Users\094360\AppData\Local\Temp\sejda_date_extraction"_
+         Param: _-p_
+         Param: _[TEXT]_
+         Param: _--existingOutput_
+         Param: _overwrite_
+Configuring Sejda 2.10.4
+Loading Sejda configuration form default sejda.xml
+Starting execution with arguments: 'splitbytext -f C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\Teacher Class Attendance .pdf --top 340 --left 55 --width 75 --height 22 -o C:\Users\094360\AppData\Local\Temp\sejda_date_extraction -p [TEXT] --existingOutput overwrite'
+Java version: '1.8.0_92'
+Validating parameters.
+Starting task (org.sejda.impl.sambox.SplitByTextContentTask@40a4337a) execution.
+Opening C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\Teacher Class Attendance .pdf
+Found 0 inherited images and 0 inherited fonts potentially unused
+No Unicode mapping for checkbld (1) in font ODNMDG+TT10Ct00
+Starting to split by text content
+Starting split at page 1 of the original document
+Created output temporary buffer C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer3300494633138943242.pdf
+Task progress: 14% done
+Task progress: 29% done
+Task progress: 43% done
+Task progress: 57% done
+Task progress: 71% done
+Task progress: 86% done
+Task progress: 100% done
+Filtering annotations
+Merging acroforms with policy MERGE
+Merged AcroForm dictionary
+Ending split at page 7 of the original document, generated document size is 47.80 KB
+Moving C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer3300494633138943242.pdf to C:\Users\094360\AppData\Local\Temp\sejda_date_extraction\2016 NOV 02.pdf.
+Input documents split and written to C:\Users\094360\AppData\Local\Temp\sejda_date_extraction
+Task (org.sejda.impl.sambox.SplitByTextContentTask@40a4337a) executed in 1 second
+Completed execution
+THE DATE: 2016 NOV 02
+temp directory: C:\Users\094360\AppData\Local\Temp\DARv20161223
+Info. Successful temp dir creation?: false C:\Users\094360\AppData\Local\Temp\DARv20161223
+Parameters for sejda console launch:
+         Param: _cmd_
+         Param: _/c_
+         Param: _call_
+         Param: _"C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin\sejda-console"_
+         Param: _splitbytext_
+         Param: _-f_
+         Param: _"C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\Teacher Class Attendance .pdf"_
+         Param: _--top_
+         Param: _105_
+         Param: _--left_
+         Param: _71_
+         Param: _--width_
+         Param: _200_
+         Param: _--height_
+         Param: _22_
+         Param: _-o_
+         Param: _"C:\Users\094360\AppData\Local\Temp\DARv20161223"_
+         Param: _-p_
+         Param: _[TEXT]_
+         Param: _--existingOutput_
+         Param: _overwrite_
+Configuring Sejda 2.10.4
+Loading Sejda configuration form default sejda.xml
+Starting execution with arguments: 'splitbytext -f C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\Teacher Class Attendance .pdf --top 105 --left 71 --width 200 --height 22 -o C:\Users\094360\AppData\Local\Temp\DARv20161223 -p [TEXT] --existingOutput overwrite'
+Java version: '1.8.0_92'
+Validating parameters.
+Starting task (org.sejda.impl.sambox.SplitByTextContentTask@40a4337a) execution.
+Opening C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\Teacher Class Attendance .pdf
+Found 0 inherited images and 0 inherited fonts potentially unused
+No Unicode mapping for checkbld (1) in font ODNMDG+TT10Ct00
+Text changed from Aviles-Wood, Flor to Bain, Benjamin on page 3 in area: TopLeftRectangularBox[left=105,top=71,width=200,height=22]
+Text changed from Bain, Benjamin to Bradley, David on page 4 in area: TopLeftRectangularBox[left=105,top=71,width=200,height=22]
+Text changed from Bradley, David to Broumas, Matina on page 5 in area: TopLeftRectangularBox[left=105,top=71,width=200,height=22]
+Text changed from Broumas, Matina to Bryan, Deonne on page 6 in area: TopLeftRectangularBox[left=105,top=71,width=200,height=22]
+Starting to split by text content
+Starting split at page 1 of the original document
+Created output temporary buffer C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer2599754102396503613.pdf
+Task progress: 14% done
+Task progress: 29% done
+Filtering annotations
+Merging acroforms with policy MERGE
+Merged AcroForm dictionary
+Ending split at page 2 of the original document, generated document size is 25.80 KB
+Starting split at page 3 of the original document
+Created output temporary buffer C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer2463923634787469268.pdf
+Task progress: 43% done
+Filtering annotations
+Merging acroforms with policy MERGE
+Merged AcroForm dictionary
+Ending split at page 3 of the original document, generated document size is 17.54 KB
+Starting split at page 4 of the original document
+Created output temporary buffer C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer5723526949901723208.pdf
+Task progress: 57% done
+Filtering annotations
+Merging acroforms with policy MERGE
+Merged AcroForm dictionary
+Ending split at page 4 of the original document, generated document size is 17.60 KB
+Starting split at page 5 of the original document
+Created output temporary buffer C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer3846209192070595650.pdf
+Task progress: 71% done
+Filtering annotations
+Merging acroforms with policy MERGE
+Merged AcroForm dictionary
+Ending split at page 5 of the original document, generated document size is 17.42 KB
+Starting split at page 6 of the original document
+Created output temporary buffer C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer6291766762308188987.pdf
+Task progress: 86% done
+Task progress: 100% done
+Filtering annotations
+Merging acroforms with policy MERGE
+Merged AcroForm dictionary
+Ending split at page 7 of the original document, generated document size is 22.17 KB
+Moving C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer2599754102396503613.pdf to C:\Users\094360\AppData\Local\Temp\DARv20161223\Aviles-Wood Flor.pdf.
+Moving C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer2463923634787469268.pdf to C:\Users\094360\AppData\Local\Temp\DARv20161223\Bain Benjamin.pdf.
+Moving C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer6291766762308188987.pdf to C:\Users\094360\AppData\Local\Temp\DARv20161223\Bryan Deonne.pdf.
+Moving C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer5723526949901723208.pdf to C:\Users\094360\AppData\Local\Temp\DARv20161223\Bradley David.pdf.
+Moving C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer3846209192070595650.pdf to C:\Users\094360\AppData\Local\Temp\DARv20161223\Broumas Matina.pdf.
+Input documents split and written to C:\Users\094360\AppData\Local\Temp\DARv20161223
+Task (org.sejda.impl.sambox.SplitByTextContentTask@40a4337a) executed in 2 seconds
+Completed execution
+TROUBLESHOOTING: tempDir.getAbsolutePath() = C:\Users\094360\AppData\Local\Temp\DARv20161223
+    C:\Users\094360\AppData\Local\Temp\DARv20161223\Aviles-Wood Flor.pdf
+    C:\Users\094360\AppData\Local\Temp\DARv20161223\Bain Benjamin.pdf
+    C:\Users\094360\AppData\Local\Temp\DARv20161223\Bradley David.pdf
+    C:\Users\094360\AppData\Local\Temp\DARv20161223\Broumas Matina.pdf
+    C:\Users\094360\AppData\Local\Temp\DARv20161223\Bryan Deonne.pdf
+
+Start: MOVE and ARCHIVE FILES
+End: MOVE and ARCHIVE FILES
+End: MOVE and ARCHIVE MASTER for Useless
+ReWriting Key : output_path, Value : C:\Users\094360\Desktop\SomeSejdaDARs
+ReWriting Key : master_useful_DAR_PowerBuilder, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\PowerBuilder.pdf
+ReWriting Key : sejda_console, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin\sejda-console
+ReWriting Key : master_useless_DAR_Teacher_Class_Attendance_, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\Teacher Class Attendance .pdf
+ReWriting Key : master_DAR_Location, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\PowerBuilder.pdf
+ReWriting Key : sejda, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin
+ReWriting Key : test, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin\a.bat
+  Writing Key : test, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin\a.bat
+Done setProperty()
+ENUM NAME: Useful
+temp directory: C:\Users\094360\AppData\Local\Temp\sejda_date_extraction
+Info. Successful temp dir creation?: true C:\Users\094360\AppData\Local\Temp\sejda_date_extraction
+Parameters for sejda console launch:
+         Param: _cmd_
+         Param: _/c_
+         Param: _call_
+         Param: _"C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin\sejda-console"_
+         Param: _splitbytext_
+         Param: _-f_
+         Param: _"C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\PowerBuilder.pdf"_
+         Param: _--top_
+         Param: _514_
+         Param: _--left_
+         Param: _61_
+         Param: _--width_
+         Param: _75_
+         Param: _--height_
+         Param: _22_
+         Param: _-o_
+         Param: _"C:\Users\094360\AppData\Local\Temp\sejda_date_extraction"_
+         Param: _-p_
+         Param: _[TEXT]_
+         Param: _--existingOutput_
+         Param: _overwrite_
+Configuring Sejda 2.10.4
+Loading Sejda configuration form default sejda.xml
+Starting execution with arguments: 'splitbytext -f C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\PowerBuilder.pdf --top 514 --left 61 --width 75 --height 22 -o C:\Users\094360\AppData\Local\Temp\sejda_date_extraction -p [TEXT] --existingOutput overwrite'
+Java version: '1.8.0_92'
+Validating parameters.
+Starting task (org.sejda.impl.sambox.SplitByTextContentTask@40a4337a) execution.
+Opening C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\PowerBuilder.pdf
+Found 0 inherited images and 0 inherited fonts potentially unused
+Starting to split by text content
+Starting split at page 1 of the original document
+Created output temporary buffer C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer6304685501250663941.pdf
+Task progress: 14% done
+Task progress: 29% done
+Task progress: 43% done
+Task progress: 57% done
+Task progress: 71% done
+Task progress: 86% done
+Task progress: 100% done
+Filtering annotations
+Merging acroforms with policy MERGE
+Merged AcroForm dictionary
+Ending split at page 7 of the original document, generated document size is 83.83 KB
+Moving C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer6304685501250663941.pdf to C:\Users\094360\AppData\Local\Temp\sejda_date_extraction\2016 Nov 02.pdf.
+Input documents split and written to C:\Users\094360\AppData\Local\Temp\sejda_date_extraction
+Task (org.sejda.impl.sambox.SplitByTextContentTask@40a4337a) executed in 2 seconds
+Completed execution
+THE DATE: 2016 Nov 02
+temp directory: C:\Users\094360\AppData\Local\Temp\DARv20161223
+Info. Successful temp dir creation?: false C:\Users\094360\AppData\Local\Temp\DARv20161223
+Parameters for sejda console launch:
+         Param: _cmd_
+         Param: _/c_
+         Param: _call_
+         Param: _"C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin\sejda-console"_
+         Param: _splitbytext_
+         Param: _-f_
+         Param: _"C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\PowerBuilder.pdf"_
+         Param: _--top_
+         Param: _86_
+         Param: _--left_
+         Param: _84_
+         Param: _--width_
+         Param: _200_
+         Param: _--height_
+         Param: _22_
+         Param: _-o_
+         Param: _"C:\Users\094360\AppData\Local\Temp\DARv20161223"_
+         Param: _-p_
+         Param: _[TEXT]_
+         Param: _--existingOutput_
+         Param: _overwrite_
+Configuring Sejda 2.10.4
+Loading Sejda configuration form default sejda.xml
+Starting execution with arguments: 'splitbytext -f C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\PowerBuilder.pdf --top 86 --left 84 --width 200 --height 22 -o C:\Users\094360\AppData\Local\Temp\DARv20161223 -p [TEXT] --existingOutput overwrite'
+Java version: '1.8.0_92'
+Validating parameters.
+Starting task (org.sejda.impl.sambox.SplitByTextContentTask@40a4337a) execution.
+Opening C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\PowerBuilder.pdf
+Found 0 inherited images and 0 inherited fonts potentially unused
+Text changed from AVILES-WOOD, FLOR to BAIN, BENJAMIN on page 3 in area: TopLeftRectangularBox[left=86,top=84,width=200,height=22]
+Text changed from BAIN, BENJAMIN to BRADLEY, DAVID on page 4 in area: TopLeftRectangularBox[left=86,top=84,width=200,height=22]
+Text changed from BRADLEY, DAVID to BROUMAS, MATINA on page 5 in area: TopLeftRectangularBox[left=86,top=84,width=200,height=22]
+Text changed from BROUMAS, MATINA to BRYAN, DEONNE on page 6 in area: TopLeftRectangularBox[left=86,top=84,width=200,height=22]
+Starting to split by text content
+Starting split at page 1 of the original document
+Created output temporary buffer C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer4188848325093280254.pdf
+Task progress: 14% done
+Task progress: 29% done
+Filtering annotations
+Merging acroforms with policy MERGE
+Merged AcroForm dictionary
+Ending split at page 2 of the original document, generated document size is 38.68 KB
+Starting split at page 3 of the original document
+Created output temporary buffer C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer6894183354190602715.pdf
+Task progress: 43% done
+Filtering annotations
+Merging acroforms with policy MERGE
+Merged AcroForm dictionary
+Ending split at page 3 of the original document, generated document size is 19.59 KB
+Starting split at page 4 of the original document
+Created output temporary buffer C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer3036366258535429244.pdf
+Task progress: 57% done
+Filtering annotations
+Merging acroforms with policy MERGE
+Merged AcroForm dictionary
+Ending split at page 4 of the original document, generated document size is 18.75 KB
+Starting split at page 5 of the original document
+Created output temporary buffer C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer7405325595557960549.pdf
+Task progress: 71% done
+Filtering annotations
+Merging acroforms with policy MERGE
+Merged AcroForm dictionary
+Ending split at page 5 of the original document, generated document size is 19.90 KB
+Starting split at page 6 of the original document
+Created output temporary buffer C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer347040813320276251.pdf
+Task progress: 86% done
+Task progress: 100% done
+Filtering annotations
+Merging acroforms with policy MERGE
+Merged AcroForm dictionary
+Ending split at page 7 of the original document, generated document size is 30.56 KB
+Moving C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer3036366258535429244.pdf to C:\Users\094360\AppData\Local\Temp\DARv20161223\BRADLEY DAVID.pdf.
+Moving C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer6894183354190602715.pdf to C:\Users\094360\AppData\Local\Temp\DARv20161223\BAIN BENJAMIN.pdf.
+Moving C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer4188848325093280254.pdf to C:\Users\094360\AppData\Local\Temp\DARv20161223\AVILES-WOOD FLOR.pdf.
+Moving C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer7405325595557960549.pdf to C:\Users\094360\AppData\Local\Temp\DARv20161223\BROUMAS MATINA.pdf.
+Moving C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer347040813320276251.pdf to C:\Users\094360\AppData\Local\Temp\DARv20161223\BRYAN DEONNE.pdf.
+Input documents split and written to C:\Users\094360\AppData\Local\Temp\DARv20161223
+Task (org.sejda.impl.sambox.SplitByTextContentTask@40a4337a) executed in 1 second
+Completed execution
+TROUBLESHOOTING: tempDir.getAbsolutePath() = C:\Users\094360\AppData\Local\Temp\DARv20161223
+    C:\Users\094360\AppData\Local\Temp\DARv20161223\AVILES-WOOD FLOR.pdf
+    C:\Users\094360\AppData\Local\Temp\DARv20161223\BAIN BENJAMIN.pdf
+    C:\Users\094360\AppData\Local\Temp\DARv20161223\BRADLEY DAVID.pdf
+    C:\Users\094360\AppData\Local\Temp\DARv20161223\BROUMAS MATINA.pdf
+    C:\Users\094360\AppData\Local\Temp\DARv20161223\BRYAN DEONNE.pdf
+
+Start: MOVE and ARCHIVE FILES
+End: MOVE and ARCHIVE FILES
+End: MOVE and ARCHIVE MASTER for Useful
+I opened the file explorer
+DAR Splitter launched: 2016/12/27 22:05:17
+C:\Users\094360\AppData\Roaming\DAR.config
+java.io.IOException: Both master DAR files missing. Use CutePDF to print new ones or choose new master DAR PDFs.
+	at ca.tdsb.dunbar.dailyattendancereport.SejdaSupport.runMe(SejdaSupport.java:382)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:273)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:1)
+	at javafx.concurrent.Task$TaskCallable.call(Task.java:1423)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+ReWriting Key : master_useful_DAR_PowerBuilder, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\PowerBuilder.pdf
+ReWriting Key : output_path, Value : C:\Users\094360\Desktop\SomeSejdaDARs
+ReWriting Key : master_useless_DAR_Teacher_Class_Attendance_, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\Teacher Class Attendance .pdf
+ReWriting Key : sejda_console, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin\sejda-console
+ReWriting Key : master_DAR_Location, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\PowerBuilder.pdf
+ReWriting Key : test, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin\a.bat
+ReWriting Key : sejda, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin
+  Writing Key : test, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin\a.bat
+Done setProperty()
+ENUM NAME: Useless
+temp directory: C:\Users\094360\AppData\Local\Temp\sejda_date_extraction
+Info. Successful temp dir creation?: true C:\Users\094360\AppData\Local\Temp\sejda_date_extraction
+Parameters for sejda console launch:
+         Param: _cmd_
+         Param: _/c_
+         Param: _call_
+         Param: _"C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin\sejda-console"_
+         Param: _splitbytext_
+         Param: _-f_
+         Param: _"C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\Teacher Class Attendance .pdf"_
+         Param: _--top_
+         Param: _340_
+         Param: _--left_
+         Param: _55_
+         Param: _--width_
+         Param: _75_
+         Param: _--height_
+         Param: _22_
+         Param: _-o_
+         Param: _"C:\Users\094360\AppData\Local\Temp\sejda_date_extraction"_
+         Param: _-p_
+         Param: _[TEXT]_
+         Param: _--existingOutput_
+         Param: _overwrite_
+Configuring Sejda 2.10.4
+Loading Sejda configuration form default sejda.xml
+Starting execution with arguments: 'splitbytext -f C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\Teacher Class Attendance .pdf --top 340 --left 55 --width 75 --height 22 -o C:\Users\094360\AppData\Local\Temp\sejda_date_extraction -p [TEXT] --existingOutput overwrite'
+Java version: '1.8.0_92'
+Validating parameters.
+Starting task (org.sejda.impl.sambox.SplitByTextContentTask@40a4337a) execution.
+Opening C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\Teacher Class Attendance .pdf
+Found 0 inherited images and 0 inherited fonts potentially unused
+No Unicode mapping for checkbld (1) in font ODNMDG+TT10Ct00
+Starting to split by text content
+Starting split at page 1 of the original document
+Created output temporary buffer C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer4756807036041500501.pdf
+Task progress: 14% done
+Task progress: 29% done
+Task progress: 43% done
+Task progress: 57% done
+Task progress: 71% done
+Task progress: 86% done
+Task progress: 100% done
+Filtering annotations
+Merging acroforms with policy MERGE
+Merged AcroForm dictionary
+Ending split at page 7 of the original document, generated document size is 47.80 KB
+Moving C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer4756807036041500501.pdf to C:\Users\094360\AppData\Local\Temp\sejda_date_extraction\2016 NOV 02.pdf.
+Input documents split and written to C:\Users\094360\AppData\Local\Temp\sejda_date_extraction
+Task (org.sejda.impl.sambox.SplitByTextContentTask@40a4337a) executed in 2 seconds
+Completed execution
+THE DATE: 2016 NOV 02
+temp directory: C:\Users\094360\AppData\Local\Temp\DARv20161223
+Info. Successful temp dir creation?: false C:\Users\094360\AppData\Local\Temp\DARv20161223
+Parameters for sejda console launch:
+         Param: _cmd_
+         Param: _/c_
+         Param: _call_
+         Param: _"C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin\sejda-console"_
+         Param: _splitbytext_
+         Param: _-f_
+         Param: _"C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\Teacher Class Attendance .pdf"_
+         Param: _--top_
+         Param: _105_
+         Param: _--left_
+         Param: _71_
+         Param: _--width_
+         Param: _200_
+         Param: _--height_
+         Param: _22_
+         Param: _-o_
+         Param: _"C:\Users\094360\AppData\Local\Temp\DARv20161223"_
+         Param: _-p_
+         Param: _[TEXT]_
+         Param: _--existingOutput_
+         Param: _overwrite_
+Configuring Sejda 2.10.4
+Loading Sejda configuration form default sejda.xml
+Starting execution with arguments: 'splitbytext -f C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\Teacher Class Attendance .pdf --top 105 --left 71 --width 200 --height 22 -o C:\Users\094360\AppData\Local\Temp\DARv20161223 -p [TEXT] --existingOutput overwrite'
+Java version: '1.8.0_92'
+Validating parameters.
+Starting task (org.sejda.impl.sambox.SplitByTextContentTask@40a4337a) execution.
+Opening C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\Teacher Class Attendance .pdf
+Found 0 inherited images and 0 inherited fonts potentially unused
+No Unicode mapping for checkbld (1) in font ODNMDG+TT10Ct00
+Text changed from Aviles-Wood, Flor to Bain, Benjamin on page 3 in area: TopLeftRectangularBox[left=105,top=71,width=200,height=22]
+Text changed from Bain, Benjamin to Bradley, David on page 4 in area: TopLeftRectangularBox[left=105,top=71,width=200,height=22]
+Text changed from Bradley, David to Broumas, Matina on page 5 in area: TopLeftRectangularBox[left=105,top=71,width=200,height=22]
+Text changed from Broumas, Matina to Bryan, Deonne on page 6 in area: TopLeftRectangularBox[left=105,top=71,width=200,height=22]
+Starting to split by text content
+Starting split at page 1 of the original document
+Created output temporary buffer C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer8933837418497642982.pdf
+Task progress: 14% done
+Task progress: 29% done
+Filtering annotations
+Merging acroforms with policy MERGE
+Merged AcroForm dictionary
+Ending split at page 2 of the original document, generated document size is 25.80 KB
+Starting split at page 3 of the original document
+Created output temporary buffer C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer1839922500185414449.pdf
+Task progress: 43% done
+Filtering annotations
+Merging acroforms with policy MERGE
+Merged AcroForm dictionary
+Ending split at page 3 of the original document, generated document size is 17.54 KB
+Starting split at page 4 of the original document
+Created output temporary buffer C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer3980112679916697331.pdf
+Task progress: 57% done
+Filtering annotations
+Merging acroforms with policy MERGE
+Merged AcroForm dictionary
+Ending split at page 4 of the original document, generated document size is 17.60 KB
+Starting split at page 5 of the original document
+Created output temporary buffer C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer4673893157177883412.pdf
+Task progress: 71% done
+Filtering annotations
+Merging acroforms with policy MERGE
+Merged AcroForm dictionary
+Ending split at page 5 of the original document, generated document size is 17.42 KB
+Starting split at page 6 of the original document
+Created output temporary buffer C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer9152026230400405220.pdf
+Task progress: 86% done
+Task progress: 100% done
+Filtering annotations
+Merging acroforms with policy MERGE
+Merged AcroForm dictionary
+Ending split at page 7 of the original document, generated document size is 22.17 KB
+Moving C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer8933837418497642982.pdf to C:\Users\094360\AppData\Local\Temp\DARv20161223\Aviles-Wood Flor.pdf.
+Moving C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer1839922500185414449.pdf to C:\Users\094360\AppData\Local\Temp\DARv20161223\Bain Benjamin.pdf.
+Moving C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer9152026230400405220.pdf to C:\Users\094360\AppData\Local\Temp\DARv20161223\Bryan Deonne.pdf.
+Moving C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer3980112679916697331.pdf to C:\Users\094360\AppData\Local\Temp\DARv20161223\Bradley David.pdf.
+Moving C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer4673893157177883412.pdf to C:\Users\094360\AppData\Local\Temp\DARv20161223\Broumas Matina.pdf.
+Input documents split and written to C:\Users\094360\AppData\Local\Temp\DARv20161223
+Task (org.sejda.impl.sambox.SplitByTextContentTask@40a4337a) executed in 2 seconds
+Completed execution
+TROUBLESHOOTING: tempDir.getAbsolutePath() = C:\Users\094360\AppData\Local\Temp\DARv20161223
+    C:\Users\094360\AppData\Local\Temp\DARv20161223\Aviles-Wood Flor.pdf
+    C:\Users\094360\AppData\Local\Temp\DARv20161223\Bain Benjamin.pdf
+    C:\Users\094360\AppData\Local\Temp\DARv20161223\Bradley David.pdf
+    C:\Users\094360\AppData\Local\Temp\DARv20161223\Broumas Matina.pdf
+    C:\Users\094360\AppData\Local\Temp\DARv20161223\Bryan Deonne.pdf
+
+Start: MOVE and ARCHIVE FILES
+End: MOVE and ARCHIVE FILES
+End: MOVE and ARCHIVE MASTER for Useless
+ReWriting Key : output_path, Value : C:\Users\094360\Desktop\SomeSejdaDARs
+ReWriting Key : master_useful_DAR_PowerBuilder, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\PowerBuilder.pdf
+ReWriting Key : sejda_console, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin\sejda-console
+ReWriting Key : master_useless_DAR_Teacher_Class_Attendance_, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\Teacher Class Attendance .pdf
+ReWriting Key : master_DAR_Location, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\PowerBuilder.pdf
+ReWriting Key : sejda, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin
+ReWriting Key : test, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin\a.bat
+  Writing Key : test, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin\a.bat
+Done setProperty()
+ENUM NAME: Useful
+temp directory: C:\Users\094360\AppData\Local\Temp\sejda_date_extraction
+Info. Successful temp dir creation?: true C:\Users\094360\AppData\Local\Temp\sejda_date_extraction
+Parameters for sejda console launch:
+         Param: _cmd_
+         Param: _/c_
+         Param: _call_
+         Param: _"C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin\sejda-console"_
+         Param: _splitbytext_
+         Param: _-f_
+         Param: _"C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\PowerBuilder.pdf"_
+         Param: _--top_
+         Param: _514_
+         Param: _--left_
+         Param: _61_
+         Param: _--width_
+         Param: _75_
+         Param: _--height_
+         Param: _22_
+         Param: _-o_
+         Param: _"C:\Users\094360\AppData\Local\Temp\sejda_date_extraction"_
+         Param: _-p_
+         Param: _[TEXT]_
+         Param: _--existingOutput_
+         Param: _overwrite_
+Configuring Sejda 2.10.4
+Loading Sejda configuration form default sejda.xml
+Starting execution with arguments: 'splitbytext -f C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\PowerBuilder.pdf --top 514 --left 61 --width 75 --height 22 -o C:\Users\094360\AppData\Local\Temp\sejda_date_extraction -p [TEXT] --existingOutput overwrite'
+Java version: '1.8.0_92'
+Validating parameters.
+Starting task (org.sejda.impl.sambox.SplitByTextContentTask@40a4337a) execution.
+Opening C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\PowerBuilder.pdf
+Found 0 inherited images and 0 inherited fonts potentially unused
+Starting to split by text content
+Starting split at page 1 of the original document
+Created output temporary buffer C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer1923790388947326745.pdf
+Task progress: 14% done
+Task progress: 29% done
+Task progress: 43% done
+Task progress: 57% done
+Task progress: 71% done
+Task progress: 86% done
+Task progress: 100% done
+Filtering annotations
+Merging acroforms with policy MERGE
+Merged AcroForm dictionary
+Ending split at page 7 of the original document, generated document size is 83.82 KB
+Moving C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer1923790388947326745.pdf to C:\Users\094360\AppData\Local\Temp\sejda_date_extraction\2016 Nov 02.pdf.
+Input documents split and written to C:\Users\094360\AppData\Local\Temp\sejda_date_extraction
+Task (org.sejda.impl.sambox.SplitByTextContentTask@40a4337a) executed in 2 seconds
+Completed execution
+THE DATE: 2016 Nov 02
+temp directory: C:\Users\094360\AppData\Local\Temp\DARv20161223
+Info. Successful temp dir creation?: false C:\Users\094360\AppData\Local\Temp\DARv20161223
+Parameters for sejda console launch:
+         Param: _cmd_
+         Param: _/c_
+         Param: _call_
+         Param: _"C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin\sejda-console"_
+         Param: _splitbytext_
+         Param: _-f_
+         Param: _"C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\PowerBuilder.pdf"_
+         Param: _--top_
+         Param: _86_
+         Param: _--left_
+         Param: _84_
+         Param: _--width_
+         Param: _200_
+         Param: _--height_
+         Param: _22_
+         Param: _-o_
+         Param: _"C:\Users\094360\AppData\Local\Temp\DARv20161223"_
+         Param: _-p_
+         Param: _[TEXT]_
+         Param: _--existingOutput_
+         Param: _overwrite_
+Configuring Sejda 2.10.4
+Loading Sejda configuration form default sejda.xml
+Starting execution with arguments: 'splitbytext -f C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\PowerBuilder.pdf --top 86 --left 84 --width 200 --height 22 -o C:\Users\094360\AppData\Local\Temp\DARv20161223 -p [TEXT] --existingOutput overwrite'
+Java version: '1.8.0_92'
+Validating parameters.
+Starting task (org.sejda.impl.sambox.SplitByTextContentTask@40a4337a) execution.
+Opening C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\PowerBuilder.pdf
+Found 0 inherited images and 0 inherited fonts potentially unused
+Text changed from AVILES-WOOD, FLOR to BAIN, BENJAMIN on page 3 in area: TopLeftRectangularBox[left=86,top=84,width=200,height=22]
+Text changed from BAIN, BENJAMIN to BRADLEY, DAVID on page 4 in area: TopLeftRectangularBox[left=86,top=84,width=200,height=22]
+Text changed from BRADLEY, DAVID to BROUMAS, MATINA on page 5 in area: TopLeftRectangularBox[left=86,top=84,width=200,height=22]
+Text changed from BROUMAS, MATINA to BRYAN, DEONNE on page 6 in area: TopLeftRectangularBox[left=86,top=84,width=200,height=22]
+Starting to split by text content
+Starting split at page 1 of the original document
+Created output temporary buffer C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer1250519511986090768.pdf
+Task progress: 14% done
+Task progress: 29% done
+Filtering annotations
+Merging acroforms with policy MERGE
+Merged AcroForm dictionary
+Ending split at page 2 of the original document, generated document size is 38.67 KB
+Starting split at page 3 of the original document
+Created output temporary buffer C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer2135146299119522221.pdf
+Task progress: 43% done
+Filtering annotations
+Merging acroforms with policy MERGE
+Merged AcroForm dictionary
+Ending split at page 3 of the original document, generated document size is 19.59 KB
+Starting split at page 4 of the original document
+Created output temporary buffer C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer8782469074462263420.pdf
+Task progress: 57% done
+Filtering annotations
+Merging acroforms with policy MERGE
+Merged AcroForm dictionary
+Ending split at page 4 of the original document, generated document size is 18.75 KB
+Starting split at page 5 of the original document
+Created output temporary buffer C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer7462796224231746986.pdf
+Task progress: 71% done
+Filtering annotations
+Merging acroforms with policy MERGE
+Merged AcroForm dictionary
+Ending split at page 5 of the original document, generated document size is 19.90 KB
+Starting split at page 6 of the original document
+Created output temporary buffer C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer1469340144181431140.pdf
+Task progress: 86% done
+Task progress: 100% done
+Filtering annotations
+Merging acroforms with policy MERGE
+Merged AcroForm dictionary
+Ending split at page 7 of the original document, generated document size is 30.56 KB
+Moving C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer8782469074462263420.pdf to C:\Users\094360\AppData\Local\Temp\DARv20161223\BRADLEY DAVID.pdf.
+Moving C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer2135146299119522221.pdf to C:\Users\094360\AppData\Local\Temp\DARv20161223\BAIN BENJAMIN.pdf.
+Moving C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer1250519511986090768.pdf to C:\Users\094360\AppData\Local\Temp\DARv20161223\AVILES-WOOD FLOR.pdf.
+Moving C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer7462796224231746986.pdf to C:\Users\094360\AppData\Local\Temp\DARv20161223\BROUMAS MATINA.pdf.
+Moving C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer1469340144181431140.pdf to C:\Users\094360\AppData\Local\Temp\DARv20161223\BRYAN DEONNE.pdf.
+Input documents split and written to C:\Users\094360\AppData\Local\Temp\DARv20161223
+Task (org.sejda.impl.sambox.SplitByTextContentTask@40a4337a) executed in 1 second
+Completed execution
+TROUBLESHOOTING: tempDir.getAbsolutePath() = C:\Users\094360\AppData\Local\Temp\DARv20161223
+    C:\Users\094360\AppData\Local\Temp\DARv20161223\AVILES-WOOD FLOR.pdf
+    C:\Users\094360\AppData\Local\Temp\DARv20161223\BAIN BENJAMIN.pdf
+    C:\Users\094360\AppData\Local\Temp\DARv20161223\BRADLEY DAVID.pdf
+    C:\Users\094360\AppData\Local\Temp\DARv20161223\BROUMAS MATINA.pdf
+    C:\Users\094360\AppData\Local\Temp\DARv20161223\BRYAN DEONNE.pdf
+
+Start: MOVE and ARCHIVE FILES
+End: MOVE and ARCHIVE FILES
+End: MOVE and ARCHIVE MASTER for Useful
+I opened the file explorer
+DAR Splitter launched: 2016/12/27 22:14:24
+C:\Users\094360\AppData\Roaming\DAR.config
+ReWriting Key : master_useful_DAR_PowerBuilder, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\PowerBuilder.pdf
+ReWriting Key : output_path, Value : C:\Users\094360\Desktop\SomeSejdaDARs
+ReWriting Key : master_useless_DAR_Teacher_Class_Attendance_, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\Teacher Class Attendance .pdf
+ReWriting Key : sejda_console, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin\sejda-console
+ReWriting Key : master_DAR_Location, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\PowerBuilder.pdf
+ReWriting Key : test, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin\a.bat
+ReWriting Key : sejda, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin
+  Writing Key : test, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin\a.bat
+Done setProperty()
+ENUM NAME: Useless
+temp directory: C:\Users\094360\AppData\Local\Temp\sejda_date_extraction
+Info. Successful temp dir creation?: true C:\Users\094360\AppData\Local\Temp\sejda_date_extraction
+Parameters for sejda console launch:
+         Param: _cmd_
+         Param: _/c_
+         Param: _call_
+         Param: _"C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin\sejda-console"_
+         Param: _splitbytext_
+         Param: _-f_
+         Param: _"C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\Teacher Class Attendance .pdf"_
+         Param: _--top_
+         Param: _340_
+         Param: _--left_
+         Param: _55_
+         Param: _--width_
+         Param: _75_
+         Param: _--height_
+         Param: _22_
+         Param: _-o_
+         Param: _"C:\Users\094360\AppData\Local\Temp\sejda_date_extraction"_
+         Param: _-p_
+         Param: _[TEXT]_
+         Param: _--existingOutput_
+         Param: _overwrite_
+Configuring Sejda 2.10.4
+Loading Sejda configuration form default sejda.xml
+Starting execution with arguments: 'splitbytext -f C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\Teacher Class Attendance .pdf --top 340 --left 55 --width 75 --height 22 -o C:\Users\094360\AppData\Local\Temp\sejda_date_extraction -p [TEXT] --existingOutput overwrite'
+Java version: '1.8.0_92'
+Validating parameters.
+Starting task (org.sejda.impl.sambox.SplitByTextContentTask@40a4337a) execution.
+Opening C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\Teacher Class Attendance .pdf
+Found 0 inherited images and 0 inherited fonts potentially unused
+ReWriting Key : output_path, Value : C:\Users\094360\Desktop\SomeSejdaDARs
+ReWriting Key : master_useful_DAR_PowerBuilder, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\PowerBuilder.pdf
+ReWriting Key : sejda_console, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin\sejda-console
+ReWriting Key : master_useless_DAR_Teacher_Class_Attendance_, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\Teacher Class Attendance .pdf
+ReWriting Key : master_DAR_Location, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\PowerBuilder.pdf
+ReWriting Key : sejda, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin
+ReWriting Key : test, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin\a.bat
+  Writing Key : test, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin\a.bat
+Done setProperty()
+ENUM NAME: Useless
+temp directory: C:\Users\094360\AppData\Local\Temp\sejda_date_extraction
+Info. Successful temp dir creation?: false C:\Users\094360\AppData\Local\Temp\sejda_date_extraction
+Parameters for sejda console launch:
+         Param: _cmd_
+         Param: _/c_
+         Param: _call_
+         Param: _"C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin\sejda-console"_
+         Param: _splitbytext_
+         Param: _-f_
+         Param: _"C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\Teacher Class Attendance .pdf"_
+         Param: _--top_
+         Param: _340_
+         Param: _--left_
+         Param: _55_
+         Param: _--width_
+         Param: _75_
+         Param: _--height_
+         Param: _22_
+         Param: _-o_
+         Param: _"C:\Users\094360\AppData\Local\Temp\sejda_date_extraction"_
+         Param: _-p_
+         Param: _[TEXT]_
+         Param: _--existingOutput_
+         Param: _overwrite_
+No Unicode mapping for checkbld (1) in font ODNMDG+TT10Ct00
+Starting to split by text content
+Starting split at page 1 of the original document
+Created output temporary buffer C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer5719702361449576167.pdf
+Task progress: 14% done
+Task progress: 29% done
+Task progress: 43% done
+Task progress: 57% done
+Task progress: 71% done
+Task progress: 86% done
+Task progress: 100% done
+Filtering annotations
+Merging acroforms with policy MERGE
+Merged AcroForm dictionary
+Ending split at page 7 of the original document, generated document size is 47.80 KB
+Moving C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer5719702361449576167.pdf to C:\Users\094360\AppData\Local\Temp\sejda_date_extraction\2016 NOV 02.pdf.
+Input documents split and written to C:\Users\094360\AppData\Local\Temp\sejda_date_extraction
+Task (org.sejda.impl.sambox.SplitByTextContentTask@40a4337a) executed in 1 second
+Completed execution
+THE DATE: 2016 NOV 02
+temp directory: C:\Users\094360\AppData\Local\Temp\DARv20161223
+Info. Successful temp dir creation?: false C:\Users\094360\AppData\Local\Temp\DARv20161223
+Parameters for sejda console launch:
+         Param: _cmd_
+         Param: _/c_
+         Param: _call_
+         Param: _"C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin\sejda-console"_
+         Param: _splitbytext_
+         Param: _-f_
+         Param: _"C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\Teacher Class Attendance .pdf"_
+         Param: _--top_
+         Param: _105_
+         Param: _--left_
+         Param: _71_
+         Param: _--width_
+         Param: _200_
+         Param: _--height_
+         Param: _22_
+         Param: _-o_
+         Param: _"C:\Users\094360\AppData\Local\Temp\DARv20161223"_
+         Param: _-p_
+         Param: _[TEXT]_
+         Param: _--existingOutput_
+         Param: _overwrite_
+Configuring Sejda 2.10.4
+Loading Sejda configuration form default sejda.xml
+Starting execution with arguments: 'splitbytext -f C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\Teacher Class Attendance .pdf --top 340 --left 55 --width 75 --height 22 -o C:\Users\094360\AppData\Local\Temp\sejda_date_extraction -p [TEXT] --existingOutput overwrite'
+Java version: '1.8.0_92'
+Configuring Sejda 2.10.4
+Loading Sejda configuration form default sejda.xml
+Invalid value (Path 'C:\Users\094360\AppData\Local\Temp\sejda_date_extraction' is not an existing directory): --output -o value : output directory (required)
+Invalid value (Path 'C:\Users\094360\AppData\Local\Temp\sejda_date_extraction' is not an existing directory): --output -o value : output directory (required)
+Starting execution with arguments: 'splitbytext -f C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\Teacher Class Attendance .pdf --top 105 --left 71 --width 200 --height 22 -o C:\Users\094360\AppData\Local\Temp\DARv20161223 -p [TEXT] --existingOutput overwrite'
+Java version: '1.8.0_92'
+java.lang.NullPointerException
+	at ca.tdsb.dunbar.dailyattendancereport.SejdaSupport.getPDFDate(SejdaSupport.java:320)
+	at ca.tdsb.dunbar.dailyattendancereport.SejdaSupport.splitDAR(SejdaSupport.java:94)
+	at ca.tdsb.dunbar.dailyattendancereport.SejdaSupport.runMe(SejdaSupport.java:370)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:277)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:1)
+	at javafx.concurrent.Task$TaskCallable.call(Task.java:1423)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+Validating parameters.
+Starting task (org.sejda.impl.sambox.SplitByTextContentTask@40a4337a) execution.
+Opening C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\Teacher Class Attendance .pdf
+Found 0 inherited images and 0 inherited fonts potentially unused
+No Unicode mapping for checkbld (1) in font ODNMDG+TT10Ct00
+Text changed from Aviles-Wood, Flor to Bain, Benjamin on page 3 in area: TopLeftRectangularBox[left=105,top=71,width=200,height=22]
+Text changed from Bain, Benjamin to Bradley, David on page 4 in area: TopLeftRectangularBox[left=105,top=71,width=200,height=22]
+Text changed from Bradley, David to Broumas, Matina on page 5 in area: TopLeftRectangularBox[left=105,top=71,width=200,height=22]
+Text changed from Broumas, Matina to Bryan, Deonne on page 6 in area: TopLeftRectangularBox[left=105,top=71,width=200,height=22]
+Starting to split by text content
+Starting split at page 1 of the original document
+Created output temporary buffer C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer5423794530790874054.pdf
+Task progress: 14% done
+Task progress: 29% done
+Filtering annotations
+Merging acroforms with policy MERGE
+Merged AcroForm dictionary
+Ending split at page 2 of the original document, generated document size is 25.80 KB
+Starting split at page 3 of the original document
+Created output temporary buffer C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer7361311470176803806.pdf
+Task progress: 43% done
+Filtering annotations
+Merging acroforms with policy MERGE
+Merged AcroForm dictionary
+Ending split at page 3 of the original document, generated document size is 17.54 KB
+Starting split at page 4 of the original document
+Created output temporary buffer C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer3550938614577252155.pdf
+Task progress: 57% done
+Filtering annotations
+Merging acroforms with policy MERGE
+Merged AcroForm dictionary
+Ending split at page 4 of the original document, generated document size is 17.60 KB
+Starting split at page 5 of the original document
+Created output temporary buffer C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer1533427595506915822.pdf
+Task progress: 71% done
+Filtering annotations
+Merging acroforms with policy MERGE
+Merged AcroForm dictionary
+Ending split at page 5 of the original document, generated document size is 17.41 KB
+Starting split at page 6 of the original document
+Created output temporary buffer C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer8183772213691641129.pdf
+Task progress: 86% done
+Task progress: 100% done
+Filtering annotations
+Merging acroforms with policy MERGE
+Merged AcroForm dictionary
+Ending split at page 7 of the original document, generated document size is 22.17 KB
+Moving C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer5423794530790874054.pdf to C:\Users\094360\AppData\Local\Temp\DARv20161223\Aviles-Wood Flor.pdf.
+Moving C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer7361311470176803806.pdf to C:\Users\094360\AppData\Local\Temp\DARv20161223\Bain Benjamin.pdf.
+Moving C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer8183772213691641129.pdf to C:\Users\094360\AppData\Local\Temp\DARv20161223\Bryan Deonne.pdf.
+Moving C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer3550938614577252155.pdf to C:\Users\094360\AppData\Local\Temp\DARv20161223\Bradley David.pdf.
+Moving C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer1533427595506915822.pdf to C:\Users\094360\AppData\Local\Temp\DARv20161223\Broumas Matina.pdf.
+Input documents split and written to C:\Users\094360\AppData\Local\Temp\DARv20161223
+Task (org.sejda.impl.sambox.SplitByTextContentTask@40a4337a) executed in 2 seconds
+Completed execution
+TROUBLESHOOTING: tempDir.getAbsolutePath() = C:\Users\094360\AppData\Local\Temp\DARv20161223
+    C:\Users\094360\AppData\Local\Temp\DARv20161223\Aviles-Wood Flor.pdf
+    C:\Users\094360\AppData\Local\Temp\DARv20161223\Bain Benjamin.pdf
+    C:\Users\094360\AppData\Local\Temp\DARv20161223\Bradley David.pdf
+    C:\Users\094360\AppData\Local\Temp\DARv20161223\Broumas Matina.pdf
+    C:\Users\094360\AppData\Local\Temp\DARv20161223\Bryan Deonne.pdf
+
+Start: MOVE and ARCHIVE FILES
+End: MOVE and ARCHIVE FILES
+End: MOVE and ARCHIVE MASTER for Useless
+ReWriting Key : master_useful_DAR_PowerBuilder, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\PowerBuilder.pdf
+ReWriting Key : output_path, Value : C:\Users\094360\Desktop\SomeSejdaDARs
+ReWriting Key : master_useless_DAR_Teacher_Class_Attendance_, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\Teacher Class Attendance .pdf
+ReWriting Key : sejda_console, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin\sejda-console
+ReWriting Key : master_DAR_Location, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\PowerBuilder.pdf
+ReWriting Key : test, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin\a.bat
+ReWriting Key : sejda, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin
+  Writing Key : test, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin\a.bat
+Done setProperty()
+ENUM NAME: Useful
+temp directory: C:\Users\094360\AppData\Local\Temp\sejda_date_extraction
+Info. Successful temp dir creation?: true C:\Users\094360\AppData\Local\Temp\sejda_date_extraction
+Parameters for sejda console launch:
+         Param: _cmd_
+         Param: _/c_
+         Param: _call_
+         Param: _"C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin\sejda-console"_
+         Param: _splitbytext_
+         Param: _-f_
+         Param: _"C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\PowerBuilder.pdf"_
+         Param: _--top_
+         Param: _514_
+         Param: _--left_
+         Param: _61_
+         Param: _--width_
+         Param: _75_
+         Param: _--height_
+         Param: _22_
+         Param: _-o_
+         Param: _"C:\Users\094360\AppData\Local\Temp\sejda_date_extraction"_
+         Param: _-p_
+         Param: _[TEXT]_
+         Param: _--existingOutput_
+         Param: _overwrite_
+ReWriting Key : output_path, Value : C:\Users\094360\Desktop\SomeSejdaDARs
+ReWriting Key : master_useful_DAR_PowerBuilder, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\PowerBuilder.pdf
+ReWriting Key : sejda_console, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin\sejda-console
+ReWriting Key : master_useless_DAR_Teacher_Class_Attendance_, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\Teacher Class Attendance .pdf
+ReWriting Key : master_DAR_Location, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\PowerBuilder.pdf
+ReWriting Key : sejda, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin
+ReWriting Key : test, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin\a.bat
+  Writing Key : test, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin\a.bat
+Done setProperty()
+ENUM NAME: Useful
+temp directory: C:\Users\094360\AppData\Local\Temp\sejda_date_extraction
+Info. Successful temp dir creation?: false C:\Users\094360\AppData\Local\Temp\sejda_date_extraction
+Parameters for sejda console launch:
+         Param: _cmd_
+         Param: _/c_
+         Param: _call_
+         Param: _"C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin\sejda-console"_
+         Param: _splitbytext_
+         Param: _-f_
+         Param: _"C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\PowerBuilder.pdf"_
+         Param: _--top_
+         Param: _514_
+         Param: _--left_
+         Param: _61_
+         Param: _--width_
+         Param: _75_
+         Param: _--height_
+         Param: _22_
+         Param: _-o_
+         Param: _"C:\Users\094360\AppData\Local\Temp\sejda_date_extraction"_
+         Param: _-p_
+         Param: _[TEXT]_
+         Param: _--existingOutput_
+         Param: _overwrite_
+Configuring Sejda 2.10.4
+Loading Sejda configuration form default sejda.xml
+Starting execution with arguments: 'splitbytext -f C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\PowerBuilder.pdf --top 514 --left 61 --width 75 --height 22 -o C:\Users\094360\AppData\Local\Temp\sejda_date_extraction -p [TEXT] --existingOutput overwrite'
+Java version: '1.8.0_92'
+Configuring Sejda 2.10.4
+Loading Sejda configuration form default sejda.xml
+Starting execution with arguments: 'splitbytext -f C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\PowerBuilder.pdf --top 514 --left 61 --width 75 --height 22 -o C:\Users\094360\AppData\Local\Temp\sejda_date_extraction -p [TEXT] --existingOutput overwrite'
+Java version: '1.8.0_92'
+Validating parameters.
+Validating parameters.
+Starting task (org.sejda.impl.sambox.SplitByTextContentTask@40a4337a) execution.
+Opening C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\PowerBuilder.pdf
+Starting task (org.sejda.impl.sambox.SplitByTextContentTask@40a4337a) execution.
+Opening C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\PowerBuilder.pdf
+Found 0 inherited images and 0 inherited fonts potentially unused
+Found 0 inherited images and 0 inherited fonts potentially unused
+Starting to split by text content
+Starting split at page 1 of the original document
+Created output temporary buffer C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer3550982848609956048.pdf
+Task progress: 14% done
+Task progress: 29% done
+Task progress: 43% done
+Task progress: 57% done
+Task progress: 71% done
+Task progress: 86% done
+Task progress: 100% done
+Filtering annotations
+Merging acroforms with policy MERGE
+Merged AcroForm dictionary
+Starting to split by text content
+Starting split at page 1 of the original document
+Created output temporary buffer C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer59758666872440508.pdf
+Task progress: 14% done
+Task progress: 29% done
+Task progress: 43% done
+Task progress: 57% done
+Task progress: 71% done
+Task progress: 86% done
+Task progress: 100% done
+Filtering annotations
+Merging acroforms with policy MERGE
+Merged AcroForm dictionary
+Ending split at page 7 of the original document, generated document size is 83.83 KB
+Moving C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer3550982848609956048.pdf to C:\Users\094360\AppData\Local\Temp\sejda_date_extraction\2016 Nov 02.pdf.
+Input documents split and written to C:\Users\094360\AppData\Local\Temp\sejda_date_extraction
+Task (org.sejda.impl.sambox.SplitByTextContentTask@40a4337a) executed in 4 seconds
+Completed execution
+Ending split at page 7 of the original document, generated document size is 83.83 KB
+Moving C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer59758666872440508.pdf to C:\Users\094360\AppData\Local\Temp\sejda_date_extraction\2016 Nov 02.pdf.
+Input documents split and written to C:\Users\094360\AppData\Local\Temp\sejda_date_extraction
+Task (org.sejda.impl.sambox.SplitByTextContentTask@40a4337a) executed in 4 seconds
+Completed execution
+THE DATE: 2016 Nov 02
+temp directory: C:\Users\094360\AppData\Local\Temp\DARv20161223
+Info. Successful temp dir creation?: false C:\Users\094360\AppData\Local\Temp\DARv20161223
+Parameters for sejda console launch:
+         Param: _cmd_
+         Param: _/c_
+         Param: _call_
+         Param: _"C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin\sejda-console"_
+         Param: _splitbytext_
+         Param: _-f_
+         Param: _"C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\PowerBuilder.pdf"_
+         Param: _--top_
+         Param: _86_
+         Param: _--left_
+         Param: _84_
+         Param: _--width_
+         Param: _200_
+         Param: _--height_
+         Param: _22_
+         Param: _-o_
+         Param: _"C:\Users\094360\AppData\Local\Temp\DARv20161223"_
+         Param: _-p_
+         Param: _[TEXT]_
+         Param: _--existingOutput_
+         Param: _overwrite_
+java.lang.NullPointerException
+	at ca.tdsb.dunbar.dailyattendancereport.SejdaSupport.getPDFDate(SejdaSupport.java:320)
+	at ca.tdsb.dunbar.dailyattendancereport.SejdaSupport.splitDAR(SejdaSupport.java:94)
+	at ca.tdsb.dunbar.dailyattendancereport.SejdaSupport.runMe(SejdaSupport.java:376)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:277)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:1)
+	at javafx.concurrent.Task$TaskCallable.call(Task.java:1423)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+Configuring Sejda 2.10.4
+Loading Sejda configuration form default sejda.xml
+Starting execution with arguments: 'splitbytext -f C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\PowerBuilder.pdf --top 86 --left 84 --width 200 --height 22 -o C:\Users\094360\AppData\Local\Temp\DARv20161223 -p [TEXT] --existingOutput overwrite'
+Java version: '1.8.0_92'
+Validating parameters.
+Starting task (org.sejda.impl.sambox.SplitByTextContentTask@40a4337a) execution.
+Opening C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\PowerBuilder.pdf
+Found 0 inherited images and 0 inherited fonts potentially unused
+Text changed from AVILES-WOOD, FLOR to BAIN, BENJAMIN on page 3 in area: TopLeftRectangularBox[left=86,top=84,width=200,height=22]
+Text changed from BAIN, BENJAMIN to BRADLEY, DAVID on page 4 in area: TopLeftRectangularBox[left=86,top=84,width=200,height=22]
+Text changed from BRADLEY, DAVID to BROUMAS, MATINA on page 5 in area: TopLeftRectangularBox[left=86,top=84,width=200,height=22]
+Text changed from BROUMAS, MATINA to BRYAN, DEONNE on page 6 in area: TopLeftRectangularBox[left=86,top=84,width=200,height=22]
+Starting to split by text content
+Starting split at page 1 of the original document
+Created output temporary buffer C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer246004675638437482.pdf
+Task progress: 14% done
+Task progress: 29% done
+Filtering annotations
+Merging acroforms with policy MERGE
+Merged AcroForm dictionary
+Ending split at page 2 of the original document, generated document size is 38.67 KB
+Starting split at page 3 of the original document
+Created output temporary buffer C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer83398239346219658.pdf
+Task progress: 43% done
+Filtering annotations
+Merging acroforms with policy MERGE
+Merged AcroForm dictionary
+Ending split at page 3 of the original document, generated document size is 19.59 KB
+Starting split at page 4 of the original document
+Created output temporary buffer C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer2307854784942027586.pdf
+Task progress: 57% done
+Filtering annotations
+Merging acroforms with policy MERGE
+Merged AcroForm dictionary
+Ending split at page 4 of the original document, generated document size is 18.75 KB
+Starting split at page 5 of the original document
+Created output temporary buffer C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer2185250208083600102.pdf
+Task progress: 71% done
+Filtering annotations
+Merging acroforms with policy MERGE
+Merged AcroForm dictionary
+Ending split at page 5 of the original document, generated document size is 19.90 KB
+Starting split at page 6 of the original document
+Created output temporary buffer C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer381681507260214804.pdf
+Task progress: 86% done
+Task progress: 100% done
+Filtering annotations
+Merging acroforms with policy MERGE
+Merged AcroForm dictionary
+Ending split at page 7 of the original document, generated document size is 30.56 KB
+Moving C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer2307854784942027586.pdf to C:\Users\094360\AppData\Local\Temp\DARv20161223\BRADLEY DAVID.pdf.
+Moving C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer83398239346219658.pdf to C:\Users\094360\AppData\Local\Temp\DARv20161223\BAIN BENJAMIN.pdf.
+Moving C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer246004675638437482.pdf to C:\Users\094360\AppData\Local\Temp\DARv20161223\AVILES-WOOD FLOR.pdf.
+Moving C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer2185250208083600102.pdf to C:\Users\094360\AppData\Local\Temp\DARv20161223\BROUMAS MATINA.pdf.
+Moving C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer381681507260214804.pdf to C:\Users\094360\AppData\Local\Temp\DARv20161223\BRYAN DEONNE.pdf.
+Input documents split and written to C:\Users\094360\AppData\Local\Temp\DARv20161223
+Task (org.sejda.impl.sambox.SplitByTextContentTask@40a4337a) executed in 1 second
+Completed execution
+TROUBLESHOOTING: tempDir.getAbsolutePath() = C:\Users\094360\AppData\Local\Temp\DARv20161223
+    C:\Users\094360\AppData\Local\Temp\DARv20161223\AVILES-WOOD FLOR.pdf
+    C:\Users\094360\AppData\Local\Temp\DARv20161223\BAIN BENJAMIN.pdf
+    C:\Users\094360\AppData\Local\Temp\DARv20161223\BRADLEY DAVID.pdf
+    C:\Users\094360\AppData\Local\Temp\DARv20161223\BROUMAS MATINA.pdf
+    C:\Users\094360\AppData\Local\Temp\DARv20161223\BRYAN DEONNE.pdf
+
+Start: MOVE and ARCHIVE FILES
+End: MOVE and ARCHIVE FILES
+End: MOVE and ARCHIVE MASTER for Useful
+I opened the file explorer
+java.io.IOException: Both master DAR files missing. Use CutePDF to print new ones or choose new master DAR PDFs.
+	at ca.tdsb.dunbar.dailyattendancereport.SejdaSupport.runMe(SejdaSupport.java:382)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:277)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:1)
+	at javafx.concurrent.Task$TaskCallable.call(Task.java:1423)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+java.io.IOException: Both master DAR files missing. Use CutePDF to print new ones or choose new master DAR PDFs.
+	at ca.tdsb.dunbar.dailyattendancereport.SejdaSupport.runMe(SejdaSupport.java:382)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:277)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:1)
+	at javafx.concurrent.Task$TaskCallable.call(Task.java:1423)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+java.io.IOException: Both master DAR files missing. Use CutePDF to print new ones or choose new master DAR PDFs.
+	at ca.tdsb.dunbar.dailyattendancereport.SejdaSupport.runMe(SejdaSupport.java:382)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:277)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:1)
+	at javafx.concurrent.Task$TaskCallable.call(Task.java:1423)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+java.io.IOException: Both master DAR files missing. Use CutePDF to print new ones or choose new master DAR PDFs.
+	at ca.tdsb.dunbar.dailyattendancereport.SejdaSupport.runMe(SejdaSupport.java:382)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:277)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:1)
+	at javafx.concurrent.Task$TaskCallable.call(Task.java:1423)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+java.io.IOException: Both master DAR files missing. Use CutePDF to print new ones or choose new master DAR PDFs.
+	at ca.tdsb.dunbar.dailyattendancereport.SejdaSupport.runMe(SejdaSupport.java:382)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:277)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:1)
+	at javafx.concurrent.Task$TaskCallable.call(Task.java:1423)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+java.io.IOException: Both master DAR files missing. Use CutePDF to print new ones or choose new master DAR PDFs.
+	at ca.tdsb.dunbar.dailyattendancereport.SejdaSupport.runMe(SejdaSupport.java:382)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:277)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:1)
+	at javafx.concurrent.Task$TaskCallable.call(Task.java:1423)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+DAR Splitter launched: 2016/12/28 09:47:30
+C:\Users\094360\AppData\Roaming\DAR.config
+java.io.IOException: Both master DAR files missing. Use CutePDF to print new ones or choose new master DAR PDFs.
+	at ca.tdsb.dunbar.dailyattendancereport.SejdaSupport.runMe(SejdaSupport.java:382)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:277)
+	at ca.tdsb.dunbar.dailyattendancereport.DAR$SplitDARFcButtonListener$1.call(DAR.java:1)
+	at javafx.concurrent.Task$TaskCallable.call(Task.java:1423)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+DAR Splitter launched: 2016/12/28 09:51:25
+C:\Users\094360\AppData\Roaming\DAR.config
+DAR Splitter launched: 2016/12/28 09:52:51
+C:\Users\094360\AppData\Roaming\DAR.config
+DAR Splitter launched: 2016/12/28 09:54:46
+C:\Users\094360\AppData\Roaming\DAR.config
+ReWriting Key : master_useful_DAR_PowerBuilder, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\PowerBuilder.pdf
+ReWriting Key : output_path, Value : C:\Users\094360\Desktop\SomeSejdaDARs
+ReWriting Key : master_useless_DAR_Teacher_Class_Attendance_, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\Teacher Class Attendance .pdf
+ReWriting Key : sejda_console, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin\sejda-console
+ReWriting Key : master_DAR_Location, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\PowerBuilder.pdf
+ReWriting Key : test, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin\a.bat
+ReWriting Key : sejda, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin
+  Writing Key : test, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin\a.bat
+Done setProperty()
+ENUM NAME: Useless
+temp directory: C:\Users\094360\AppData\Local\Temp\sejda_date_extraction
+Info. Successful temp dir creation?: true C:\Users\094360\AppData\Local\Temp\sejda_date_extraction
+Parameters for sejda console launch:
+         Param: _cmd_
+         Param: _/c_
+         Param: _call_
+         Param: _"C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin\sejda-console"_
+         Param: _splitbytext_
+         Param: _-f_
+         Param: _"C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\Teacher Class Attendance .pdf"_
+         Param: _--top_
+         Param: _340_
+         Param: _--left_
+         Param: _55_
+         Param: _--width_
+         Param: _75_
+         Param: _--height_
+         Param: _22_
+         Param: _-o_
+         Param: _"C:\Users\094360\AppData\Local\Temp\sejda_date_extraction"_
+         Param: _-p_
+         Param: _[TEXT]_
+         Param: _--existingOutput_
+         Param: _overwrite_
+Configuring Sejda 2.10.4
+Loading Sejda configuration form default sejda.xml
+Starting execution with arguments: 'splitbytext -f C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\Teacher Class Attendance .pdf --top 340 --left 55 --width 75 --height 22 -o C:\Users\094360\AppData\Local\Temp\sejda_date_extraction -p [TEXT] --existingOutput overwrite'
+Java version: '1.8.0_92'
+Validating parameters.
+Starting task (org.sejda.impl.sambox.SplitByTextContentTask@40a4337a) execution.
+Opening C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\Teacher Class Attendance .pdf
+Found 0 inherited images and 0 inherited fonts potentially unused
+No Unicode mapping for checkbld (1) in font ODNMDG+TT10Ct00
+Starting to split by text content
+Starting split at page 1 of the original document
+Created output temporary buffer C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer1817332010107409504.pdf
+Task progress: 14% done
+Task progress: 29% done
+Task progress: 43% done
+Task progress: 57% done
+Task progress: 71% done
+Task progress: 86% done
+Task progress: 100% done
+Filtering annotations
+Merging acroforms with policy MERGE
+Merged AcroForm dictionary
+Ending split at page 7 of the original document, generated document size is 47.80 KB
+Moving C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer1817332010107409504.pdf to C:\Users\094360\AppData\Local\Temp\sejda_date_extraction\2016 NOV 02.pdf.
+Input documents split and written to C:\Users\094360\AppData\Local\Temp\sejda_date_extraction
+Task (org.sejda.impl.sambox.SplitByTextContentTask@40a4337a) executed in 1 second
+Completed execution
+THE DATE: 2016 NOV 02
+temp directory: C:\Users\094360\AppData\Local\Temp\DARv20161223
+Info. Successful temp dir creation?: false C:\Users\094360\AppData\Local\Temp\DARv20161223
+Parameters for sejda console launch:
+         Param: _cmd_
+         Param: _/c_
+         Param: _call_
+         Param: _"C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin\sejda-console"_
+         Param: _splitbytext_
+         Param: _-f_
+         Param: _"C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\Teacher Class Attendance .pdf"_
+         Param: _--top_
+         Param: _105_
+         Param: _--left_
+         Param: _71_
+         Param: _--width_
+         Param: _200_
+         Param: _--height_
+         Param: _22_
+         Param: _-o_
+         Param: _"C:\Users\094360\AppData\Local\Temp\DARv20161223"_
+         Param: _-p_
+         Param: _[TEXT]_
+         Param: _--existingOutput_
+         Param: _overwrite_
+Configuring Sejda 2.10.4
+Loading Sejda configuration form default sejda.xml
+Starting execution with arguments: 'splitbytext -f C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\Teacher Class Attendance .pdf --top 105 --left 71 --width 200 --height 22 -o C:\Users\094360\AppData\Local\Temp\DARv20161223 -p [TEXT] --existingOutput overwrite'
+Java version: '1.8.0_92'
+Validating parameters.
+Starting task (org.sejda.impl.sambox.SplitByTextContentTask@40a4337a) execution.
+Opening C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\Teacher Class Attendance .pdf
+Found 0 inherited images and 0 inherited fonts potentially unused
+No Unicode mapping for checkbld (1) in font ODNMDG+TT10Ct00
+Text changed from Aviles-Wood, Flor to Bain, Benjamin on page 3 in area: TopLeftRectangularBox[left=105,top=71,width=200,height=22]
+Text changed from Bain, Benjamin to Bradley, David on page 4 in area: TopLeftRectangularBox[left=105,top=71,width=200,height=22]
+Text changed from Bradley, David to Broumas, Matina on page 5 in area: TopLeftRectangularBox[left=105,top=71,width=200,height=22]
+Text changed from Broumas, Matina to Bryan, Deonne on page 6 in area: TopLeftRectangularBox[left=105,top=71,width=200,height=22]
+Starting to split by text content
+Starting split at page 1 of the original document
+Created output temporary buffer C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer8538162869154627241.pdf
+Task progress: 14% done
+Task progress: 29% done
+Filtering annotations
+Merging acroforms with policy MERGE
+Merged AcroForm dictionary
+Ending split at page 2 of the original document, generated document size is 25.80 KB
+Starting split at page 3 of the original document
+Created output temporary buffer C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer1563058981334299317.pdf
+Task progress: 43% done
+Filtering annotations
+Merging acroforms with policy MERGE
+Merged AcroForm dictionary
+Ending split at page 3 of the original document, generated document size is 17.54 KB
+Starting split at page 4 of the original document
+Created output temporary buffer C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer4882826660547575686.pdf
+Task progress: 57% done
+Filtering annotations
+Merging acroforms with policy MERGE
+Merged AcroForm dictionary
+Ending split at page 4 of the original document, generated document size is 17.60 KB
+Starting split at page 5 of the original document
+Created output temporary buffer C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer8088841965751233950.pdf
+Task progress: 71% done
+Filtering annotations
+Merging acroforms with policy MERGE
+Merged AcroForm dictionary
+Ending split at page 5 of the original document, generated document size is 17.42 KB
+Starting split at page 6 of the original document
+Created output temporary buffer C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer1125661508654122395.pdf
+Task progress: 86% done
+Task progress: 100% done
+Filtering annotations
+Merging acroforms with policy MERGE
+Merged AcroForm dictionary
+Ending split at page 7 of the original document, generated document size is 22.17 KB
+Moving C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer8538162869154627241.pdf to C:\Users\094360\AppData\Local\Temp\DARv20161223\Aviles-Wood Flor.pdf.
+Moving C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer1563058981334299317.pdf to C:\Users\094360\AppData\Local\Temp\DARv20161223\Bain Benjamin.pdf.
+Moving C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer1125661508654122395.pdf to C:\Users\094360\AppData\Local\Temp\DARv20161223\Bryan Deonne.pdf.
+Moving C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer4882826660547575686.pdf to C:\Users\094360\AppData\Local\Temp\DARv20161223\Bradley David.pdf.
+Moving C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer8088841965751233950.pdf to C:\Users\094360\AppData\Local\Temp\DARv20161223\Broumas Matina.pdf.
+Input documents split and written to C:\Users\094360\AppData\Local\Temp\DARv20161223
+Task (org.sejda.impl.sambox.SplitByTextContentTask@40a4337a) executed in 2 seconds
+Completed execution
+TROUBLESHOOTING: tempDir.getAbsolutePath() = C:\Users\094360\AppData\Local\Temp\DARv20161223
+    C:\Users\094360\AppData\Local\Temp\DARv20161223\Aviles-Wood Flor.pdf
+    C:\Users\094360\AppData\Local\Temp\DARv20161223\Bain Benjamin.pdf
+    C:\Users\094360\AppData\Local\Temp\DARv20161223\Bradley David.pdf
+    C:\Users\094360\AppData\Local\Temp\DARv20161223\Broumas Matina.pdf
+    C:\Users\094360\AppData\Local\Temp\DARv20161223\Bryan Deonne.pdf
+
+Start: MOVE and ARCHIVE FILES
+End: MOVE and ARCHIVE FILES
+End: MOVE and ARCHIVE MASTER for Useless
+ReWriting Key : output_path, Value : C:\Users\094360\Desktop\SomeSejdaDARs
+ReWriting Key : master_useful_DAR_PowerBuilder, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\PowerBuilder.pdf
+ReWriting Key : sejda_console, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin\sejda-console
+ReWriting Key : master_useless_DAR_Teacher_Class_Attendance_, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\Teacher Class Attendance .pdf
+ReWriting Key : master_DAR_Location, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\PowerBuilder.pdf
+ReWriting Key : sejda, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin
+ReWriting Key : test, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin\a.bat
+  Writing Key : test, Value : C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin\a.bat
+Done setProperty()
+ENUM NAME: Useful
+temp directory: C:\Users\094360\AppData\Local\Temp\sejda_date_extraction
+Info. Successful temp dir creation?: true C:\Users\094360\AppData\Local\Temp\sejda_date_extraction
+Parameters for sejda console launch:
+         Param: _cmd_
+         Param: _/c_
+         Param: _call_
+         Param: _"C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin\sejda-console"_
+         Param: _splitbytext_
+         Param: _-f_
+         Param: _"C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\PowerBuilder.pdf"_
+         Param: _--top_
+         Param: _514_
+         Param: _--left_
+         Param: _61_
+         Param: _--width_
+         Param: _75_
+         Param: _--height_
+         Param: _22_
+         Param: _-o_
+         Param: _"C:\Users\094360\AppData\Local\Temp\sejda_date_extraction"_
+         Param: _-p_
+         Param: _[TEXT]_
+         Param: _--existingOutput_
+         Param: _overwrite_
+Configuring Sejda 2.10.4
+Loading Sejda configuration form default sejda.xml
+Starting execution with arguments: 'splitbytext -f C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\PowerBuilder.pdf --top 514 --left 61 --width 75 --height 22 -o C:\Users\094360\AppData\Local\Temp\sejda_date_extraction -p [TEXT] --existingOutput overwrite'
+Java version: '1.8.0_92'
+Validating parameters.
+Starting task (org.sejda.impl.sambox.SplitByTextContentTask@40a4337a) execution.
+Opening C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\PowerBuilder.pdf
+Found 0 inherited images and 0 inherited fonts potentially unused
+Starting to split by text content
+Starting split at page 1 of the original document
+Created output temporary buffer C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer5208281705449846525.pdf
+Task progress: 14% done
+Task progress: 29% done
+Task progress: 43% done
+Task progress: 57% done
+Task progress: 71% done
+Task progress: 86% done
+Task progress: 100% done
+Filtering annotations
+Merging acroforms with policy MERGE
+Merged AcroForm dictionary
+Ending split at page 7 of the original document, generated document size is 83.82 KB
+Moving C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer5208281705449846525.pdf to C:\Users\094360\AppData\Local\Temp\sejda_date_extraction\2016 Nov 02.pdf.
+Input documents split and written to C:\Users\094360\AppData\Local\Temp\sejda_date_extraction
+Task (org.sejda.impl.sambox.SplitByTextContentTask@40a4337a) executed in 3 seconds
+Completed execution
+THE DATE: 2016 Nov 02
+temp directory: C:\Users\094360\AppData\Local\Temp\DARv20161223
+Info. Successful temp dir creation?: false C:\Users\094360\AppData\Local\Temp\DARv20161223
+Parameters for sejda console launch:
+         Param: _cmd_
+         Param: _/c_
+         Param: _call_
+         Param: _"C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\sejda-console-2.10.4-bin\sejda-console-2.10.4\bin\sejda-console"_
+         Param: _splitbytext_
+         Param: _-f_
+         Param: _"C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\PowerBuilder.pdf"_
+         Param: _--top_
+         Param: _86_
+         Param: _--left_
+         Param: _84_
+         Param: _--width_
+         Param: _200_
+         Param: _--height_
+         Param: _22_
+         Param: _-o_
+         Param: _"C:\Users\094360\AppData\Local\Temp\DARv20161223"_
+         Param: _-p_
+         Param: _[TEXT]_
+         Param: _--existingOutput_
+         Param: _overwrite_
+Configuring Sejda 2.10.4
+Loading Sejda configuration form default sejda.xml
+Starting execution with arguments: 'splitbytext -f C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\PowerBuilder.pdf --top 86 --left 84 --width 200 --height 22 -o C:\Users\094360\AppData\Local\Temp\DARv20161223 -p [TEXT] --existingOutput overwrite'
+Java version: '1.8.0_92'
+Validating parameters.
+Starting task (org.sejda.impl.sambox.SplitByTextContentTask@40a4337a) execution.
+Opening C:\Users\094360\Dropbox\Riverdale at TDSB\ICS General\DAR\PowerBuilder.pdf
+Found 0 inherited images and 0 inherited fonts potentially unused
+Text changed from AVILES-WOOD, FLOR to BAIN, BENJAMIN on page 3 in area: TopLeftRectangularBox[left=86,top=84,width=200,height=22]
+Text changed from BAIN, BENJAMIN to BRADLEY, DAVID on page 4 in area: TopLeftRectangularBox[left=86,top=84,width=200,height=22]
+Text changed from BRADLEY, DAVID to BROUMAS, MATINA on page 5 in area: TopLeftRectangularBox[left=86,top=84,width=200,height=22]
+Text changed from BROUMAS, MATINA to BRYAN, DEONNE on page 6 in area: TopLeftRectangularBox[left=86,top=84,width=200,height=22]
+Starting to split by text content
+Starting split at page 1 of the original document
+Created output temporary buffer C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer1455886601810227830.pdf
+Task progress: 14% done
+Task progress: 29% done
+Filtering annotations
+Merging acroforms with policy MERGE
+Merged AcroForm dictionary
+Ending split at page 2 of the original document, generated document size is 38.68 KB
+Starting split at page 3 of the original document
+Created output temporary buffer C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer7312867104767460419.pdf
+Task progress: 43% done
+Filtering annotations
+Merging acroforms with policy MERGE
+Merged AcroForm dictionary
+Ending split at page 3 of the original document, generated document size is 19.59 KB
+Starting split at page 4 of the original document
+Created output temporary buffer C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer320937123685842901.pdf
+Task progress: 57% done
+Filtering annotations
+Merging acroforms with policy MERGE
+Merged AcroForm dictionary
+Ending split at page 4 of the original document, generated document size is 18.75 KB
+Starting split at page 5 of the original document
+Created output temporary buffer C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer2043566102242816152.pdf
+Task progress: 71% done
+Filtering annotations
+Merging acroforms with policy MERGE
+Merged AcroForm dictionary
+Ending split at page 5 of the original document, generated document size is 19.90 KB
+Starting split at page 6 of the original document
+Created output temporary buffer C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer4782063914817529702.pdf
+Task progress: 86% done
+Task progress: 100% done
+Filtering annotations
+Merging acroforms with policy MERGE
+Merged AcroForm dictionary
+Ending split at page 7 of the original document, generated document size is 30.56 KB
+Moving C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer320937123685842901.pdf to C:\Users\094360\AppData\Local\Temp\DARv20161223\BRADLEY DAVID.pdf.
+Moving C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer7312867104767460419.pdf to C:\Users\094360\AppData\Local\Temp\DARv20161223\BAIN BENJAMIN.pdf.
+Moving C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer1455886601810227830.pdf to C:\Users\094360\AppData\Local\Temp\DARv20161223\AVILES-WOOD FLOR.pdf.
+Moving C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer2043566102242816152.pdf to C:\Users\094360\AppData\Local\Temp\DARv20161223\BROUMAS MATINA.pdf.
+Moving C:\Users\094360\AppData\Local\Temp\SejdaTmpBuffer4782063914817529702.pdf to C:\Users\094360\AppData\Local\Temp\DARv20161223\BRYAN DEONNE.pdf.
+Input documents split and written to C:\Users\094360\AppData\Local\Temp\DARv20161223
+Task (org.sejda.impl.sambox.SplitByTextContentTask@40a4337a) executed in 1 second
+Completed execution
+TROUBLESHOOTING: tempDir.getAbsolutePath() = C:\Users\094360\AppData\Local\Temp\DARv20161223
+    C:\Users\094360\AppData\Local\Temp\DARv20161223\AVILES-WOOD FLOR.pdf
+    C:\Users\094360\AppData\Local\Temp\DARv20161223\BAIN BENJAMIN.pdf
+    C:\Users\094360\AppData\Local\Temp\DARv20161223\BRADLEY DAVID.pdf
+    C:\Users\094360\AppData\Local\Temp\DARv20161223\BROUMAS MATINA.pdf
+    C:\Users\094360\AppData\Local\Temp\DARv20161223\BRYAN DEONNE.pdf
+
+Start: MOVE and ARCHIVE FILES
+End: MOVE and ARCHIVE FILES
+End: MOVE and ARCHIVE MASTER for Useful
+I opened the file explorer
