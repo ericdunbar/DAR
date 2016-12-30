@@ -11,6 +11,7 @@ import ca.tdsb.dunbar.dailyattendancereport.SejdaSupport;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -18,6 +19,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
@@ -87,12 +89,13 @@ public class DAR extends Application {
 		// http://stackoverflow.com/questions/8043356/file-write-printstream-append
 		// http://stackoverflow.com/questions/12053075/how-do-i-write-the-exception-from-printstacktrace-into-a-text-file-in-java
 		try {
-			ps = new PrintStream(new FileOutputStream("DAR20161228_log.txt", true));
-			// new FileOutputStream(System.getProperty("java.io.tmpdir") + "\\"
-			// + "DAR_log.txt", true));
-			// System.setOut(ps);
+			// ps = new PrintStream(new FileOutputStream("DAR20161230_log.txt",
+			// true));
+			ps = new PrintStream(
+					new FileOutputStream(System.getProperty("java.io.tmpdir") + "\\" + "DAR20161230_1_log.txt", true));
+//			System.setOut(ps);
 		} catch (Exception e) {
-			e.printStackTrace();
+			e.printStackTrace(ps);
 		}
 
 		// https://www.mkyong.com/java/java-how-to-get-current-date-time-date-and-calender/
@@ -378,7 +381,9 @@ public class DAR extends Application {
 			// https://www.mkyong.com/java/java-how-to-get-current-date-time-date-and-calender/
 			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			Date date = new Date(System.currentTimeMillis());
-			setText(dateFormat.format(date) + ": " + s + "\n" + this.getText());
+			String setT = dateFormat.format(date) + ": " + s + "\n" + this.getText();
+			setText(setT);
+			minorln(setT);
 		}
 	}
 
@@ -463,10 +468,41 @@ public class DAR extends Application {
 	 * 
 	 * @param string
 	 */
-	public static void minorln(String string) {
-		minor(string + "\n");
+	public static void majorln(String string) {
+		System.out.println(string);
 	}
 
+	public static void minorln(String string) {
+		majorln("__" + string);
+	}
+	
+
+	public static void msgBoxError(String title, String header, String content) { 
+//		msgBox(title, header, content, Alert.AlertType.WARNING);
+//		msgBox(title, header, content, Alert.AlertType.CONFIRMATION);
+//		msgBox(title, header, content, Alert.AlertType.INFORMATION);
+		msgBox(title, header, content, Alert.AlertType.ERROR);
+
+
+		
+	}
+	
+	public static void msgBoxInfo(String title, String header, String content) { 
+		msgBox(title, header, content, Alert.AlertType.INFORMATION);
+	}
+
+	//http://stackoverflow.com/questions/11662857/javafx-2-1-messagebox
+	public static void msgBox(String title, String header, String content, Alert.AlertType typeOfBox) { 
+	    Platform.runLater(new Runnable() {
+	        public void run() {
+	    	    Alert alert = new Alert(typeOfBox);
+	    	    alert.setTitle(title);
+	    	    alert.setHeaderText(header);
+	    	    alert.setContentText(content);
+	    	    alert.showAndWait();
+	        }
+	      });
+	}
 	private void showDARFileChooser() {
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setInitialDirectory(new File(System.getenv("userprofile")));
