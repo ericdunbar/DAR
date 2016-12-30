@@ -478,13 +478,7 @@ public class DAR extends Application {
 	
 
 	public static void msgBoxError(String title, String header, String content) { 
-//		msgBox(title, header, content, Alert.AlertType.WARNING);
-//		msgBox(title, header, content, Alert.AlertType.CONFIRMATION);
-//		msgBox(title, header, content, Alert.AlertType.INFORMATION);
 		msgBox(title, header, content, Alert.AlertType.ERROR);
-
-
-		
 	}
 	
 	public static void msgBoxInfo(String title, String header, String content) { 
@@ -503,6 +497,7 @@ public class DAR extends Application {
 	        }
 	      });
 	}
+	
 	private void showDARFileChooser() {
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setInitialDirectory(new File(System.getenv("userprofile")));
