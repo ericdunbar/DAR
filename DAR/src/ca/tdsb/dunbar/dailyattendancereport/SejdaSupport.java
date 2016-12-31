@@ -31,11 +31,29 @@ public class SejdaSupport {
 		this.preferences = prefs;
 		this.ps = printStream;
 		this.messageFX = msgFX;
-		File sejdaF = new File(prefs.getProperty(DAR.prefSejdaLocation));
+		if (!this.preferences.exists())
+			throw new IOException("Please set preferences. Without valid preferences this program is useless.");
+
+		String sedjaFS = prefs.getProperty(DAR.prefSejdaLocation);
+		if (sedjaFS == null)
+			throw new IOException(
+					"Set the location of \"sejda-console\" using the \"Choose sedja-console...\" button. File location is likely whereever this is found: sejda-console-2.10.4-bin\\sejda-console-2.10.4\\bin\\sejda-console.");
+		File sejdaF = new File(sedjaFS);
 		if (!sejdaF.exists()) {
 			throw new IOException(
-					"sejda-console not available. Ensure the path to the application is set in the prferences.");
+					"\"sejda-console\" is unavailable. Move it back to its original location or set its new location using the \"Choose sedja-console...\" button. File location is likely whereever this is found: sejda-console-2.10.4-bin\\sejda-console-2.10.4\\bin\\sejda-console.");
 		}
+
+		String outPath = preferences.getProperty(DAR.prefOutputPath);
+		if (outPath == null)
+			throw new IOException(
+					"Please set destination (output) directory using the \"Choose destination directory...\" button.");
+
+		if (!(new File(outPath).exists())) {
+			throw new IOException("Destination directory unavailable or has been moved (this could indicate a network error in which case changing destination directory won't do anything). "
+					+ "Please set destination (output) directory using the \"Choose destination directory...\" button.");
+		}
+
 	}
 
 	TextDAR messageFX; // display status updates here
@@ -89,10 +107,11 @@ public class SejdaSupport {
 
 		// DATE
 		String dateForDAR = getPDFDate(sourceFile, whichDAR);
-		
+
 		File tFile = new File(dateForDAR);
 		if (tFile.getName().equalsIgnoreCase("date_error")) {
-			throw new IOException("The source PDF(s) is/are reversed or (an) incorrect PDF(s) was/were chosen. Please use the \"Choose Master DAR Files...\" button to choose the correct file(s).");
+			throw new IOException(
+					"The source PDF(s) are reversed or incorrect PDF(s) were chosen for one or both DAR types. Please use the \"Choose Master DAR Files...\" button to choose the correct file(s).");
 		}
 		DAR.minorln("THE DATE: " + dateForDAR);
 
@@ -115,13 +134,14 @@ public class SejdaSupport {
 
 		sejdaSplitDAR(cmdAndArgs, tempDir);
 
-		// DELETE FILES
+		// DELETE EXISTING FILES
 		// http://stackoverflow.com/questions/5751335/using-file-listfiles-with-filenameextensionfilter
 		File ftbd = new File(preferences.getProperty(DAR.prefOutputPath));
 
-		// delete existing PDFs
 		int delF = deleteFiles(ftbd, whichDAR, ".pdf");
-		messageFX.prependTextWithDate("Cleaned up " + delF + " " + whichDAR.toString() + " files from destination.");
+
+		messageFX.prependTextWithDate(
+				"Cleaned up destination by removing " + delF + " " + whichDAR.toString() + " files.");
 
 		String newFileList[] = tempDir.list(new FilenameFilter() {
 			public boolean accept(File dir, String name) {
@@ -144,29 +164,29 @@ public class SejdaSupport {
 		archiveDir = new File(preferences.getProperty(DAR.prefOutputPath) + "\\Archive\\" + dateForDAR);
 		archiveDir.mkdir();
 
-		DAR.minorln("Start: MOVE and ARCHIVE FILES");
+		DAR.minorln("Start: MOVE and ARCHIVE NEW FILES");
 		for (String s : newFileList) {
 			String oldFile = tempDir.getAbsolutePath() + "\\" + s;
 
 			String newName = FilenameUtils.getBaseName(s) + " " + describeDAR + ".pdf";
 			String newArchivalName = FilenameUtils.getBaseName(s) + " " + describeDAR + " " + dateForDAR + ".pdf";
 			newName = newArchivalName; // yes, got lazy!
-			
+
 			String newFile = preferences.getProperty(DAR.prefOutputPath) + "\\" + newName;
 			String newArchivalFile = archiveDir.getAbsolutePath() + "\\" + newArchivalName;
 
 			darMoveFile(oldFile, newFile, newArchivalFile);
 		}
-		messageFX.prependTextWithDate("MOVED " + newFileList.length + " " + whichDAR.toString() + " teacher DAR PDF files to: " + preferences.getProperty(DAR.prefOutputPath) + " for " + dateForDAR+".");
-		DAR.minorln("End: MOVE and ARCHIVE FILES");
+		messageFX.prependTextWithDate(
+				"Moved " + newFileList.length + " new " + whichDAR.toString() + " teacher DAR PDF files to: "
+						+ preferences.getProperty(DAR.prefOutputPath) + " for " + dateForDAR + ".");
 
 		// MOVE master DAR to ARCHIVE
 		String FROM = preferences.getProperty(localPrefMasteDAR);
 		String TO = preferences.getProperty(DAR.prefOutputPath) + "\\Archive\\Masters\\" + "Master_DAR_" + describeDAR
 				+ "_" + dateForDAR + ".pdf";
 		darMoveFile(FROM, TO);
-		DAR.minorln("End: MOVE and ARCHIVE MASTER for " + describeDAR);
-		messageFX.prependTextWithDate("ARCHIVED the master DAR PDF for " + describeDAR + " for " + dateForDAR+".");
+		messageFX.prependTextWithDate("Archived the master DAR PDF for " + describeDAR + " for " + dateForDAR + ".");
 		DAR.majorln("METHOD END: public void splitDAR(DARType whichDAR) throws IOException");
 	}
 
@@ -324,7 +344,7 @@ public class SejdaSupport {
 		File fL[] = tempDir.listFiles();
 
 		if (fL.length != 1) {
-			// do not delete dir for troublshooting purposes
+			// do not delete dir for troubleshooting purposes
 			return "date_error";
 		}
 
@@ -358,16 +378,6 @@ public class SejdaSupport {
 		DAR.working = true;
 
 		try {
-			// TODO Have errorStatusFX update before processing
-
-			if (!(new File(preferences.getProperty(DAR.prefOutputPath)).exists())) {
-				throw new IOException("Destination directory unavailable. Please choose it.");
-			}
-
-			// TODO Eliminate Apache
-			// TODO RENAME variable
-			// TODO catch unset preference
-
 			boolean missing[] = { false, false };
 			final int useless = 0;
 			final int useful = 1;
@@ -396,26 +406,23 @@ public class SejdaSupport {
 				String msg = ("Only one DAR processed. " + generateMissingMsg(dM) + commonMsg);
 				DAR.msgBoxError("Problem with a DAR", "A problem was encountered with one DAR file", msg);
 				throw new IOException(msg);
+			} else {
+				DAR.minorln("Completed check to see if no, one or two missing DAR files. THROW IOException not used.");
+
+				Desktop desktop = Desktop.getDesktop();
+				desktop.open(new File(preferences.getProperty(DAR.prefOutputPath)));
+
+				DAR.msgBoxInfo("Success", "Both DARs successfully processed",
+						"Please check the destination directory that opened to confirm that the files were successfully processed.");
+
+				errorStatusFX.prependTextWithDate("Both DARs successfully processed.");
 			}
-			
-			DAR.minorln("Completed check to see if no, one or two missing DAR files. THROW IOException not used.");
-
-			Desktop desktop = Desktop.getDesktop();
-			desktop.open(new File(preferences.getProperty(DAR.prefOutputPath)));
-
-			DAR.msgBoxInfo("Success", "Both DARs successfully processed",
-					"Please check the destination directory that opened to confirm that the files were successfully processed.");
-
-			errorStatusFX.prependTextWithDate("Both DARs successfully processed.");
-
 		} catch (Exception e1) {
-			// TODO Auto-generated catch block
 			DAR.minorln("TRY..CATCH (RM1): one or two missing DAR Exception: e1.getMessage() = " + e1.getMessage());
 
 			e1.printStackTrace();
 
 			errorStatusFX.prependTextWithDate(e1.getMessage());
-			DAR.working = false;
 		}
 
 		DAR.working = false;
@@ -441,7 +448,7 @@ public class SejdaSupport {
 			if (!masterDAR.exists())
 				s = "The master DAR file (" + masterDAR.getName() + ") for " + d.toString()
 						+ " DAR masters is missing. "
-						+ "Use CutePDF to print a new DAR of that type, if necessary and Choose the location for that master DAR PDF. ";
+						+ "Use CutePDF to print a new DAR of that type. If necessary, choose the location for the master DAR PDF. ";
 		}
 		return s;
 	}
@@ -467,7 +474,6 @@ public class SejdaSupport {
 		try {
 			masterDAR = new File(pathToMasterDAR);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			DAR.minorln("TRY..CATCH (AS1): Failure. \"masterDAR = new File(pathToMasterDAR);\". e.getMessage() = "
 					+ e.getMessage());
 			missing = true;

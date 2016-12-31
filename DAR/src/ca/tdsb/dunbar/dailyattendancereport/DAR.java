@@ -52,7 +52,7 @@ public class DAR extends Application {
 	private TextLbl masterUsefulDARFX;
 	private TextLbl masterUselessDARFX;
 
-	private static final String formTitleFX = "Daily Attendance Report processor version 2016.12.24";
+	private static final String formTitleFX = "Daily Attendance Report processor version 2016.12.30";
 
 	private TextLbl clockFX;
 	private TextLbl sedjaDARFX;
@@ -64,7 +64,7 @@ public class DAR extends Application {
 
 	private Button[] buttons;
 
-	// GENERAL INSTANCE fields
+	// GENERAL INSTANCE FIELDS
 	/**
 	 * The two types of daily attendance record PDF.
 	 * 
@@ -77,9 +77,7 @@ public class DAR extends Application {
 
 	// CLASS fields
 	static PrintStream ps = null; // log file for System.out and StackTrace
-
-	// TODO: Get rid of working. Such an ugly solution.
-	static boolean working = false; // used to determine status updates
+	static boolean working = false; // disable buttons while processing
 	protected static boolean firstRun = true; // prevents invisible text
 
 	public static void main(String[] args) {
@@ -88,20 +86,18 @@ public class DAR extends Application {
 		// http://stackoverflow.com/questions/8043356/file-write-printstream-append
 		// http://stackoverflow.com/questions/12053075/how-do-i-write-the-exception-from-printstacktrace-into-a-text-file-in-java
 		try {
-			// ps = new PrintStream(new FileOutputStream("DAR20161230_log.txt",
-			// true));
 			ps = new PrintStream(
 					new FileOutputStream(System.getProperty("java.io.tmpdir") + "\\" + "DAR20161230_1_log.txt", true));
-			// System.setOut(ps);
+			// System.setOut(ps); // capture System.out to a file
 		} catch (Exception e) {
-			e.printStackTrace(ps);
+			e.printStackTrace();
 		}
 
 		// https://www.mkyong.com/java/java-how-to-get-current-date-time-date-and-calender/
 		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		Date date = new Date(System.currentTimeMillis());
 		majorln("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
-		majorln("DAR Splitter launched: "+dateFormat.format(date));
+		majorln("DAR Splitter launched: " + dateFormat.format(date));
 		majorln("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
 
 		Application.launch(args);
@@ -111,7 +107,7 @@ public class DAR extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		majorln("METHOD: start(Stage primaryStage)");
-		minorln("Preferences file: " + preferences.getFileName());
+		minorln("Preferences file: " + preferences.getPreferencesFileName());
 
 		primaryStage.setTitle(formTitleFX);
 
@@ -139,6 +135,7 @@ public class DAR extends Application {
 		btnSedjaConsole = new Button("Choose \"sedja-console\"...");
 		btnSedjaConsole.setOnAction(new SedjaDirFcButtonListener());
 		btnSedjaConsole.setMnemonicParsing(true);
+		btnSedjaConsole.setDisable(true);
 		buttonHb1.getChildren().addAll(btnSedjaConsole);
 
 		btnSplitDAR = new Button("_Split master DAR");
@@ -155,7 +152,7 @@ public class DAR extends Application {
 		buttonHb5.setAlignment(Pos.CENTER);
 		buttonHb5.getChildren().addAll(btnExit);
 
-		buttons = new Button[] { btnDestDir, btnMasterDAR, btnSedjaConsole, btnExit, btnSplitDAR };
+		buttons = new Button[] { btnDestDir, btnMasterDAR, btnExit, btnSplitDAR };
 
 		// Status message text
 		programUpdatesFX = new TextDAR();
@@ -228,8 +225,6 @@ public class DAR extends Application {
 
 		// Trigger split button
 		btnSplitDAR.fire();
-
-		// TODO Automate the process if valid DAR is available
 
 		majorln("METHOD END: start(Stage primaryStage)");
 	}
@@ -315,11 +310,17 @@ public class DAR extends Application {
 						r = new SejdaSupport(preferences, ps, programUpdatesFX);
 						r.runMe(programUpdatesFX);
 					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						if (e.getMessage() == null) {
-							programUpdatesFX.prependTextWithDate("Possible problem with preferences. Please set them.");
-						} else
+						btnSedjaConsole.setDisable(false);
+						if (e.getMessage()==null) {
+							String msg = "Possible problem with preferences. Please set them.";
+							programUpdatesFX.prependTextWithDate(msg);
+							msgBoxError("Preferences Problem Detected", "Possible problem with preferences.", msg);
+							e.printStackTrace();
+						} else {
 							programUpdatesFX.prependTextWithDate(e.getMessage());
+							msgBoxError("Error encountered", "An error was encountered at the start of the split process.",
+									e.getMessage());
+						}
 						e.printStackTrace(ps);
 					}
 
@@ -550,7 +551,7 @@ public class DAR extends Application {
 		}
 
 		// TODO: MESSY. AM TOO TIRED TO FIX
-		
+
 		String errorMsg = "";
 		if (!selectedFile.getName().equals("PowerBuilder.pdf")) {
 			errorMsg = "\"" + "PowerBuilder.pdf" + "\"" + " was expected. \"" + selectedFile.getName() + "\""

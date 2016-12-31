@@ -1,5 +1,6 @@
 package ca.tdsb.dunbar.dailyattendancereport;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -22,7 +23,7 @@ public class DARProperties {
 	}
 
 	// Universal
-	public String prefsFile;
+	private String prefsFile;
 
 	/**
 	 * Creates an instance to manage the storage and retrieval of preferences in
@@ -34,8 +35,12 @@ public class DARProperties {
 		prefsFile = System.getenv("APPDATA") + "\\" + file;
 	}
 
-	public String getFileName(){
+	public String getPreferencesFileName(){
 		return prefsFile;
+	}
+	
+	public boolean exists(){
+		return new File(getPreferencesFileName()).exists();
 	}
 	
 	/**
