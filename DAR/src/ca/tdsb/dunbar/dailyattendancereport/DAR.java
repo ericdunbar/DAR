@@ -6,7 +6,6 @@ import java.io.PrintStream;
 import java.sql.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-
 import ca.tdsb.dunbar.dailyattendancereport.SejdaSupport;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -84,7 +83,7 @@ public class DAR extends Application {
 	protected static boolean firstRun = true; // prevents invisible text
 
 	public static void main(String[] args) {
-
+		majorln("METHOD: main(String[] args)");
 		// CONFIGURE LOGGING
 		// http://stackoverflow.com/questions/8043356/file-write-printstream-append
 		// http://stackoverflow.com/questions/12053075/how-do-i-write-the-exception-from-printstacktrace-into-a-text-file-in-java
@@ -93,7 +92,7 @@ public class DAR extends Application {
 			// true));
 			ps = new PrintStream(
 					new FileOutputStream(System.getProperty("java.io.tmpdir") + "\\" + "DAR20161230_1_log.txt", true));
-//			System.setOut(ps);
+			// System.setOut(ps);
 		} catch (Exception e) {
 			e.printStackTrace(ps);
 		}
@@ -101,16 +100,17 @@ public class DAR extends Application {
 		// https://www.mkyong.com/java/java-how-to-get-current-date-time-date-and-calender/
 		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		Date date = new Date(System.currentTimeMillis());
-		System.out.println("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
-		System.out.print("DAR Splitter launched: ");
-		System.out.println(dateFormat.format(date));
-		System.out.println("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
+		majorln("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
+		majorln("DAR Splitter launched: "+dateFormat.format(date));
+		majorln("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
 
 		Application.launch(args);
+		majorln("METHOD END: main(String[] args)");
 	}
 
 	@Override
 	public void start(Stage primaryStage) {
+		majorln("METHOD: start(Stage primaryStage)");
 		minorln("Preferences file: " + preferences.getFileName());
 
 		primaryStage.setTitle(formTitleFX);
@@ -230,6 +230,8 @@ public class DAR extends Application {
 		btnSplitDAR.fire();
 
 		// TODO Automate the process if valid DAR is available
+
+		majorln("METHOD END: start(Stage primaryStage)");
 	}
 
 	private TextLbl createTextFX(String descriptor, String prefString) {
@@ -475,53 +477,93 @@ public class DAR extends Application {
 	public static void minorln(String string) {
 		majorln("__" + string);
 	}
-	
 
-	public static void msgBoxError(String title, String header, String content) { 
+	public static void msgBoxError(String title, String header, String content) {
 		msgBox(title, header, content, Alert.AlertType.ERROR);
 	}
-	
-	public static void msgBoxInfo(String title, String header, String content) { 
+
+	public static void msgBoxInfo(String title, String header, String content) {
 		msgBox(title, header, content, Alert.AlertType.INFORMATION);
 	}
 
-	//http://stackoverflow.com/questions/11662857/javafx-2-1-messagebox
-	public static void msgBox(String title, String header, String content, Alert.AlertType typeOfBox) { 
-	    Platform.runLater(new Runnable() {
-	        public void run() {
-	    	    Alert alert = new Alert(typeOfBox);
-	    	    alert.setTitle(title);
-	    	    alert.setHeaderText(header);
-	    	    alert.setContentText(content);
-	    	    alert.showAndWait();
-	        }
-	      });
-	}
-	
-	private void showDARFileChooser() {
-		FileChooser fileChooser = new FileChooser();
-		fileChooser.setInitialDirectory(new File(System.getenv("userprofile")));
-		fileChooser.setTitle("Open useful DAR, aka \"PowerBuilder.pdf\"");
-		File selectedFile = fileChooser.showOpenDialog(null);
+	// http://stackoverflow.com/questions/11662857/javafx-2-1-messagebox
 
+	public static void msgBox(String title, String header, String content, Alert.AlertType typeOfBox) {
+		Platform.runLater(new Runnable() {
+
+			public void run() {
+				Alert alert = new Alert(typeOfBox);
+				alert.setTitle(title);
+				alert.setHeaderText(header);
+				alert.setContentText(content);
+				alert.showAndWait();
+			}
+		});
+	}
+
+	static class DARFileChooserClass {
+
+		public void msgBox2(String title, String header, String content, Alert.AlertType typeOfBox) {
+			majorln("METHOD: public void msgBox2(String title, String header, String content, Alert.AlertType typeOfBox)");
+			minorln("content = " + content);
+
+			Platform.runLater(new Runnable() {
+
+				public void run() {
+					Alert alert = new Alert(typeOfBox);
+					alert.setTitle(title);
+					alert.setHeaderText(header);
+					alert.setContentText(content);
+					alert.showAndWait();
+				}
+			});
+		}
+
+		public File DARFileChooser(String DARFileName, DARType dT) {
+			majorln("METHOD: public File DARFileChooser(String DARFileName, DARType dT)");
+			FileChooser fileChooser = new FileChooser();
+			fileChooser.setInitialDirectory(new File(System.getenv("userprofile")));
+			File selectedFile = null;
+			fileChooser.setTitle("Open " + dT.toString() + " DAR, likely called \"" + DARFileName + "\"");
+
+			selectedFile = fileChooser.showOpenDialog(null);
+
+			majorln("METHOD END: public File DARFileChooser(String DARFileName, DARType dT)");
+			return selectedFile;
+		}
+	}
+
+	private void showDARFileChooser() {
+		File selectedFile, selectedFile2;
+		DARFileChooserClass dfc = new DARFileChooserClass();
+		selectedFile = dfc.DARFileChooser("PowerBuilder.pdf", DARType.Useful);
 		if (selectedFile != null) {
 			preferences.setProperty(prefMasterUsefulDAR, selectedFile.getAbsolutePath());
-			// TODO update object
-			// masterUsefulDARFX.setText("Master " + DARType.Useful.toString() +
-			// " DAR (updated):\n "
-			// + preferences.getProperty(prefMasterUsefulDAR));
 			masterUsefulDARFX.update();
 		}
 
-		fileChooser.setTitle("Open " + DARType.Useless.toString() + " DAR, aka \"Teacher Class Attendance .pdf\"");
-		File selectedFile2 = fileChooser.showOpenDialog(null);
-
+		dfc = new DARFileChooserClass();
+		selectedFile2 = dfc.DARFileChooser("Teacher Class Attendance .pdf", DARType.Useless);
 		if (selectedFile2 != null) {
 			preferences.setProperty(prefMasterUselessDAR, selectedFile2.getAbsolutePath());
 			masterUselessDARFX.update();
-			// masterUselessDARFX
-			// .setText("Master Useless DAR (updated):\n " +
-			// preferences.getProperty(prefMasterUselessDAR));
+		}
+
+		// TODO: MESSY. AM TOO TIRED TO FIX
+		
+		String errorMsg = "";
+		if (!selectedFile.getName().equals("PowerBuilder.pdf")) {
+			errorMsg = "\"" + "PowerBuilder.pdf" + "\"" + " was expected. \"" + selectedFile.getName() + "\""
+					+ " was chosen. ";
+		}
+		if (!selectedFile2.getName().equals("Teacher Class Attendance .pdf")) {
+			errorMsg = errorMsg + "\"" + "Teacher Class Attendance .pdf" + "\"" + " was expected. \""
+					+ selectedFile2.getName() + "\"" + " was chosen. ";
+		}
+
+		if (!errorMsg.equals("")) {
+			dfc.msgBox2("Confirm selected PDF", "Unexpected file(s) chosen",
+					errorMsg + " DOUBLE CHECK THAT THE MASTER FILES ARE CORRECT!", Alert.AlertType.CONFIRMATION);
 		}
 	}
 

@@ -38,9 +38,9 @@ public class SejdaSupport {
 		}
 	}
 
-	TextDAR messageFX;
-	File sejdaF;
-	PrintStream ps;
+	TextDAR messageFX; // display status updates here
+	File sejdaF; // sejda-console
+	PrintStream ps; // the printstream where errors go
 	DARProperties preferences;
 
 	/**
@@ -66,36 +66,41 @@ public class SejdaSupport {
 		// 1. TEXT COORDINATES & type of preferences file
 		// String c[] = {"--top", "--left", "--width", "--height"};
 
-		String localPrefDARLocation;
+		String localPrefMasteDAR;
 
 		String teacherNameCoordinates[];
 
 		String describeDAR = whichDAR.toString();
 
 		if (whichDAR == DARType.Useful) {
-			localPrefDARLocation = DAR.prefMasterUsefulDAR;
+			localPrefMasteDAR = DAR.prefMasterUsefulDAR;
 
 			// USEFUL split by TEACHERNAME
 			teacherNameCoordinates = new String[] { "86", "84", "200", "22" };
 		} else {
-			localPrefDARLocation = DAR.prefMasterUselessDAR;
+			localPrefMasteDAR = DAR.prefMasterUselessDAR;
 
 			// USELESS split by TEACHERNAME
 			teacherNameCoordinates = new String[] { "105", "71", "200", "22" };
 		}
 
 		// SOURCE FILE
-		String sourceFile = preferences.getProperty(localPrefDARLocation);
+		String sourceFile = preferences.getProperty(localPrefMasteDAR);
 
 		// DATE
 		String dateForDAR = getPDFDate(sourceFile, whichDAR);
+		
+		File tFile = new File(dateForDAR);
+		if (tFile.getName().equalsIgnoreCase("date_error")) {
+			throw new IOException("The source PDF(s) is/are reversed or (an) incorrect PDF(s) was/were chosen. Please use the \"Choose Master DAR Files...\" button to choose the correct file(s).");
+		}
 		DAR.minorln("THE DATE: " + dateForDAR);
 
 		// DESTINATION DIRECTORY
 		// Prepare temporary directory
 		File tempDir = createTempDir();
 		if (tempDir == null)
-			throw new IOException("Temp process directory could not be created. Try again.");
+			throw new IOException("Temp directory could not be created. Try again.");
 
 		String destinationDirectory = tempDir.getAbsolutePath();
 
@@ -115,9 +120,8 @@ public class SejdaSupport {
 		File ftbd = new File(preferences.getProperty(DAR.prefOutputPath));
 
 		// delete existing PDFs
-		deleteFiles(ftbd, whichDAR, ".pdf");
-
-		// TODO?
+		int delF = deleteFiles(ftbd, whichDAR, ".pdf");
+		messageFX.prependTextWithDate("Cleaned up " + delF + " " + whichDAR.toString() + " files from destination.");
 
 		String newFileList[] = tempDir.list(new FilenameFilter() {
 			public boolean accept(File dir, String name) {
@@ -125,8 +129,6 @@ public class SejdaSupport {
 				return name.toLowerCase().endsWith(".pdf");
 			}
 		});
-
-		// String newFileList[] = tempDir.list(new SuffixFileFilter(".pdf"));
 
 		// MOVE and COPY PDFs
 
@@ -142,28 +144,29 @@ public class SejdaSupport {
 		archiveDir = new File(preferences.getProperty(DAR.prefOutputPath) + "\\Archive\\" + dateForDAR);
 		archiveDir.mkdir();
 
-		DAR.minorln("");
 		DAR.minorln("Start: MOVE and ARCHIVE FILES");
 		for (String s : newFileList) {
 			String oldFile = tempDir.getAbsolutePath() + "\\" + s;
 
 			String newName = FilenameUtils.getBaseName(s) + " " + describeDAR + ".pdf";
 			String newArchivalName = FilenameUtils.getBaseName(s) + " " + describeDAR + " " + dateForDAR + ".pdf";
-
+			newName = newArchivalName; // yes, got lazy!
+			
 			String newFile = preferences.getProperty(DAR.prefOutputPath) + "\\" + newName;
-			String archiveFile = archiveDir.getAbsolutePath() + "\\" + newArchivalName;
+			String newArchivalFile = archiveDir.getAbsolutePath() + "\\" + newArchivalName;
 
-			darMoveFile(oldFile, newFile, archiveFile);
+			darMoveFile(oldFile, newFile, newArchivalFile);
 		}
+		messageFX.prependTextWithDate("MOVED " + newFileList.length + " " + whichDAR.toString() + " teacher DAR PDF files to: " + preferences.getProperty(DAR.prefOutputPath) + " for " + dateForDAR+".");
 		DAR.minorln("End: MOVE and ARCHIVE FILES");
 
 		// MOVE master DAR to ARCHIVE
-		String FROM = preferences.getProperty(localPrefDARLocation);
+		String FROM = preferences.getProperty(localPrefMasteDAR);
 		String TO = preferences.getProperty(DAR.prefOutputPath) + "\\Archive\\Masters\\" + "Master_DAR_" + describeDAR
 				+ "_" + dateForDAR + ".pdf";
 		darMoveFile(FROM, TO);
-		System.out.println("End: MOVE and ARCHIVE MASTER for " + describeDAR);
-		messageFX.prependTextWithDate("MOVE and ARCHIVE MASTER for " + describeDAR);
+		DAR.minorln("End: MOVE and ARCHIVE MASTER for " + describeDAR);
+		messageFX.prependTextWithDate("ARCHIVED the master DAR PDF for " + describeDAR + " for " + dateForDAR+".");
 		DAR.majorln("METHOD END: public void splitDAR(DARType whichDAR) throws IOException");
 	}
 
@@ -268,7 +271,7 @@ public class SejdaSupport {
 		FileUtils.moveFile(FileUtils.getFile(oldFile), FileUtils.getFile(firstNewFile));
 	}
 
-	private void deleteFiles(File ftbd, DARType whichDAR, String extension) {
+	private int deleteFiles(File ftbd, DARType whichDAR, String extension) {
 		DAR.majorln("METHOD: deleteFiles(File ftbd, DARType whichDAR, String extension)");
 
 		String filesToBeDeletedList[] = ftbd.list(new FilenameFilter() {
@@ -282,6 +285,7 @@ public class SejdaSupport {
 			new File(preferences.getProperty(DAR.prefOutputPath) + "\\" + string).delete();
 		}
 		DAR.majorln("METHOD END: deleteFiles(File ftbd, DARType whichDAR, String extension)");
+		return filesToBeDeletedList.length;
 	}
 
 	public String getPDFDate(String sourceFile, DARType darT) throws IOException {
