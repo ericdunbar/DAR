@@ -1,12 +1,12 @@
 package ca.tdsb.dunbar.dailyattendancereport;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.PrintStream;
 import java.sql.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import ca.tdsb.dunbar.dailyattendancereport.SejdaSupport;
+import ca.tdsb.dunbar.dailyattendancereport.DL;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
@@ -34,19 +34,52 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+/**
+ * This class manages the separation of a single PDF of the daily attendance
+ * record into individual PDFs representing each teacher's DAR. Two types of DAR
+ * as produced by Trillium are supported. A so-called "useful" one and a
+ * so-called "useless" one. This convention is arbitrarily (and cheekily)
+ * chosen. The useful DAR contains phone numbers and class attendance while the
+ * useless DAR contains only a comment about the reason for an absence.
+ * 
+ * @author ED
+ * @date 2016-12-31
+ *
+ */
 public class DAR extends Application {
 
-	// PREFERENCES fields
+	// ||||||||||||||||||||||||||||||
+	// __________PREFERENCES
+	// ||||||||||||||||||||||||||||||
+	/** Instance of a preferences-management program that tracks preferences */
 	static DARProperties preferences = new DARProperties("DAR.config");
 
-	public final static String prefInputPath = "input_path";
+	/** Destination for successfully split individual PDFs */
 	public final static String prefOutputPath = "output_path";
+
+	/**
+	 * Full path and name for the original "useful" type of DAR. Contains all
+	 * teacher DARs in a single file.
+	 */
 	public final static String prefMasterUsefulDAR = "master_useful_DAR_PowerBuilder";
+
+	/**
+	 * Full path and name for the original "useless" type of DAR. Contains all
+	 * teacher DARs in a single file.
+	 */
 	public final static String prefMasterUselessDAR = "master_useless_DAR_Teacher_Class_Attendance_";
+
+	// TODO Is prefSejdaDirectory perhaps redundant? Should it just be extracted
+	// from prefSejdaLocation
+	/** Directory in which sejda-console will run. */
 	public final static String prefSejdaDirectory = "sejda";
+
+	/** Full path and name of the sejda-console application */
 	public final static String prefSejdaLocation = "sejda_console";
 
-	// JavaFX objects and fields
+	// ||||||||||||||||||||||||||||||
+	// __JavaFX objects and fields
+	// ||||||||||||||||||||||||||||||
 	private TextDAR programUpdatesFX;
 	private TextLbl destinationDirFX;
 	private TextLbl masterUsefulDARFX;
@@ -64,7 +97,7 @@ public class DAR extends Application {
 
 	private Button[] buttons;
 
-	// GENERAL INSTANCE FIELDS
+	// GENERAL
 	/**
 	 * The two types of daily attendance record PDF.
 	 * 
@@ -80,34 +113,31 @@ public class DAR extends Application {
 	static boolean working = false; // disable buttons while processing
 	protected static boolean firstRun = true; // prevents invisible text
 
-	public static void main(String[] args) {
-		majorln("METHOD: main(String[] args)");
-		// CONFIGURE LOGGING
-		// http://stackoverflow.com/questions/8043356/file-write-printstream-append
-		// http://stackoverflow.com/questions/12053075/how-do-i-write-the-exception-from-printstacktrace-into-a-text-file-in-java
-		try {
-			ps = new PrintStream(
-					new FileOutputStream(System.getProperty("java.io.tmpdir") + "\\" + "DAR20161230_1_log.txt", true));
-			// System.setOut(ps); // capture System.out to a file
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
+	private static void announceProgram() {
 		// https://www.mkyong.com/java/java-how-to-get-current-date-time-date-and-calender/
 		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		Date date = new Date(System.currentTimeMillis());
-		majorln("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
-		majorln("DAR Splitter launched: " + dateFormat.format(date));
-		majorln("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
+		DL.majorln("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
+		DL.majorln("DAR Splitter launched: " + dateFormat.format(date));
+		DL.majorln("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
+	}
+
+	public static void main(String[] args) {
+		DL.methodBegin();
+
+		announceProgram();
+
+		ps = DL.startLogging(false, false);
 
 		Application.launch(args);
-		majorln("METHOD END: main(String[] args)");
+
+		DL.methodEnd();
 	}
 
 	@Override
 	public void start(Stage primaryStage) {
-		majorln("METHOD: start(Stage primaryStage)");
-		minorln("Preferences file: " + preferences.getPreferencesFileName());
+		DL.methodBegin();
+		DL.minorln("Preferences file: " + preferences.getPreferencesFileName());
 
 		primaryStage.setTitle(formTitleFX);
 
@@ -226,7 +256,7 @@ public class DAR extends Application {
 		// Trigger split button
 		btnSplitDAR.fire();
 
-		majorln("METHOD END: start(Stage primaryStage)");
+		DL.methodEnd();
 	}
 
 	private TextLbl createTextFX(String descriptor, String prefString) {
@@ -256,11 +286,11 @@ public class DAR extends Application {
 			Task<Void> task = new Task<Void>() {
 				@Override
 				public Void call() {
-
+					DL.methodBegin();
 					for (Button button : buttons) {
 						button.setDisable(true);
 					}
-					minorln("Buttons disabled");
+					DL.minorln("Buttons disabled");
 
 					// TODO: Determine why TextArea (TextDAR) is not updating if
 					// prefs file failure occurs too early in program launch
@@ -300,7 +330,7 @@ public class DAR extends Application {
 						 * 1423) at java.util.concurrent.FutureTask.run(Unknown
 						 * Source) at java.lang.Thread.run(Unknown Source) DAR
 						 * Splitter launched: 2016/12/29 05:44:08
-						 * C:\Users\094360\AppData\Roaming\DAR.config iiii
+						 * C:\Users\ED\AppData\Roaming\DAR.config iiii
 						 * round,round,round,round,round,
 						 */
 
@@ -311,15 +341,15 @@ public class DAR extends Application {
 						r.runMe(programUpdatesFX);
 					} catch (Exception e) {
 						btnSedjaConsole.setDisable(false);
-						if (e.getMessage()==null) {
+						if (e.getMessage() == null) {
 							String msg = "Possible problem with preferences. Please set them.";
 							programUpdatesFX.prependTextWithDate(msg);
 							msgBoxError("Preferences Problem Detected", "Possible problem with preferences.", msg);
 							e.printStackTrace();
 						} else {
 							programUpdatesFX.prependTextWithDate(e.getMessage());
-							msgBoxError("Error encountered", "An error was encountered at the start of the split process.",
-									e.getMessage());
+							msgBoxError("Error encountered",
+									"An error was encountered at the start of the split process.", e.getMessage());
 						}
 						e.printStackTrace(ps);
 					}
@@ -327,8 +357,9 @@ public class DAR extends Application {
 					for (Button button : buttons) {
 						button.setDisable(false);
 					}
-					DAR.minorln("Buttons enabled");
+					DL.minorln("Buttons enabled");
 
+					DL.methodEnd();
 					return null;
 				}
 			};
@@ -376,7 +407,7 @@ public class DAR extends Application {
 	 * Class that extends TextArea to include a method to prepend date & time to
 	 * the text.
 	 * 
-	 * @author 094360
+	 * @author ED
 	 *
 	 */
 	public class TextDAR extends TextArea {
@@ -386,7 +417,7 @@ public class DAR extends Application {
 			Date date = new Date(System.currentTimeMillis());
 			String setT = dateFormat.format(date) + ": " + s + "\n" + this.getText();
 			setText(setT);
-			minorln(setT);
+			DL.minorln(setT);
 		}
 	}
 
@@ -394,7 +425,7 @@ public class DAR extends Application {
 	 * Class that displays preference values in a pre-determined format in a
 	 * JavaFX Text field.
 	 * 
-	 * @author 094360
+	 * @author ED
 	 *
 	 */
 	public class TextLbl extends Text {
@@ -411,8 +442,7 @@ public class DAR extends Application {
 		 * Sets the Text contents to the description (similar to the key) of the
 		 * property and the value of the property.
 		 * 
-		 * @param update
-		 *            whether to include the notice (update)
+		 * @param update whether to include the notice (update)
 		 */
 		private void setTextValue(boolean update) {
 			String s = "";
@@ -457,28 +487,6 @@ public class DAR extends Application {
 		}
 	}
 
-	/**
-	 * Provide a minor program update.
-	 * 
-	 * @param string
-	 */
-	public static void minor(String string) {
-		System.out.print(string);
-	}
-
-	/**
-	 * Provide a minor program update.
-	 * 
-	 * @param string
-	 */
-	public static void majorln(String string) {
-		System.out.println(string);
-	}
-
-	public static void minorln(String string) {
-		majorln("__" + string);
-	}
-
 	public static void msgBoxError(String title, String header, String content) {
 		msgBox(title, header, content, Alert.AlertType.ERROR);
 	}
@@ -505,8 +513,8 @@ public class DAR extends Application {
 	static class DARFileChooserClass {
 
 		public void msgBox2(String title, String header, String content, Alert.AlertType typeOfBox) {
-			majorln("METHOD: public void msgBox2(String title, String header, String content, Alert.AlertType typeOfBox)");
-			minorln("content = " + content);
+			DL.methodBegin();
+			DL.minorln("content = " + content);
 
 			Platform.runLater(new Runnable() {
 
@@ -518,10 +526,11 @@ public class DAR extends Application {
 					alert.showAndWait();
 				}
 			});
+			DL.methodEnd();
 		}
 
 		public File DARFileChooser(String DARFileName, DARType dT) {
-			majorln("METHOD: public File DARFileChooser(String DARFileName, DARType dT)");
+			DL.methodBegin();
 			FileChooser fileChooser = new FileChooser();
 			fileChooser.setInitialDirectory(new File(System.getenv("userprofile")));
 			File selectedFile = null;
@@ -529,7 +538,7 @@ public class DAR extends Application {
 
 			selectedFile = fileChooser.showOpenDialog(null);
 
-			majorln("METHOD END: public File DARFileChooser(String DARFileName, DARType dT)");
+			DL.methodEnd();
 			return selectedFile;
 		}
 	}
