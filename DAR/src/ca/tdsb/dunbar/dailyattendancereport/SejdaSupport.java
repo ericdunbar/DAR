@@ -23,13 +23,11 @@ public class SejdaSupport {
 	 * 
 	 * @param prefs
 	 * @param printStream
-	 * @throws IOException
-	 *             File not found
+	 * @throws IOException File not found
 	 */
-	public SejdaSupport(DARProperties prefs, PrintStream printStream, TextDAR msgFX) throws IOException {
+	public SejdaSupport(DARProperties prefs, TextDAR msgFX) throws IOException {
 		// Initialize variables
 		this.preferences = prefs;
-		this.ps = printStream;
 		this.messageFX = msgFX;
 		if (!this.preferences.exists())
 			throw new IOException("Please set preferences. Without valid preferences this program is useless.");
@@ -50,15 +48,15 @@ public class SejdaSupport {
 					"Please set destination (output) directory using the \"Choose destination directory...\" button.");
 
 		if (!(new File(outPath).exists())) {
-			throw new IOException("Destination directory unavailable or has been moved (this could indicate a network error in which case changing destination directory won't do anything). "
-					+ "Please set destination (output) directory using the \"Choose destination directory...\" button.");
+			throw new IOException(
+					"Destination directory unavailable or has been moved (this could indicate a network error in which case changing destination directory won't do anything). "
+							+ "Please set destination (output) directory using the \"Choose destination directory...\" button.");
 		}
 
 	}
 
 	TextDAR messageFX; // display status updates here
 	File sejdaF; // sejda-console
-	PrintStream ps; // the printstream where errors go
 	DARProperties preferences;
 
 	/**
@@ -67,8 +65,8 @@ public class SejdaSupport {
 	 * @throws IOException
 	 */
 	public void splitDAR(DARType whichDAR) throws IOException {
-		DL.majorln("METHOD: public void splitDAR(DARType whichDAR) throws IOException");
-		DL.minorln("whichDAR = " + whichDAR.toString());
+		DL.methodBegin();
+		DL.println("whichDAR = " + whichDAR.toString());
 
 		/*
 		 * List of tasks to do: 1. prepare temporary directory by emptying it 2.
@@ -113,7 +111,7 @@ public class SejdaSupport {
 			throw new IOException(
 					"The source PDF(s) are reversed or incorrect PDF(s) were chosen for one or both DAR types. Please use the \"Choose Master DAR Files...\" button to choose the correct file(s).");
 		}
-		DL.minorln("THE DATE: " + dateForDAR);
+		DL.println("THE DATE: " + dateForDAR);
 
 		// DESTINATION DIRECTORY
 		// Prepare temporary directory
@@ -152,10 +150,10 @@ public class SejdaSupport {
 
 		// MOVE and COPY PDFs
 
-		DL.minorln("FILE LIST FOR: " + tempDir.getAbsolutePath());
+		DL.println("FILE LIST FOR: " + tempDir.getAbsolutePath());
 
 		for (String string : newFileList) {
-			DL.minorln("    " + tempDir.getAbsolutePath() + "\\" + string);
+			DL.println("    " + tempDir.getAbsolutePath() + "\\" + string);
 		}
 
 		// Attempted fix for constantly refreshing archive directory
@@ -164,7 +162,7 @@ public class SejdaSupport {
 		archiveDir = new File(preferences.getProperty(DAR.prefOutputPath) + "\\Archive\\" + dateForDAR);
 		archiveDir.mkdir();
 
-		DL.minorln("Start: MOVE and ARCHIVE NEW FILES");
+		DL.println("Start: MOVE and ARCHIVE NEW FILES");
 		for (String s : newFileList) {
 			String oldFile = tempDir.getAbsolutePath() + "\\" + s;
 
@@ -187,7 +185,7 @@ public class SejdaSupport {
 				+ "_" + dateForDAR + ".pdf";
 		darMoveFile(FROM, TO);
 		messageFX.prependTextWithDate("Archived the master DAR PDF for " + describeDAR + " for " + dateForDAR + ".");
-		DL.majorln("METHOD END: public void splitDAR(DARType whichDAR) throws IOException");
+		DL.methodEnd();
 	}
 
 	/**
@@ -196,15 +194,12 @@ public class SejdaSupport {
 	 * IOException if a problem occurs when the console (cmd.exe) is run or the
 	 * given directory does not exist.
 	 * 
-	 * @param cmdAndArgs
-	 *            array of command line arguments
-	 * @param baseDir
-	 *            directory in which sejda is run
-	 * @throws IOException
-	 *             thrown if directory missing or console failed
+	 * @param cmdAndArgs array of command line arguments
+	 * @param baseDir directory in which sejda is run
+	 * @throws IOException thrown if directory missing or console failed
 	 */
 	private void sejdaSplitDAR(List<String> cmdAndArgs, File baseDir) throws IOException {
-		DL.majorln("METHOD: private void sejdaSplitDAR(List<String> cmdAndArgs, File baseDir) throws IOException");
+		DL.methodBegin();
 		// troubleshooting
 
 		System.out.println("Parameters for sejda console launch:");
@@ -229,15 +224,14 @@ public class SejdaSupport {
 		} catch (Exception err) {
 			err.printStackTrace();
 		}
-		DL.majorln("METHOD END: private void sejdaSplitDAR(List<String> cmdAndArgs, File baseDir) throws IOException");
+		DL.methodEnd();
 	}
 
 	/**
 	 * Creates or empties a temporary directory with the given name in the
 	 * system's temp directory structure.
 	 * 
-	 * @param name
-	 *            Name of temporary directory to create or empty
+	 * @param name Name of temporary directory to create or empty
 	 * @return File object pointing to the directory
 	 */
 	private File createTempDir(String name) {
@@ -269,8 +263,7 @@ public class SejdaSupport {
 	/**
 	 * Wrap given String in quotations. Helpful for DOS command line arguments.
 	 * 
-	 * @param s
-	 *            String to be wrapped in quotations
+	 * @param s String to be wrapped in quotations
 	 * @return String wrapped in quotations
 	 */
 	private String quotesWrap(String s) {
@@ -292,7 +285,7 @@ public class SejdaSupport {
 	}
 
 	private int deleteFiles(File ftbd, DARType whichDAR, String extension) {
-		DL.majorln("METHOD: deleteFiles(File ftbd, DARType whichDAR, String extension)");
+		DL.methodBegin();
 
 		String filesToBeDeletedList[] = ftbd.list(new FilenameFilter() {
 			public boolean accept(File dir, String name) {
@@ -304,12 +297,12 @@ public class SejdaSupport {
 		for (String string : filesToBeDeletedList) {
 			new File(preferences.getProperty(DAR.prefOutputPath) + "\\" + string).delete();
 		}
-		DL.majorln("METHOD END: deleteFiles(File ftbd, DARType whichDAR, String extension)");
+		DL.methodEnd();
 		return filesToBeDeletedList.length;
 	}
 
 	public String getPDFDate(String sourceFile, DARType darT) throws IOException {
-		DL.majorln("METHOD: getPDFDate(String sourceFile, DARType darT) throws IOException");
+		DL.methodBegin();
 		File tempDir = createTempDir("sejda_date_extraction");
 		if (tempDir == null)
 			throw new IOException(
@@ -349,7 +342,7 @@ public class SejdaSupport {
 		}
 
 		deleteDir(tempDir);
-		DL.majorln("METHOD END (getPDFDate(String sourceFile, DARType darT) throws IOException)");
+		DL.methodEnd();
 		return FilenameUtils.removeExtension(fL[0].getName());
 	}
 
@@ -357,8 +350,7 @@ public class SejdaSupport {
 	 * Recursively deletes the contents of a directory.
 	 * http://stackoverflow.com/questions/20281835/how-to-delete-a-folder-with-files-using-java
 	 * 
-	 * @param file
-	 *            directory to empty
+	 * @param file directory to empty
 	 * @return
 	 */
 	private boolean deleteDir(File file) {
@@ -386,7 +378,7 @@ public class SejdaSupport {
 
 			missing[useful] = attemptSplit(DARType.Useful);
 
-			DL.minorln("Check to see if no, one or two missing DAR files and whether to THROW exception");
+			DL.println("Check to see if no, one or two missing DAR files and whether to THROW exception");
 			// THROW EXCEPTIONS
 			String commonMsg = "Note: if you press Cancel to one of the \"Choose master DAR...\" dialog boxes the relevant preference will not be changed but you can still set the other preference.";
 
@@ -407,7 +399,7 @@ public class SejdaSupport {
 				DAR.msgBoxError("Problem with a DAR", "A problem was encountered with one DAR file", msg);
 				throw new IOException(msg);
 			} else {
-				DL.minorln("Completed check to see if no, one or two missing DAR files. THROW IOException not used.");
+				DL.println("Completed check to see if no, one or two missing DAR files. THROW IOException not used.");
 
 				Desktop desktop = Desktop.getDesktop();
 				desktop.open(new File(preferences.getProperty(DAR.prefOutputPath)));
@@ -418,7 +410,7 @@ public class SejdaSupport {
 				errorStatusFX.prependTextWithDate("Both DARs successfully processed.");
 			}
 		} catch (Exception e1) {
-			DL.minorln("TRY..CATCH (RM1): one or two missing DAR Exception: e1.getMessage() = " + e1.getMessage());
+			DL.println("TRY..CATCH (RM1): one or two missing DAR Exception: e1.getMessage() = " + e1.getMessage());
 
 			e1.printStackTrace();
 
@@ -455,7 +447,7 @@ public class SejdaSupport {
 
 	private boolean attemptSplit(DARType d) throws IOException {
 		DL.methodBegin();
-		DL.minorln("d = " + d.toString());
+		DL.println("d = " + d.toString());
 		File masterDAR = new File("[FYI No_" + d.toString() + " file of type PDF has been selected]");
 
 		String prefKey = null;
@@ -469,18 +461,18 @@ public class SejdaSupport {
 
 		boolean missing = false;
 
-		DL.minorln("pathToMasterDAR in attemptSplit(): " + pathToMasterDAR);
+		DL.println("pathToMasterDAR in attemptSplit(): " + pathToMasterDAR);
 
 		try {
 			masterDAR = new File(pathToMasterDAR);
 		} catch (Exception e) {
-			DL.minorln("TRY..CATCH (AS1): Failure. \"masterDAR = new File(pathToMasterDAR);\". e.getMessage() = "
+			DL.println("TRY..CATCH (AS1): Failure. \"masterDAR = new File(pathToMasterDAR);\". e.getMessage() = "
 					+ e.getMessage());
 			missing = true;
 		}
 
 		// PERFORM SPLIT
-		DL.minorln("Try processing: " + pathToMasterDAR);
+		DL.println("Try processing: " + pathToMasterDAR);
 
 		if (masterDAR.exists()) {
 			// Process the DAR

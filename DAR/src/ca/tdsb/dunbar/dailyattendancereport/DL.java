@@ -6,17 +6,18 @@ import java.io.PrintStream;
 public class DL {
 
 	private static int indent = 0;
+	private static boolean toFileB = false;
+	private static PrintStream printS;
 
 	/**
-	 * If <strong>toFile</strong> is true, opens a file to log
-	 * <code>System.Out</code> and exceptions. If <strong>silentConsole</strong>
-	 * is false will redirect output to both the console and to a log file.
+	 * Opens a file to log <code>System.Out</code> and exceptions. Exceptions
+	 * can also be sent to the log.
 	 * 
 	 * @param toFile whether to log activities to a file
-	 * @param silentConsole whether to duplicate output to both a log file and
-	 *            to the console
+	 * @param logStdError whether to duplicate output to both a log file and to
+	 *            the console
 	 */
-	public static PrintStream startLogging(boolean toFile, boolean silentConsole) {
+	public static PrintStream startLogging(boolean logStdError) {
 		// CONFIGURE LOGGING
 		// http://stackoverflow.com/questions/8043356/file-write-printstream-append
 		// http://stackoverflow.com/questions/12053075/how-do-i-write-the-exception-from-printstacktrace-into-a-text-file-in-java
@@ -25,10 +26,11 @@ public class DL {
 		try {
 			ps = new PrintStream(
 					new FileOutputStream(System.getProperty("java.io.tmpdir") + "\\" + "DAR20161230_1_log.txt", true));
-			if (toFile) {
-				System.setOut(ps); // capture System.out to a file
+			if (logStdError) {
+				System.setErr(ps);
 			}
-
+			toFileB = true;
+			printS = ps;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -40,27 +42,22 @@ public class DL {
 	 * 
 	 * @param string
 	 */
-	public static void minor(String string) {
-		System.out.print(indenter() + string);
+	public static void println(String string) {
+		String msg = indenter() + string;
+		System.out.println(msg);
+		if (toFileB) {
+			printS.println(msg); // capture System.out to a file
+		}
 	}
 
-	/**
-	 * Provide a major program update in the PrintStream.
-	 * 
-	 * @param string String to display
-	 */
-	public static void majorln(String string) {
-		System.out.println(indenter() + string);
-	}
-
-	private static String indenter(){
-		String indentS = "";
+	private static String indenter() {
+		String indentS ="";//= Integer.toString(indent);
 		for (int i = 0; i < indent; i++) {
-			indentS+="  ";
+			indentS += "    ";
 		}
 		return indentS;
 	}
-	
+
 	/**
 	 * Reports the end of a method, provided the method closes neatly and does
 	 * not throw an exception before it ends.
@@ -68,8 +65,8 @@ public class DL {
 	 */
 	public static void methodEnd() {
 		StackTraceElement[] ste = Thread.currentThread().getStackTrace();
-		indent --;
-		majorln("Method end: " + ste[2].toString());
+		indent--;
+		println("Method end: " + ste[2].toString());
 	}
 
 	/**
@@ -78,7 +75,7 @@ public class DL {
 	 */
 	public static void methodBegin() {
 		StackTraceElement[] ste = Thread.currentThread().getStackTrace();
-		majorln("Method start: " + ste[2].toString());
+		println("Method start: " + ste[2].toString());
 		indent++;
 
 		// majorln(ste[2].getMethodName());
@@ -92,10 +89,6 @@ public class DL {
 		// minorln("getLineNumber " + s.getLineNumber());
 		// minorln("");
 		// }
-	}
-
-	public static void minorln(String string) {
-		majorln("  " + string);
 	}
 
 }

@@ -109,7 +109,7 @@ public class DAR extends Application {
 	}
 
 	// CLASS fields
-	static PrintStream ps = null; // log file for System.out and StackTrace
+	static PrintStream xps = null; // log file for System.out and StackTrace
 	static boolean working = false; // disable buttons while processing
 	protected static boolean firstRun = true; // prevents invisible text
 
@@ -117,17 +117,16 @@ public class DAR extends Application {
 		// https://www.mkyong.com/java/java-how-to-get-current-date-time-date-and-calender/
 		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		Date date = new Date(System.currentTimeMillis());
-		DL.majorln("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
-		DL.majorln("DAR Splitter launched: " + dateFormat.format(date));
-		DL.majorln("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
+		DL.println("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
+		DL.println("DAR Splitter launched: " + dateFormat.format(date));
+		DL.println("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
 	}
 
 	public static void main(String[] args) {
+		DL.startLogging(false);
 		DL.methodBegin();
 
 		announceProgram();
-
-		ps = DL.startLogging(false, false);
 
 		Application.launch(args);
 
@@ -137,7 +136,7 @@ public class DAR extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		DL.methodBegin();
-		DL.minorln("Preferences file: " + preferences.getPreferencesFileName());
+		DL.println("Preferences file: " + preferences.getPreferencesFileName());
 
 		primaryStage.setTitle(formTitleFX);
 
@@ -290,7 +289,7 @@ public class DAR extends Application {
 					for (Button button : buttons) {
 						button.setDisable(true);
 					}
-					DL.minorln("Buttons disabled");
+					DL.println("Buttons disabled");
 
 					// TODO: Determine why TextArea (TextDAR) is not updating if
 					// prefs file failure occurs too early in program launch
@@ -337,7 +336,7 @@ public class DAR extends Application {
 					}
 					SejdaSupport r = null;
 					try {
-						r = new SejdaSupport(preferences, ps, programUpdatesFX);
+						r = new SejdaSupport(preferences, programUpdatesFX);
 						r.runMe(programUpdatesFX);
 					} catch (Exception e) {
 						btnSedjaConsole.setDisable(false);
@@ -351,13 +350,13 @@ public class DAR extends Application {
 							msgBoxError("Error encountered",
 									"An error was encountered at the start of the split process.", e.getMessage());
 						}
-						e.printStackTrace(ps);
+						e.printStackTrace();
 					}
 
 					for (Button button : buttons) {
 						button.setDisable(false);
 					}
-					DL.minorln("Buttons enabled");
+					DL.println("Buttons enabled");
 
 					DL.methodEnd();
 					return null;
@@ -417,7 +416,7 @@ public class DAR extends Application {
 			Date date = new Date(System.currentTimeMillis());
 			String setT = dateFormat.format(date) + ": " + s + "\n" + this.getText();
 			setText(setT);
-			DL.minorln(setT);
+			DL.println(setT);
 		}
 	}
 
@@ -514,7 +513,7 @@ public class DAR extends Application {
 
 		public void msgBox2(String title, String header, String content, Alert.AlertType typeOfBox) {
 			DL.methodBegin();
-			DL.minorln("content = " + content);
+			DL.println("content = " + content);
 
 			Platform.runLater(new Runnable() {
 
