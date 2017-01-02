@@ -1,7 +1,6 @@
 package ca.tdsb.dunbar.dailyattendancereport;
 
 import java.io.File;
-import java.io.PrintStream;
 import java.sql.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -69,8 +68,6 @@ public class DAR extends Application {
 	 */
 	public final static String prefMasterUselessDAR = "master_useless_DAR_Teacher_Class_Attendance_";
 
-	// TODO Is prefSejdaDirectory perhaps redundant? Should it just be extracted
-	// from prefSejdaLocation
 	/** Directory in which sejda-console will run. */
 	public final static String prefSejdaDirectory = "sejda";
 
@@ -109,7 +106,6 @@ public class DAR extends Application {
 	}
 
 	// CLASS fields
-	static PrintStream xps = null; // log file for System.out and StackTrace
 	static boolean working = false; // disable buttons while processing
 	protected static boolean firstRun = true; // prevents invisible text
 
@@ -123,7 +119,7 @@ public class DAR extends Application {
 	}
 
 	public static void main(String[] args) {
-		DL.startLogging(false);
+		DL.startLogging(true, true, false);
 		DL.methodBegin();
 
 		announceProgram();
@@ -204,7 +200,6 @@ public class DAR extends Application {
 		// sejda-console location
 		sedjaDARFX = createTextFX("sedja app", (prefSejdaLocation));
 
-		// TODO Status updates and labels
 		// http://stackoverflow.com/questions/19968012/javafx-update-ui-label-asynchronously-with-messages-while-application-different
 
 		// Separator
@@ -217,7 +212,6 @@ public class DAR extends Application {
 		// Vbox
 		VBox vbox = new VBox(15);
 		vbox.setPadding(new Insets(25, 25, 25, 25));
-		;
 
 		vbox.getChildren().addAll(labelHb, buttonHb4, separator2, buttonHb1, separator3, buttonHb5, programUpdatesFX,
 				clockFX, masterUsefulDARFX, masterUselessDARFX, destinationDirFX, sedjaDARFX);
@@ -270,11 +264,6 @@ public class DAR extends Application {
 		return newTextFX;
 	}
 
-	// TODO Describe resetErrorStatus
-	private void resetErrorStatus() {
-		// TODO What does this do?
-		// errorStatusFX.setTextWithDate("");
-	}
 
 	// TODO Describe SplitDARFcB
 	private class SplitDARFcButtonListener implements EventHandler<ActionEvent> {
@@ -372,8 +361,6 @@ public class DAR extends Application {
 	private class SingleFcButtonListener implements EventHandler<ActionEvent> {
 		@Override
 		public void handle(ActionEvent e) {
-			resetErrorStatus();
-
 			showDARFileChooser();
 		}
 	}
@@ -381,7 +368,6 @@ public class DAR extends Application {
 	private class DestinationDirFcButtonListener implements EventHandler<ActionEvent> {
 		@Override
 		public void handle(ActionEvent e) {
-			resetErrorStatus();
 			showDestinationDirChooser();
 		}
 	}
@@ -389,7 +375,6 @@ public class DAR extends Application {
 	private class SedjaDirFcButtonListener implements EventHandler<ActionEvent> {
 		@Override
 		public void handle(ActionEvent e) {
-			resetErrorStatus();
 			showSedjaChooser();
 		}
 	}
@@ -397,7 +382,6 @@ public class DAR extends Application {
 	private class ExitFcButtonListener implements EventHandler<ActionEvent> {
 		@Override
 		public void handle(ActionEvent e) {
-			resetErrorStatus();
 			System.exit(0);
 		}
 	}

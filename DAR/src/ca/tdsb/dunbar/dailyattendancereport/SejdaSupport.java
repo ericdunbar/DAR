@@ -6,7 +6,6 @@ import java.io.File;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.PrintStream;
 import java.util.Arrays;
 import java.util.List;
 import org.apache.commons.io.FileUtils;
@@ -35,11 +34,11 @@ public class SejdaSupport {
 		String sedjaFS = prefs.getProperty(DAR.prefSejdaLocation);
 		if (sedjaFS == null)
 			throw new IOException(
-					"Set the location of \"sejda-console\" using the \"Choose sedja-console...\" button. File location is likely whereever this is found: sejda-console-2.10.4-bin\\sejda-console-2.10.4\\bin\\sejda-console.");
+					"Set the location of \"sejda-console\" using the \"Choose sedja-console...\" button. \n\nFile location in this set of directories: sejda-console-2.10.4-bin\\sejda-console-2.10.4\\bin\\sejda-console.");
 		File sejdaF = new File(sedjaFS);
-		if (!sejdaF.exists()) {
+		if (!sejdaF.exists() || !sejdaF.getName().equals("sejda-console")) {
 			throw new IOException(
-					"\"sejda-console\" is unavailable. Move it back to its original location or set its new location using the \"Choose sedja-console...\" button. File location is likely whereever this is found: sejda-console-2.10.4-bin\\sejda-console-2.10.4\\bin\\sejda-console.");
+					"\"sejda-console\" is unavailable. Move it back to its original location or set its new location using the \"Choose sedja-console...\" button. \n\nFile location in this set of directories: sejda-console-2.10.4-bin\\sejda-console-2.10.4\\bin\\sejda-console.");
 		}
 
 		String outPath = preferences.getProperty(DAR.prefOutputPath);
@@ -202,9 +201,9 @@ public class SejdaSupport {
 		DL.methodBegin();
 		// troubleshooting
 
-		System.out.println("Parameters for sejda console launch:");
+		DL.println("Parameters for sejda console launch:");
 		for (String string : cmdAndArgs) {
-			System.out.println("         Param: _" + string + "_");
+			DL.println("    Param: \'" + string + "\'");
 		}
 
 		// call the sejda processor
@@ -218,7 +217,7 @@ public class SejdaSupport {
 			String line;
 			BufferedReader input = new BufferedReader(new InputStreamReader(p.getInputStream()));
 			while ((line = input.readLine()) != null) {
-				System.out.println(line);
+				DL.println(line);
 			}
 			input.close();
 		} catch (Exception err) {
@@ -237,9 +236,8 @@ public class SejdaSupport {
 	private File createTempDir(String name) {
 		// http://stackoverflow.com/questions/31154727/saving-files-to-temp-folder
 		String tempDirS = System.getProperty("java.io.tmpdir") + name;
-		System.out.println("temp directory: " + tempDirS);
 		File tempDir = new File(tempDirS);
-		System.out.println("Info. Successful temp dir creation?: " + tempDir.mkdir() + " " + tempDirS);
+		DL.println("Successful temporary directory created: " + tempDirS + "? " + tempDir.mkdir());
 		if (!tempDir.exists())
 			tempDir = null;
 		else {
@@ -257,7 +255,7 @@ public class SejdaSupport {
 	 *         needs to check for its existence.
 	 */
 	private File createTempDir() {
-		return createTempDir("DARv20161223");
+		return createTempDir("DARv20170101");
 	}
 
 	/**
@@ -380,11 +378,11 @@ public class SejdaSupport {
 
 			DL.println("Check to see if no, one or two missing DAR files and whether to THROW exception");
 			// THROW EXCEPTIONS
-			String commonMsg = "Note: if you press Cancel to one of the \"Choose master DAR...\" dialog boxes the relevant preference will not be changed but you can still set the other preference.";
+			String commonMsg = "\n\nNote: if you press Cancel to one of the \"Choose master DAR...\" dialog boxes the relevant preference will not be changed but you can still set the other preference.";
 
 			if (missing[useless] && missing[useful]) {
-				String msg = ("Both master DAR PDF files unavailable. " + generateMissingMsg(DARType.Useful) + " "
-						+ generateMissingMsg(DARType.Useless) + " " + commonMsg);
+				String msg = ("Both master DAR PDF files unavailable. \n\n" + generateMissingMsg(DARType.Useful)
+						+ " \n\n" + generateMissingMsg(DARType.Useless) + " " + commonMsg);
 				DAR.msgBoxError("Two missing DAR", "A problem was encountered with both DAR files", msg);
 				throw new IOException(msg);
 			} else if (!missing[useless] ^ !missing[useful]) {
@@ -433,21 +431,21 @@ public class SejdaSupport {
 
 		String s = "";
 		if (pathToMasterDAR == null) {
-			s = "The preference for " + d.toString() + " DAR masters has not been set. "
-					+ "Use CutePDF to print a new DAR of that type, if necessary and Choose that master DAR PDF. ";
+			s = "The preference for " + d.toString() + " DAR master has not been set. "
+					+ "Use CutePDF to print a master DAR of that type, if necessary, and click \"Choose master DAR Files...\". ";
 		} else {
 			File masterDAR = new File(pathToMasterDAR);
 			if (!masterDAR.exists())
-				s = "The master DAR file (" + masterDAR.getName() + ") for " + d.toString()
-						+ " DAR masters is missing. "
-						+ "Use CutePDF to print a new DAR of that type. If necessary, choose the location for the master DAR PDF. ";
+				s = "The master DAR file (" + masterDAR.getName() + ") for " + d.toString() + " is missing. "
+						+ "Use CutePDF to print a new DAR. If necessary, choose the location for the master DAR PDF. ";
 		}
 		return s;
 	}
 
 	private boolean attemptSplit(DARType d) throws IOException {
 		DL.methodBegin();
-		DL.println("d = " + d.toString());
+		DL.println("DARType." + d.toString());
+
 		File masterDAR = new File("[FYI No_" + d.toString() + " file of type PDF has been selected]");
 
 		String prefKey = null;
@@ -461,8 +459,9 @@ public class SejdaSupport {
 
 		boolean missing = false;
 
-		DL.println("pathToMasterDAR in attemptSplit(): " + pathToMasterDAR);
+		DL.println("pathToMasterDAR = " + pathToMasterDAR);
 
+		// TODO Is this try..catch block redundant?
 		try {
 			masterDAR = new File(pathToMasterDAR);
 		} catch (Exception e) {
