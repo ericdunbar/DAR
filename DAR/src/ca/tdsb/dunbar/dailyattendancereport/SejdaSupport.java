@@ -48,8 +48,8 @@ public class SejdaSupport {
 
 		if (!(new File(outPath).exists())) {
 			throw new IOException(
-					"Destination directory unavailable or has been moved (this could indicate a network error in which case changing destination directory won't do anything). "
-							+ "Please set destination (output) directory using the \"Choose destination directory...\" button.");
+					"Destination directory unavailable or has been moved.\n\nThis could be caused by a network error in which case changing destination directory won't do anything. "
+							+ "\n\nIf the network is functioning properly, please set destination (output) directory using the \"Choose destination directory...\" button.");
 		}
 
 	}
@@ -87,7 +87,7 @@ public class SejdaSupport {
 
 		String describeDAR = whichDAR.toString();
 
-		if (whichDAR == DARType.Useful) {
+		if (whichDAR == DARType.DAILY_FULL) {
 			localPrefMasteDAR = DAR.prefMasterUsefulDAR;
 
 			// USEFUL split by TEACHERNAME
@@ -108,7 +108,7 @@ public class SejdaSupport {
 		File tFile = new File(dateForDAR);
 		if (tFile.getName().equalsIgnoreCase("date_error")) {
 			throw new IOException(
-					"The source PDF(s) are reversed or incorrect PDF(s) were chosen for one or both DAR types. Please use the \"Choose Master DAR Files...\" button to choose the correct file(s).");
+					"The source PDF(s) are reversed or incorrect/invalid PDF(s) were chosen for one or both DAR types. Please use the \"Choose Master DAR Files...\" button to choose the correct file(s).");
 		}
 		DL.println("THE DATE: " + dateForDAR);
 
@@ -313,7 +313,7 @@ public class SejdaSupport {
 		// String c[] = {"--top", "--left", "--width", "--height"};
 		String c[];
 
-		if (darT == DARType.Useful)
+		if (darT == DARType.DAILY_FULL)
 			c = new String[] { "514", "61", "75", "22" }; // coords for USEFUL
 															// split by DATE
 		else
@@ -372,17 +372,17 @@ public class SejdaSupport {
 			final int useless = 0;
 			final int useful = 1;
 
-			missing[useless] = attemptSplit(DARType.Useless);
+			missing[useless] = attemptSplit(DARType.CLASS_LIMITED);
 
-			missing[useful] = attemptSplit(DARType.Useful);
+			missing[useful] = attemptSplit(DARType.DAILY_FULL);
 
 			DL.println("Check to see if no, one or two missing DAR files and whether to THROW exception");
 			// THROW EXCEPTIONS
 			String commonMsg = "\n\nNote: if you press Cancel to one of the \"Choose master DAR...\" dialog boxes the relevant preference will not be changed but you can still set the other preference.";
 
 			if (missing[useless] && missing[useful]) {
-				String msg = ("Both master DAR PDF files unavailable. \n\n" + generateMissingMsg(DARType.Useful)
-						+ " \n\n" + generateMissingMsg(DARType.Useless) + " " + commonMsg);
+				String msg = ("Both master DAR PDF files unavailable. \n\n" + generateMissingMsg(DARType.CLASS_LIMITED)
+						+ " \n\n" + generateMissingMsg(DARType.DAILY_FULL) + " " + commonMsg);
 				DAR.msgBoxError("Two missing DAR", "A problem was encountered with both DAR files", msg);
 				throw new IOException(msg);
 			} else if (!missing[useless] ^ !missing[useful]) {
@@ -391,7 +391,7 @@ public class SejdaSupport {
 				errorStatusFX
 						.prependTextWithDate("Windows File Explorer opened because files should have been generated.");
 
-				DARType dM = missing[useless] ? DARType.Useless : DARType.Useful;
+				DARType dM = missing[useless] ? DARType.CLASS_LIMITED : DARType.DAILY_FULL;
 
 				String msg = ("Only one DAR processed. " + generateMissingMsg(dM) + commonMsg);
 				DAR.msgBoxError("Problem with a DAR", "A problem was encountered with one DAR file", msg);
@@ -420,11 +420,12 @@ public class SejdaSupport {
 	}
 
 	private String generateMissingMsg(DARType d) {
+		DL.methodBegin(d.toString());
 		String prefKey = null;
 
-		if (d == DARType.Useful)
+		if (d == DARType.DAILY_FULL)
 			prefKey = DAR.prefMasterUsefulDAR;
-		else if (d == DARType.Useless)
+		else if (d == DARType.CLASS_LIMITED)
 			prefKey = DAR.prefMasterUselessDAR;
 
 		String pathToMasterDAR = preferences.getProperty(prefKey);
@@ -438,7 +439,10 @@ public class SejdaSupport {
 			if (!masterDAR.exists())
 				s = "The master DAR file (" + masterDAR.getName() + ") for " + d.toString() + " is missing. "
 						+ "Use CutePDF to print a new DAR. If necessary, choose the location for the master DAR PDF. ";
+			else
+				s = "A master DAR file became available (was created) after the splitter ran. Please click on \"Split master DAR\" to complete the process.";
 		}
+		DL.methodEnd();
 		return s;
 	}
 
@@ -450,9 +454,9 @@ public class SejdaSupport {
 
 		String prefKey = null;
 
-		if (d == DARType.Useful)
+		if (d == DARType.DAILY_FULL)
 			prefKey = DAR.prefMasterUsefulDAR;
-		else if (d == DARType.Useless)
+		else if (d == DARType.CLASS_LIMITED)
 			prefKey = DAR.prefMasterUselessDAR;
 
 		String pathToMasterDAR = preferences.getProperty(prefKey);

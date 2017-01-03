@@ -1,49 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="Sejdajar/sejda-console-2.10.4.jar"/>
-	<classpathentry kind="lib" path="Sejdajar/sejda-core-2.10.4.jar"/>
-	<classpathentry kind="lib" path="Sejdajar/sejda-sambox-2.10.4.jar"/>
-	<classpathentry kind="lib" path="Sejdajar/bcmail-jdk15on-1.54.jar"/>
-	<classpathentry kind="lib" path="Sejdajar/bcpkix-jdk15on-1.54.jar"/>
-	<classpathentry kind="lib" path="Sejdajar/bcprov-jdk15on-1.54.jar"/>
-	<classpathentry kind="lib" path="Sejdajar/common-image-3.3.1.jar"/>
-	<classpathentry kind="lib" path="Sejdajar/common-io-3.3.1.jar"/>
-	<classpathentry kind="lib" path="Sejdajar/common-lang-3.3.1.jar"/>
-	<classpathentry kind="lib" path="Sejdajar/commons-codec-1.10.jar"/>
-	<classpathentry kind="lib" path="Sejdajar/commons-collections4-4.1.jar"/>
-	<classpathentry kind="lib" path="Sejdajar/commons-io-2.5.jar"/>
-	<classpathentry kind="lib" path="Sejdajar/commons-lang3-3.4.jar"/>
-	<classpathentry kind="lib" path="Sejdajar/commons-logging-1.0.4.jar"/>
-	<classpathentry kind="lib" path="Sejdajar/curvesapi-1.04.jar"/>
-	<classpathentry kind="lib" path="Sejdajar/fontbox-2.0.3.jar"/>
-	<classpathentry kind="lib" path="Sejdajar/hibernate-validator-4.2.0.Final.jar"/>
-	<classpathentry kind="lib" path="Sejdajar/icepdf-core-6.1.1.jar"/>
-	<classpathentry kind="lib" path="Sejdajar/imageio-core-3.3.1.jar"/>
-	<classpathentry kind="lib" path="Sejdajar/imageio-jpeg-3.3.1.jar"/>
-	<classpathentry kind="lib" path="Sejdajar/imageio-metadata-3.3.1.jar"/>
-	<classpathentry kind="lib" path="Sejdajar/imageio-tiff-3.3.1.jar"/>
-	<classpathentry kind="lib" path="Sejdajar/imgscalr-lib-4.2.jar"/>
-	<classpathentry kind="lib" path="Sejdajar/jai-core-1.1.3.jar"/>
-	<classpathentry kind="lib" path="Sejdajar/jcl-over-slf4j-1.7.21.jar"/>
-	<classpathentry kind="lib" path="Sejdajar/jewelcli-0.8.2.jar"/>
-	<classpathentry kind="lib" path="Sejdajar/jul-to-slf4j-1.7.21.jar"/>
-	<classpathentry kind="lib" path="Sejdajar/logback-classic-1.1.7.jar"/>
-	<classpathentry kind="lib" path="Sejdajar/logback-core-1.1.7.jar"/>
-	<classpathentry kind="lib" path="Sejdajar/poi-3.15.jar"/>
-	<classpathentry kind="lib" path="Sejdajar/poi-ooxml-3.15.jar"/>
-	<classpathentry kind="lib" path="Sejdajar/poi-ooxml-schemas-3.15.jar"/>
-	<classpathentry kind="lib" path="Sejdajar/sambox-1.0.34.RELEASE.jar"/>
-	<classpathentry kind="lib" path="Sejdajar/sejda-conversion-2.10.4.jar"/>
-	<classpathentry kind="lib" path="Sejdajar/sejda-fonts-2.10.4.jar"/>
-	<classpathentry kind="lib" path="Sejdajar/sejda-icepdf-2.10.4.jar"/>
-	<classpathentry kind="lib" path="Sejdajar/sejda-image-writers-2.10.4.jar"/>
-	<classpathentry kind="lib" path="Sejdajar/sejda-io-1.1.1.RELEASE.jar"/>
-	<classpathentry kind="lib" path="Sejdajar/sejda-model-2.10.4.jar"/>
-	<classpathentry kind="lib" path="Sejdajar/slf4j-api-1.7.21.jar"/>
-	<classpathentry kind="lib" path="Sejdajar/validation-api-1.0.0.GA.jar"/>
-	<classpathentry kind="lib" path="Sejdajar/xmlbeans-2.6.0.jar"/>
-	<classpathentry kind="lib" path="Sejdajar/xmlgraphics-commons-2.1.jar"/>
+	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="src/commons-io-2.5.jar"/>
+	<classpathentry kind="lib" path="src/commons-io-2.5-javadoc.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

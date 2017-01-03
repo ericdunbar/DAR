@@ -20,9 +20,14 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Separator;
 import javafx.scene.control.TextArea;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -81,8 +86,9 @@ public class DAR extends Application {
 	private TextLbl destinationDirFX;
 	private TextLbl masterUsefulDARFX;
 	private TextLbl masterUselessDARFX;
+	public static final String versionDAR = "20170101";
 
-	private static final String formTitleFX = "Daily Attendance Report processor version 2016.12.30";
+	private static final String formTitleFX = "Daily Attendance Report processor version " + versionDAR;
 
 	private TextLbl clockFX;
 	private TextLbl sedjaDARFX;
@@ -102,7 +108,7 @@ public class DAR extends Application {
 	 *
 	 */
 	enum DARType {
-		Useless, Useful
+		DAILY_FULL, CLASS_LIMITED
 	}
 
 	// CLASS fields
@@ -136,46 +142,89 @@ public class DAR extends Application {
 
 		primaryStage.setTitle(formTitleFX);
 
-		// Window label
-		Label label = new Label("Daily Attendance Report");
-		label.setTextFill(Color.DARKBLUE);
-		label.setFont(Font.font("Calibri", FontWeight.BOLD, 36));
+		// Images
+
+		// http://www.java2s.com/Code/Java/JavaFX/LoadajpgimagewithImageanduseImageViewtodisplay.htm
+		// http://schoolweb.tdsb.on.ca/Portals/westway/images/eco%20icon.png
+		ImageView ecoSchools = new ImageView();
+		Image imgEcoschools = new Image(DAR.class.getResourceAsStream("eco_icon.png"));
+		ecoSchools.setImage(imgEcoschools);
+		ecoSchools.setFitHeight(80);
+		ecoSchools.setPreserveRatio(true);
+		HBox ecoHb = new HBox();
+		ecoHb.setAlignment(Pos.CENTER_RIGHT);
+		ecoHb.getChildren().addAll(ecoSchools);
+
+		// Daily Attendance Report Title
+		Label lblDAR = new Label("Daily Attendance Report");
+		lblDAR.setTextFill(Color.DARKSLATEBLUE);
+		lblDAR.setFont(Font.font("Calibri", FontWeight.BOLD, 36));
+
+		// http://docs.oracle.com/javafx/2/text/jfxpub-text.htm
+		DropShadow ds = new DropShadow();
+		ds.setOffsetY(3.0f);
+		ds.setColor(Color.color(0.4f, 0.4f, 0.4f));
+
+		lblDAR.setEffect(ds);
 		HBox labelHb = new HBox();
 		labelHb.setAlignment(Pos.CENTER);
-		labelHb.getChildren().add(label);
+		labelHb.getChildren().add(lblDAR);
 
-		// Buttons
+		// Actions
+		HBox actionsHb = new HBox(10);
+		actionsHb.setAlignment(Pos.CENTER_LEFT);
+
+		// http://docs.oracle.com/javafx/2/layout/size_align.htm
+		TilePane actionButtonsTP = new TilePane();
+		actionButtonsTP.setAlignment(Pos.CENTER);
+
+		Label lblActions = new Label("Perform actions:");
+		lblActions.setTextFill(Color.DARKSLATEBLUE);
+		lblActions.setFont(Font.font("Calibri", FontWeight.NORMAL, 14));
+		lblActions.setPrefWidth(100);
+		lblActions.setMinWidth(100);
+		actionsHb.getChildren().addAll(lblActions);
+
+		btnSplitDAR = new Button("_Split master DAR");
+		btnSplitDAR.setOnAction(new SplitDARFcButtonListener());
+		btnSplitDAR.setMnemonicParsing(true);
+		actionButtonsTP.getChildren().addAll(btnSplitDAR);
+
+		btnExit = new Button("E_xit");
+		btnExit.setOnAction(new ExitFcButtonListener());
+		btnExit.setMnemonicParsing(true);
+		actionButtonsTP.getChildren().addAll(btnExit);
+		actionsHb.getChildren().addAll(actionButtonsTP);
+
+		// Preferences
+
+		HBox preferencesHb = new HBox(10);
+		preferencesHb.setAlignment(Pos.CENTER_LEFT);
+		TilePane prefsButtonsTP = new TilePane();
+		prefsButtonsTP.setAlignment(Pos.CENTER);
+
+		Label lblPrefs = new Label("Set file locations:");
+		lblPrefs.setTextFill(Color.DARKSLATEBLUE);
+		lblPrefs.setFont(Font.font("Calibri", FontWeight.NORMAL, 14));
+		lblPrefs.setPrefWidth(100);
+		lblPrefs.setMinWidth(100);
+		preferencesHb.getChildren().addAll(lblPrefs, prefsButtonsTP);
+
 		btnMasterDAR = new Button("Choose master DAR files...");
 		btnMasterDAR.setOnAction(new SingleFcButtonListener());
 		btnMasterDAR.setMnemonicParsing(true);
-		HBox buttonHb1 = new HBox(10);
-		buttonHb1.setAlignment(Pos.CENTER);
-		buttonHb1.getChildren().addAll(btnMasterDAR);
+		prefsButtonsTP.getChildren().addAll(btnMasterDAR);
 
 		btnDestDir = new Button("Choose destination directory...");
 		btnDestDir.setOnAction(new DestinationDirFcButtonListener());
 		btnDestDir.setMnemonicParsing(true);
-		buttonHb1.getChildren().addAll(btnDestDir);
+		prefsButtonsTP.getChildren().addAll(btnDestDir);
 
 		btnSedjaConsole = new Button("Choose \"sedja-console\"...");
 		btnSedjaConsole.setOnAction(new SedjaDirFcButtonListener());
 		btnSedjaConsole.setMnemonicParsing(true);
 		btnSedjaConsole.setDisable(true);
-		buttonHb1.getChildren().addAll(btnSedjaConsole);
-
-		btnSplitDAR = new Button("_Split master DAR");
-		btnSplitDAR.setOnAction(new SplitDARFcButtonListener());
-		btnSplitDAR.setMnemonicParsing(true);
-		HBox buttonHb4 = new HBox(10);
-		buttonHb4.setAlignment(Pos.CENTER);
-		buttonHb4.getChildren().addAll(btnSplitDAR);
-
-		btnExit = new Button("E_xit");
-		btnExit.setOnAction(new ExitFcButtonListener());
-		btnExit.setMnemonicParsing(true);
-		HBox buttonHb5 = new HBox(10);
-		buttonHb5.setAlignment(Pos.CENTER);
-		buttonHb5.getChildren().addAll(btnExit);
+		prefsButtonsTP.getChildren().addAll(btnSedjaConsole);
 
 		buttons = new Button[] { btnDestDir, btnMasterDAR, btnExit, btnSplitDAR };
 
@@ -191,8 +240,8 @@ public class DAR extends Application {
 		clockFX.setWrappingWidth(0);
 
 		// Source location
-		masterUsefulDARFX = createTextFX("Master " + DARType.Useful.toString() + " DAR", prefMasterUsefulDAR);
-		masterUselessDARFX = createTextFX("Master " + DARType.Useless.toString() + " DAR", prefMasterUselessDAR);
+		masterUsefulDARFX = createTextFX("Master " + DARType.DAILY_FULL.toString() + " DAR", prefMasterUsefulDAR);
+		masterUselessDARFX = createTextFX("Master " + DARType.CLASS_LIMITED.toString() + " DAR", prefMasterUselessDAR);
 
 		// Destination location
 		destinationDirFX = createTextFX("Destination directory", prefOutputPath);
@@ -203,18 +252,25 @@ public class DAR extends Application {
 		// http://stackoverflow.com/questions/19968012/javafx-update-ui-label-asynchronously-with-messages-while-application-different
 
 		// Separator
-		Separator separator2 = new Separator();
-		separator2.setOrientation(Orientation.HORIZONTAL);
+		int idx = 3;
+		int counter = 0;
+		Separator sep[] = new Separator[idx];
 
-		Separator separator3 = new Separator();
-		separator3.setOrientation(Orientation.HORIZONTAL);
+		for (int i = 0; i < idx; i++) {
+			sep[i] = new Separator();
+			sep[i].setOrientation(Orientation.HORIZONTAL);
+		}
 
 		// Vbox
 		VBox vbox = new VBox(15);
 		vbox.setPadding(new Insets(25, 25, 25, 25));
 
-		vbox.getChildren().addAll(labelHb, buttonHb4, separator2, buttonHb1, separator3, buttonHb5, programUpdatesFX,
-				clockFX, masterUsefulDARFX, masterUselessDARFX, destinationDirFX, sedjaDARFX);
+		vbox.getChildren().addAll(lblDAR, sep[counter++], actionsHb, sep[counter++], preferencesHb, sep[counter++],
+				programUpdatesFX, clockFX, masterUsefulDARFX, masterUselessDARFX, destinationDirFX, sedjaDARFX, ecoHb);
+		// vbox.getChildren().addAll(labelHb, buttonHb4, separator2, buttonHb1,
+		// separator3, buttonHb5, programUpdatesFX,
+		// clockFX, masterUsefulDARFX, masterUselessDARFX, destinationDirFX,
+		// sedjaDARFX);
 
 		// Create clock
 		Timeline statusUpdateEvt = new Timeline(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
@@ -241,8 +297,17 @@ public class DAR extends Application {
 		statusUpdateEvt.setCycleCount(Timeline.INDEFINITE);
 		statusUpdateEvt.play();
 
+		// Scrolling?
+		// http://stackoverflow.com/questions/30971407/javafx-is-it-possible-to-have-a-scroll-bar-in-vbox
+		// http://stackoverflow.com/questions/30390986/how-to-disable-horizontal-scrolling-in-scrollbar-javafx/30392217#30392217
+
+		ScrollPane scrollTheVBox = new ScrollPane();
+		scrollTheVBox.setFitToWidth(true);
+		// scrollTheVBox.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+		scrollTheVBox.setContent(vbox);
+
 		// Scene
-		Scene scene = new Scene(vbox, 800, 600); // w x h
+		Scene scene = new Scene(scrollTheVBox, 800, 700); // w x h
 		primaryStage.setScene(scene);
 		primaryStage.show();
 
@@ -260,10 +325,9 @@ public class DAR extends Application {
 		TextLbl newTextFX = new TextLbl(descriptor, prefString);
 		newTextFX.setFont(f);
 		newTextFX.setFill(c);
-		newTextFX.setWrappingWidth(700);
+		newTextFX.setWrappingWidth(699); // 699 avoid a horizontal scroll bar
 		return newTextFX;
 	}
-
 
 	// TODO Describe SplitDARFcB
 	private class SplitDARFcButtonListener implements EventHandler<ActionEvent> {
@@ -529,14 +593,14 @@ public class DAR extends Application {
 	private void showDARFileChooser() {
 		File selectedFile, selectedFile2;
 		DARFileChooserClass dfc = new DARFileChooserClass();
-		selectedFile = dfc.DARFileChooser("PowerBuilder.pdf", DARType.Useful);
+		selectedFile = dfc.DARFileChooser("PowerBuilder.pdf", DARType.DAILY_FULL);
 		if (selectedFile != null) {
 			preferences.setProperty(prefMasterUsefulDAR, selectedFile.getAbsolutePath());
 			masterUsefulDARFX.update();
 		}
 
 		dfc = new DARFileChooserClass();
-		selectedFile2 = dfc.DARFileChooser("Teacher Class Attendance .pdf", DARType.Useless);
+		selectedFile2 = dfc.DARFileChooser("Teacher Class Attendance .pdf", DARType.CLASS_LIMITED);
 		if (selectedFile2 != null) {
 			preferences.setProperty(prefMasterUselessDAR, selectedFile2.getAbsolutePath());
 			masterUselessDARFX.update();
@@ -556,7 +620,8 @@ public class DAR extends Application {
 
 		if (!errorMsg.equals("")) {
 			dfc.msgBox2("Confirm selected PDF", "Unexpected file(s) chosen",
-					errorMsg + " DOUBLE CHECK THAT THE MASTER FILES ARE CORRECT!", Alert.AlertType.CONFIRMATION);
+					errorMsg + " \n\nConfirm that the correct files were chosen. If they weren't, please use the \"Choose master DAR files...\" to choose the correct files.",
+					Alert.AlertType.WARNING);
 		}
 	}
 

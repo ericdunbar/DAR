@@ -1,7 +1,6 @@
 package ca.tdsb.dunbar.dailyattendancereport;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
 
@@ -28,7 +27,7 @@ public class DL {
 
 		PrintStream ps = null;
 		try {
-			String fileName = System.getProperty("java.io.tmpdir") + "\\" + "DAR20170101_log.txt";
+			String fileName = System.getProperty("java.io.tmpdir") + "\\" + "DAR"+DAR.versionDAR+"_log.txt";
 
 			File fSize = new File(fileName);
 			boolean append = true;
@@ -42,7 +41,6 @@ public class DL {
 
 			ps = new PrintStream(new FileOutputStream(fileName, append));
 
-				
 			if (logStdError) {
 				System.setErr(ps);
 			}
@@ -54,7 +52,7 @@ public class DL {
 			}
 
 			DL.muteSysOut = muteSysOut;
-			
+
 			printStream = ps;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -63,10 +61,10 @@ public class DL {
 	}
 
 	/**
-	 * Prints a String to System.Out and terminate the line. Adds indenting to
-	 * match the current hierarchy of method calls. Optionally log the same
-	 * output to a file. Note: indenting can be disrupted if exceptions are
-	 * thrown.
+	 * Prints a <code>String</code> to <code>System.Out</code> and terminate the
+	 * line. Adds indenting to match the current hierarchy of method calls.
+	 * Optionally, log the same output to a file. Note: indenting can be
+	 * disrupted if exceptions are thrown.
 	 * 
 	 * @param string <code>String</code> to be printed
 	 */
@@ -77,7 +75,7 @@ public class DL {
 		String msg = indenter() + string;
 		System.out.println(msg);
 		if (duplicateOutput) {
-			printStream.println(msg); // capture System.out to a file
+			printStream.println(msg); // capture System.Out to a file
 		}
 	}
 
@@ -90,7 +88,7 @@ public class DL {
 	}
 
 	/**
-	 * Reports the end of a method, provided the method closes neatly and does
+	 * Reports the end of a method to <code>System.Out</code>, provided the method closes neatly and does
 	 * not throw an exception before it ends.
 	 * https://github.com/ericdunbar/g272u2/blob/master/Support/src/DisplayMethodDetails.java
 	 */
@@ -101,14 +99,25 @@ public class DL {
 				+ ")");
 	}
 
-	/**
-	 * Reports the initiation of a method to <code>System.out</code>.
-	 * https://github.com/ericdunbar/g272u2/blob/master/Support/src/DisplayMethodDetails.java
-	 */
-	public static void methodBegin() {
+	public static void methodBegin(){
 		StackTraceElement[] ste = Thread.currentThread().getStackTrace();
 		println("Method start: " + ste[2].getMethodName() + " (" + ste[2].getFileName() + ":" + ste[2].getLineNumber()
 				+ ")");
+		indent++;
+	}
+	
+	/**
+	 * Reports the initiation of a method to <code>System.Out</code>.
+	 * https://github.com/ericdunbar/g272u2/blob/master/Support/src/DisplayMethodDetails.java
+	 */
+	public static void methodBegin(String s) {
+		String append = "";
+		if (s!=null) {
+			append = " ["+s+"]";
+		}
+		StackTraceElement[] ste = Thread.currentThread().getStackTrace();
+		println("Method start: " + ste[2].getMethodName() + " (" + ste[2].getFileName() + ":" + ste[2].getLineNumber()
+				+ ")" + append);
 		indent++;
 
 		// println(ste[2].getMethodName());
