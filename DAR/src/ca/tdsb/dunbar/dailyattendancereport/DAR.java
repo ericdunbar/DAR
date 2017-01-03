@@ -297,7 +297,7 @@ public class DAR extends Application {
 		statusUpdateEvt.setCycleCount(Timeline.INDEFINITE);
 		statusUpdateEvt.play();
 
-		// Scrolling?
+		// Scrolling
 		// http://stackoverflow.com/questions/30971407/javafx-is-it-possible-to-have-a-scroll-bar-in-vbox
 		// http://stackoverflow.com/questions/30390986/how-to-disable-horizontal-scrolling-in-scrollbar-javafx/30392217#30392217
 
