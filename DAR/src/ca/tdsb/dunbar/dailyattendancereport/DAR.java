@@ -16,6 +16,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -37,6 +38,7 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -70,7 +72,8 @@ public class DAR extends Application {
 	public final static String prefMasterUsefulDAR = "master_useful_DAR_PowerBuilder";
 
 	/**
-	 * Should a no-date PDF be created. Adds a third copy procedure to the split procedure.
+	 * Should a no-date PDF be created. Adds a third copy procedure to the split
+	 * procedure.
 	 */
 	public final static String prefCreateNoDatePDF = "no_date_pdf";
 
@@ -134,7 +137,7 @@ public class DAR extends Application {
 	}
 
 	public static void main(String[] args) {
-		DL.startLogging(true, true, false);
+		DL.startLogging(false, true, false);
 		DL.methodBegin();
 
 		announceProgram();
@@ -240,7 +243,7 @@ public class DAR extends Application {
 		HBox settingsHb = new HBox(10);
 		settingsHb.setAlignment(Pos.CENTER_LEFT);
 		TilePane settingsOptionsTP = new TilePane();
-		settingsOptionsTP.setAlignment(Pos.CENTER);
+		// settingsOptionsTP.setAlignment(Pos.CENTER);
 
 		Label lblOptions = new Label("Options:");
 		lblOptions.setTextFill(Color.DARKSLATEBLUE);
@@ -248,15 +251,15 @@ public class DAR extends Application {
 		lblOptions.setPrefWidth(100);
 		lblOptions.setMinWidth(100);
 
+		// http://docs.oracle.com/javafx/2/ui_controls/checkbox.htm
 		chkNoDate = new CheckBox("Create date-free PDFs (extra copy)");
-		chkNoDate.setSelected(preferences.getProperty(DAR.prefCreateNoDatePDF).equals("true")?true:false);
+		chkNoDate.setSelected(preferences.getProperty(DAR.prefCreateNoDatePDF).equals("true"));
 		chkNoDate.setOnAction(new chkBoxListener());
-		
+
 		settingsOptionsTP.getChildren().addAll(chkNoDate);
-		
+
 		settingsHb.getChildren().addAll(lblOptions, settingsOptionsTP);
 
-		
 		buttons = new ButtonBase[] { btnDestDir, btnMasterDAR, btnExit, btnSplitDAR, chkNoDate };
 
 		// Status message text
@@ -266,10 +269,25 @@ public class DAR extends Application {
 		// http://stackoverflow.com/questions/19167750/control-keyboard-input-into-javafx-textfield
 		programUpdatesFX.setEditable(false);
 		programUpdatesFX.setWrapText(true);
+		programUpdatesFX.setMaxHeight(150);
 
 		// Status message text
-		clockFX = createTextFX(Font.font("Calibri", FontWeight.NORMAL, 14), Color.DARKSLATEBLUE, "", "");
+		Text statusFX = createTextFX(Font.font("Calibri", FontWeight.NORMAL, 14), Color.DARKSLATEBLUE, "", "");
+		statusFX.setText("Status at");
+		statusFX.setWrappingWidth(0);
+
+		clockFX = createTextFX(Font.font("Consolas", FontWeight.NORMAL, 12), Color.DARKSLATEBLUE, "", "");
 		clockFX.setWrappingWidth(0);
+
+		// had to disable to prevent problems with java.lang.Void, return null,
+		// call() and hanging threads :(
+		// ProgressIndicator pin = new ProgressIndicator();
+		// pin.setProgress(-1);
+		// pin.setVisible(false);
+		//
+		HBox clockHb = new HBox(10);
+		clockHb.setAlignment(Pos.CENTER_LEFT);
+		clockHb.getChildren().addAll(statusFX, clockFX);
 
 		// Source location
 		masterUsefulDARFX = createTextFX("Master " + DARType.DAILY_FULL.toString() + " DAR", prefMasterUsefulDAR);
@@ -297,32 +315,52 @@ public class DAR extends Application {
 		VBox vbox = new VBox(15);
 		vbox.setPadding(new Insets(25, 25, 25, 25));
 
-		vbox.getChildren().addAll(lblDAR, sep[counter++], actionsHb, sep[counter++], preferencesHb, sep[counter++], settingsHb, sep[counter++],
-				programUpdatesFX, clockFX, masterUsefulDARFX, masterUselessDARFX, destinationDirFX, sedjaDARFX, ecoHb);
-		// vbox.getChildren().addAll(labelHb, buttonHb4, separator2, buttonHb1,
-		// separator3, buttonHb5, programUpdatesFX,
-		// clockFX, masterUsefulDARFX, masterUselessDARFX, destinationDirFX,
-		// sedjaDARFX);
+		vbox.getChildren().addAll(lblDAR, sep[counter++], actionsHb, sep[counter++], preferencesHb, sep[counter++],
+				settingsHb, sep[counter++], programUpdatesFX, clockHb, masterUsefulDARFX, masterUselessDARFX,
+				destinationDirFX, sedjaDARFX, ecoHb);
 
-		// Create clock
-		Timeline statusUpdateEvt = new Timeline(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
+		// Create and display idle/working
+		Timeline statusUpdateEvt = new Timeline(new KeyFrame(Duration.millis(500), new EventHandler<ActionEvent>() {
 
 			private int dots = 0;
 
+			// TODO Eliminate the use of message boxes. They cause the
+			// odd failure when using this action event.
 			@Override
 			public void handle(ActionEvent event) {
+				// DL.methodBegin();
 				DateFormat dateFormat = new SimpleDateFormat("HH:mm");
 				Date date = new Date(System.currentTimeMillis());
 				String workingS = "idle";
+				
+				//TODO Remove and remove the block on delete master DAR
+//				try {
+//					Thread.sleep(2000);
+//				} catch (InterruptedException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
 				if (DAR.working) {
-					workingS = "processing";
-					for (int i = 0; i < dots % 6; i++) {
-						workingS += ".";
-					}
+					char ca[] = new String("|/-\\").toCharArray();
+					int numDots = ca.length;
+
+					workingS = "processing " + ca[dots % numDots];
+					// pin.setVisible(true);
+					// int numDots = 5;
+					// workingS = "processing [";
+					// for (int i = 0; i < dots % numDots; i++)
+					// workingS += "=";
+					// workingS += ">";
+					// for (int i = 0; i < numDots - dots % numDots; i++)
+					// workingS += " ";
+					// workingS += "]";
 					dots++;
 				}
+				// else
+				// pin.setVisible(false);
 
-				clockFX.setText("Status at " + dateFormat.format(date) + ": " + workingS);
+				clockFX.setText(dateFormat.format(date) + ": " + workingS);
+				// DL.methodEnd();
 			}
 		}));
 
@@ -339,8 +377,16 @@ public class DAR extends Application {
 		scrollTheVBox.setContent(vbox);
 
 		// Scene
+		Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
+
 		Scene scene = new Scene(scrollTheVBox, 800, 700); // w x h
 		primaryStage.setScene(scene);
+
+		// http://www.java2s.com/Code/Java/JavaFX/GetScreensize.htm
+		if (primaryScreenBounds.getHeight() < 720) {
+			primaryStage.setMaximized(true);
+			;
+		}
 		primaryStage.show();
 
 		// Trigger split button
@@ -363,13 +409,16 @@ public class DAR extends Application {
 
 	// TODO Describe SplitDARFcB
 	private class SplitDARFcButtonListener implements EventHandler<ActionEvent> {
-		//// http://stackoverflow.com/questions/26554814/javafx-updating-gui
+		// http://stackoverflow.com/questions/26554814/javafx-updating-gui
+		// http://stackoverflow.com/questions/19968012/javafx-update-ui-label-asynchronously-with-messages-while-application-different
+
 		// TODO
 		@Override
 		public void handle(ActionEvent e) {
 			Task<Void> task = new Task<Void>() {
 				@Override
 				public Void call() {
+					// http://stackoverflow.com/questions/10839042/what-is-the-difference-between-java-lang-void-and-void
 					DL.methodBegin();
 					for (ButtonBase button : buttons) {
 						button.setDisable(true);
@@ -382,6 +431,7 @@ public class DAR extends Application {
 					// Solves problem with invisible but selectable text
 					if (DAR.firstRun) {
 						firstRun = false;
+
 						try {
 							Thread.sleep(2000);
 						} catch (InterruptedException ex) {
@@ -436,7 +486,7 @@ public class DAR extends Application {
 						}
 						e.printStackTrace();
 					}
-					if (r!=null)
+					if (r != null)
 						r.runMe(programUpdatesFX);
 
 					for (ButtonBase button : buttons) {
@@ -445,9 +495,11 @@ public class DAR extends Application {
 					DL.println("Buttons enabled");
 
 					DL.methodEnd();
+					// could this be the cause of status update headaches?
 					return null;
 				}
 			};
+			
 			task.messageProperty()
 					.addListener((obs, oldMessage, newMessage) -> programUpdatesFX.prependTextWithDate(newMessage));
 			new Thread(task).start();
@@ -482,7 +534,7 @@ public class DAR extends Application {
 			System.exit(0);
 		}
 	}
-	
+
 	private class chkBoxListener implements EventHandler<ActionEvent> {
 		@Override
 		public void handle(ActionEvent e) {
@@ -527,7 +579,7 @@ public class DAR extends Application {
 
 		/**
 		 * Sets the Text contents to the description (similar to the key) of the
-		 * property and the value of the property.
+		 * property using the key (pref) and the value of the property.
 		 * 
 		 * @param update whether to include the notice (update)
 		 */
@@ -588,11 +640,17 @@ public class DAR extends Application {
 		Platform.runLater(new Runnable() {
 
 			public void run() {
+				DL.methodBegin();
+
 				Alert alert = new Alert(typeOfBox);
 				alert.setTitle(title);
 				alert.setHeaderText(header);
 				alert.setContentText(content);
-				alert.showAndWait();
+
+				//TODO Testing .show vs .showAndWait
+				alert.show();
+
+				DL.methodEnd();
 			}
 		});
 	}
@@ -610,7 +668,9 @@ public class DAR extends Application {
 					alert.setTitle(title);
 					alert.setHeaderText(header);
 					alert.setContentText(content);
-					alert.showAndWait();
+
+					//TODO Testing .show vs. .showAndWait for thread hanging purposes.
+					alert.show();
 				}
 			});
 			DL.methodEnd();
@@ -681,7 +741,6 @@ public class DAR extends Application {
 			messageS = selectedDirectory.getAbsolutePath();
 			preferences.setProperty(prefOutputPath, messageS);
 			destinationDirFX.update();
-			// destinationDirFX.setText("Destination directory:\n " + messageS);
 		}
 	}
 }

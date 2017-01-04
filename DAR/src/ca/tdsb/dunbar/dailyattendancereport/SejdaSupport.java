@@ -494,14 +494,14 @@ public class SejdaSupport {
 		String s = "";
 		if (pathToMasterDAR == null) {
 			s = "The preference for " + d.toString() + " DAR master has not been set. "
-					+ "Use CutePDF to print a master DAR of that type, if necessary, and click \"Choose master DAR Files...\". ";
+					+ "Use CutePDF to print a master DAR of that type, and click \"Choose master DAR Files...\" to set the file location. ";
 		} else {
 			File masterDAR = new File(pathToMasterDAR);
 			if (!masterDAR.exists())
 				s = "The master DAR file (" + masterDAR.getName() + ") for " + d.toString() + " is missing. "
-						+ "Use CutePDF to print a new DAR. If necessary, choose the location for the master DAR PDF. ";
+						+ "Use CutePDF to print a new master DAR of that type. Ensure the location for the master DAR PDF is set correctly. If the location is incorrect, click \"Choose master DAR Files...\" to set the file location. ";
 			else
-				s = "A master DAR file became available (was created) after the splitter ran. Please click on \"Split master DAR\" to complete the process.";
+				s = "A master DAR file became available (i.e. was created) after the splitter ran. Click \"Split master DAR\" to complete the process.";
 		}
 		DL.methodEnd();
 		return s;
