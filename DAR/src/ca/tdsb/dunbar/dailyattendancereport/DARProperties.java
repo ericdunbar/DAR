@@ -10,7 +10,7 @@ import java.util.Enumeration;
 import java.util.Properties;
 
 public class DARProperties {
-	public static void main(String[] args) {
+	public static void xmain(String[] args) {
 		DARProperties pW = new DARProperties("configDemo.preferences");
 		pW.setProperty(null, null);
 		System.out.println("Test get: " + pW.getProperty("eat"));
@@ -33,24 +33,32 @@ public class DARProperties {
 	 */
 	public DARProperties(String file) {
 		prefsFile = System.getenv("APPDATA") + "\\" + file;
+
+		// lazy fix for null pointer errors
+		if (getProperty(DAR.prefCreateNoDatePDF)==null) {
+			setProperty(DAR.prefCreateNoDatePDF, "" + false);		
+		}
 	}
 
-	public String getPreferencesFileName(){
+	public String getPreferencesFileName() {
 		return prefsFile;
 	}
-	
-	public boolean exists(){
+
+	/**
+	 * Does the preferences file already exist?
+	 * 
+	 * @return true if the preferences file exists
+	 */
+	public boolean exists() {
 		return new File(getPreferencesFileName()).exists();
 	}
-	
+
 	/**
 	 * Writes the given property to the property file. Fails gracefully on a
 	 * null value and returns false.
 	 * 
-	 * @param key
-	 *            Cannot be null
-	 * @param value
-	 *            Cannot be null
+	 * @param key Cannot be null
+	 * @param value Cannot be null
 	 * @return whether the write succeeded
 	 */
 	public boolean setProperty(String key, String value) {
@@ -61,7 +69,6 @@ public class DARProperties {
 		Properties prop = readProperties();
 
 		try {
-
 			// File characterFolder = new File(System.getenv("APPDATA") + "\\" +
 			// characterName);
 

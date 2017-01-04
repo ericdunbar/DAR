@@ -19,6 +19,8 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBase;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Separator;
@@ -68,6 +70,11 @@ public class DAR extends Application {
 	public final static String prefMasterUsefulDAR = "master_useful_DAR_PowerBuilder";
 
 	/**
+	 * Should a no-date PDF be created. Adds a third copy procedure to the split procedure.
+	 */
+	public final static String prefCreateNoDatePDF = "no_date_pdf";
+
+	/**
 	 * Full path and name for the original "useless" type of DAR. Contains all
 	 * teacher DARs in a single file.
 	 */
@@ -98,7 +105,9 @@ public class DAR extends Application {
 	private Button btnSplitDAR;
 	private Button btnExit;
 
-	private Button[] buttons;
+	private ButtonBase[] buttons;
+
+	private CheckBox chkNoDate;
 
 	// GENERAL
 	/**
@@ -196,7 +205,7 @@ public class DAR extends Application {
 		actionButtonsTP.getChildren().addAll(btnExit);
 		actionsHb.getChildren().addAll(actionButtonsTP);
 
-		// Preferences
+		// File locations
 
 		HBox preferencesHb = new HBox(10);
 		preferencesHb.setAlignment(Pos.CENTER_LEFT);
@@ -226,12 +235,35 @@ public class DAR extends Application {
 		btnSedjaConsole.setDisable(true);
 		prefsButtonsTP.getChildren().addAll(btnSedjaConsole);
 
-		buttons = new Button[] { btnDestDir, btnMasterDAR, btnExit, btnSplitDAR };
+		// Settings
+
+		HBox settingsHb = new HBox(10);
+		settingsHb.setAlignment(Pos.CENTER_LEFT);
+		TilePane settingsOptionsTP = new TilePane();
+		settingsOptionsTP.setAlignment(Pos.CENTER);
+
+		Label lblOptions = new Label("Options:");
+		lblOptions.setTextFill(Color.DARKSLATEBLUE);
+		lblOptions.setFont(Font.font("Calibri", FontWeight.NORMAL, 14));
+		lblOptions.setPrefWidth(100);
+		lblOptions.setMinWidth(100);
+
+		chkNoDate = new CheckBox("Create date-free PDFs (extra copy)");
+		chkNoDate.setSelected(preferences.getProperty(DAR.prefCreateNoDatePDF).equals("true")?true:false);
+		chkNoDate.setOnAction(new chkBoxListener());
+		
+		settingsOptionsTP.getChildren().addAll(chkNoDate);
+		
+		settingsHb.getChildren().addAll(lblOptions, settingsOptionsTP);
+
+		
+		buttons = new ButtonBase[] { btnDestDir, btnMasterDAR, btnExit, btnSplitDAR, chkNoDate };
 
 		// Status message text
 		programUpdatesFX = new TextDAR();
 		programUpdatesFX.setFont(Font.font("Calibri", FontWeight.NORMAL, 14));
 		programUpdatesFX.setText("");
+		// http://stackoverflow.com/questions/19167750/control-keyboard-input-into-javafx-textfield
 		programUpdatesFX.setEditable(false);
 		programUpdatesFX.setWrapText(true);
 
@@ -252,7 +284,7 @@ public class DAR extends Application {
 		// http://stackoverflow.com/questions/19968012/javafx-update-ui-label-asynchronously-with-messages-while-application-different
 
 		// Separator
-		int idx = 3;
+		int idx = 4;
 		int counter = 0;
 		Separator sep[] = new Separator[idx];
 
@@ -265,7 +297,7 @@ public class DAR extends Application {
 		VBox vbox = new VBox(15);
 		vbox.setPadding(new Insets(25, 25, 25, 25));
 
-		vbox.getChildren().addAll(lblDAR, sep[counter++], actionsHb, sep[counter++], preferencesHb, sep[counter++],
+		vbox.getChildren().addAll(lblDAR, sep[counter++], actionsHb, sep[counter++], preferencesHb, sep[counter++], settingsHb, sep[counter++],
 				programUpdatesFX, clockFX, masterUsefulDARFX, masterUselessDARFX, destinationDirFX, sedjaDARFX, ecoHb);
 		// vbox.getChildren().addAll(labelHb, buttonHb4, separator2, buttonHb1,
 		// separator3, buttonHb5, programUpdatesFX,
@@ -339,7 +371,7 @@ public class DAR extends Application {
 				@Override
 				public Void call() {
 					DL.methodBegin();
-					for (Button button : buttons) {
+					for (ButtonBase button : buttons) {
 						button.setDisable(true);
 					}
 					DL.println("Buttons disabled");
@@ -390,7 +422,6 @@ public class DAR extends Application {
 					SejdaSupport r = null;
 					try {
 						r = new SejdaSupport(preferences, programUpdatesFX);
-						r.runMe(programUpdatesFX);
 					} catch (Exception e) {
 						btnSedjaConsole.setDisable(false);
 						if (e.getMessage() == null) {
@@ -405,8 +436,10 @@ public class DAR extends Application {
 						}
 						e.printStackTrace();
 					}
+					if (r!=null)
+						r.runMe(programUpdatesFX);
 
-					for (Button button : buttons) {
+					for (ButtonBase button : buttons) {
 						button.setDisable(false);
 					}
 					DL.println("Buttons enabled");
@@ -447,6 +480,13 @@ public class DAR extends Application {
 		@Override
 		public void handle(ActionEvent e) {
 			System.exit(0);
+		}
+	}
+	
+	private class chkBoxListener implements EventHandler<ActionEvent> {
+		@Override
+		public void handle(ActionEvent e) {
+			preferences.setProperty(prefCreateNoDatePDF, "" + chkNoDate.isSelected());
 		}
 	}
 

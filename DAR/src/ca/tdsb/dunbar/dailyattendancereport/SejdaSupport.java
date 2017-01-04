@@ -17,28 +17,38 @@ import ca.tdsb.dunbar.dailyattendancereport.DAR.TextDAR;
 public class SejdaSupport {
 
 	/**
-	 * prefs is a pointer to a preferences object, printStream is where st.error
-	 * should be directed.
+	 * Creates an instance. Preferences are checked to ensure validity. Throws
+	 * IOExceptions if preferences are missing or target files are missing. Null
+	 * is returned if any IOExceptions occur.
 	 * 
-	 * @param prefs
-	 * @param printStream
+	 * @param prefs An object of type DARProperties responsible for managing
+	 *            file locations preferences
+	 * @param msgFX A TextArea (TextDAR) JavaFX node for status updates.
 	 * @throws IOException File not found
 	 */
 	public SejdaSupport(DARProperties prefs, TextDAR msgFX) throws IOException {
 		// Initialize variables
 		this.preferences = prefs;
 		this.messageFX = msgFX;
-		if (!this.preferences.exists())
-			throw new IOException("Please set preferences. Without valid preferences this program is useless.");
 
-		String sedjaFS = prefs.getProperty(DAR.prefSejdaLocation);
-		if (sedjaFS == null)
+		// Check for the existence of the preferences file
+		if (!this.preferences.exists())
+			throw new IOException("Please set preferences. Without valid preferences this program is not useful.");
+
+		// Check for the preference sejda-console
+		String sejdaFS = prefs.getProperty(DAR.prefSejdaLocation);
+		String sejdaInfo = "The file will be located in this set of directories: sejda-console-2.10.4-bin\\sejda-console-2.10.4\\bin\\sejda-console.\n\nThis program was developed using sejda-console v. 2.10.4. A newer version may work. For downloads, visit http://www.sejda.org/download/";
+		if (sejdaFS == null)
 			throw new IOException(
-					"Set the location of \"sejda-console\" using the \"Choose sedja-console...\" button. \n\nFile location in this set of directories: sejda-console-2.10.4-bin\\sejda-console-2.10.4\\bin\\sejda-console.");
-		File sejdaF = new File(sedjaFS);
+					"Set the location of the \"sejda-console\" application using the \"Choose sedja-console...\" button."
+							+ "\n\n" + sejdaInfo);
+
+		// Check for the existence of sejda-console
+		File sejdaF = new File(sejdaFS);
 		if (!sejdaF.exists() || !sejdaF.getName().equals("sejda-console")) {
 			throw new IOException(
-					"\"sejda-console\" is unavailable. Move it back to its original location or set its new location using the \"Choose sedja-console...\" button. \n\nFile location in this set of directories: sejda-console-2.10.4-bin\\sejda-console-2.10.4\\bin\\sejda-console.");
+					"\"sejda-console\" is unavailable. Move it back to its original location or set its new location using the \"Choose sedja-console...\" button. \n\n"
+							+ sejdaInfo);
 		}
 
 		String outPath = preferences.getProperty(DAR.prefOutputPath);
@@ -131,14 +141,43 @@ public class SejdaSupport {
 
 		sejdaSplitDAR(cmdAndArgs, tempDir);
 
+		boolean simpleCopy = preferences.getProperty(DAR.prefCreateNoDatePDF).equals("true") ? true : false;
+
+		DL.println("simpleCOPY: " + simpleCopy);
+		
+		// CREATE DIRECTORIES, if missing
+		// Attempted fix for constantly refreshing archive directory
+		File archiveDir = new File(preferences.getProperty(DAR.prefOutputPath) + "\\Archive\\");
+		archiveDir.mkdir();
+		archiveDir = new File(preferences.getProperty(DAR.prefOutputPath) + "\\Archive\\" + dateForDAR);
+		archiveDir.mkdir();
+
+		File simpleDir = new File(preferences.getProperty(DAR.prefOutputPath) + "\\No Date\\");
+		if (simpleCopy) {
+			simpleDir.mkdir();
+		}
 		// DELETE EXISTING FILES
 		// http://stackoverflow.com/questions/5751335/using-file-listfiles-with-filenameextensionfilter
 		File ftbd = new File(preferences.getProperty(DAR.prefOutputPath));
 
-		int delF = deleteFiles(ftbd, whichDAR, ".pdf");
+		int delF = deleteFilesOfDARType(ftbd, whichDAR, ".pdf");
 
 		messageFX.prependTextWithDate(
 				"Cleaned up destination by removing " + delF + " " + whichDAR.toString() + " files.");
+
+		ftbd = new File(preferences.getProperty(DAR.prefOutputPath) + "\\No Date\\");
+		
+		if(!simpleCopy && ftbd.exists()) {
+			deleteDir(ftbd);
+		}
+		
+		if (ftbd.exists()) {
+			int delG = deleteFilesOfDARType(ftbd, whichDAR, ".pdf");
+			messageFX.prependTextWithDate(
+					"Cleaned up destination NO DATE by removing " + delG + " " + whichDAR.toString() + " files.");
+		}
+
+		// MOVE and COPY PDFs
 
 		String newFileList[] = tempDir.list(new FilenameFilter() {
 			public boolean accept(File dir, String name) {
@@ -147,19 +186,11 @@ public class SejdaSupport {
 			}
 		});
 
-		// MOVE and COPY PDFs
-
 		DL.println("FILE LIST FOR: " + tempDir.getAbsolutePath());
 
 		for (String string : newFileList) {
 			DL.println("    " + tempDir.getAbsolutePath() + "\\" + string);
 		}
-
-		// Attempted fix for constantly refreshing archive directory
-		File archiveDir = new File(preferences.getProperty(DAR.prefOutputPath) + "\\Archive\\");
-		archiveDir.mkdir();
-		archiveDir = new File(preferences.getProperty(DAR.prefOutputPath) + "\\Archive\\" + dateForDAR);
-		archiveDir.mkdir();
 
 		DL.println("Start: MOVE and ARCHIVE NEW FILES");
 		for (String s : newFileList) {
@@ -167,6 +198,12 @@ public class SejdaSupport {
 
 			String newName = FilenameUtils.getBaseName(s) + " " + describeDAR + ".pdf";
 			String newArchivalName = FilenameUtils.getBaseName(s) + " " + describeDAR + " " + dateForDAR + ".pdf";
+
+			if (simpleCopy) {
+				String simpleFile = simpleDir.getAbsolutePath() + "\\" + newName;
+				darCopyFile(oldFile, simpleFile);
+			}
+
 			newName = newArchivalName; // yes, got lazy!
 
 			String newFile = preferences.getProperty(DAR.prefOutputPath) + "\\" + newName;
@@ -174,6 +211,7 @@ public class SejdaSupport {
 
 			darMoveFile(oldFile, newFile, newArchivalFile);
 		}
+
 		messageFX.prependTextWithDate(
 				"Moved " + newFileList.length + " new " + whichDAR.toString() + " teacher DAR PDF files to: "
 						+ preferences.getProperty(DAR.prefOutputPath) + " for " + dateForDAR + ".");
@@ -268,10 +306,27 @@ public class SejdaSupport {
 		return "\"" + s + "\"";
 	}
 
+	/**
+	 * Move the old file to the new location.
+	 * 
+	 * @param oldFile Full pathname of file to be moved
+	 * @param newFile Full pathname of new location
+	 * @throws IOException
+	 */
 	private void darMoveFile(String oldFile, String newFile) throws IOException {
 		darMoveFile(oldFile, newFile, null);
 	}
 
+	/**
+	 * Copy the old file to one or two new locations and delete the old file.
+	 * Effectively this is a move but with two destinations. Ensure that the
+	 * second new filename is null if only one new location is required.
+	 * 
+	 * @param oldFile Full pathname of file to be moved
+	 * @param firstNewFile Full pathname of first new location
+	 * @param secondNewFile Full pathname of second new location
+	 * @throws IOException
+	 */
 	private void darMoveFile(String oldFile, String firstNewFile, String secondNewFile) throws IOException {
 		new File(firstNewFile).delete();
 
@@ -282,10 +337,16 @@ public class SejdaSupport {
 		FileUtils.moveFile(FileUtils.getFile(oldFile), FileUtils.getFile(firstNewFile));
 	}
 
-	private int deleteFiles(File ftbd, DARType whichDAR, String extension) {
+	private void darCopyFile(String oldFile, String newFile) throws IOException {
+		new File(newFile).delete();
+
+		FileUtils.copyFile(FileUtils.getFile(oldFile), FileUtils.getFile(newFile));
+	}
+
+	private int deleteFilesOfDARType(File dirToBeCleaned, DARType whichDAR, String extension) {
 		DL.methodBegin();
 
-		String filesToBeDeletedList[] = ftbd.list(new FilenameFilter() {
+		String filesToBeDeletedList[] = dirToBeCleaned.list(new FilenameFilter() {
 			public boolean accept(File dir, String name) {
 				name = name.toLowerCase();
 				return name.contains(whichDAR.toString().toLowerCase()) && name.toLowerCase().endsWith(extension);
@@ -293,7 +354,7 @@ public class SejdaSupport {
 		});
 
 		for (String string : filesToBeDeletedList) {
-			new File(preferences.getProperty(DAR.prefOutputPath) + "\\" + string).delete();
+			new File(dirToBeCleaned.getAbsolutePath() + "\\" + string).delete();
 		}
 		DL.methodEnd();
 		return filesToBeDeletedList.length;
