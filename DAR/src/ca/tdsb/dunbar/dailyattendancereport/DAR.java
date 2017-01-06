@@ -12,7 +12,9 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
@@ -26,6 +28,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Separator;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -100,7 +103,7 @@ public class DAR extends Application {
 
 	private static final String formTitleFX = "Daily Attendance Report processor version " + versionDAR;
 
-	private TextLbl clockFX;
+	// private TextLbl clockFX;
 	private TextLbl sedjaDARFX;
 	private Button btnMasterDAR;
 	private Button btnDestDir;
@@ -109,8 +112,11 @@ public class DAR extends Application {
 	private Button btnExit;
 
 	private ButtonBase[] buttons;
+	private ButtonBase[] settingsButtons;
 
 	private CheckBox chkNoDate;
+
+	private ToggleButton toggleChangeSettings;
 
 	// GENERAL
 	/**
@@ -208,59 +214,63 @@ public class DAR extends Application {
 		actionButtonsTP.getChildren().addAll(btnExit);
 		actionsHb.getChildren().addAll(actionButtonsTP);
 
-		// File locations
+		// Settings
 
-		HBox preferencesHb = new HBox(10);
-		preferencesHb.setAlignment(Pos.CENTER_LEFT);
-		TilePane prefsButtonsTP = new TilePane();
-		prefsButtonsTP.setAlignment(Pos.CENTER);
+		VBox settingsVb = new VBox(10);
 
-		Label lblPrefs = new Label("Set file locations:");
+		TilePane settingsButtonsTP = new TilePane();
+		settingsButtonsTP.setAlignment(Pos.CENTER_LEFT);
+
+		Label lblPrefs = new Label("Settings:");
 		lblPrefs.setTextFill(Color.DARKSLATEBLUE);
 		lblPrefs.setFont(Font.font("Calibri", FontWeight.NORMAL, 14));
 		lblPrefs.setPrefWidth(100);
 		lblPrefs.setMinWidth(100);
-		preferencesHb.getChildren().addAll(lblPrefs, prefsButtonsTP);
 
 		btnMasterDAR = new Button("Choose master DAR files...");
 		btnMasterDAR.setOnAction(new SingleFcButtonListener());
 		btnMasterDAR.setMnemonicParsing(true);
-		prefsButtonsTP.getChildren().addAll(btnMasterDAR);
+		settingsButtonsTP.getChildren().addAll(btnMasterDAR);
 
 		btnDestDir = new Button("Choose destination directory...");
 		btnDestDir.setOnAction(new DestinationDirFcButtonListener());
 		btnDestDir.setMnemonicParsing(true);
-		prefsButtonsTP.getChildren().addAll(btnDestDir);
+		settingsButtonsTP.getChildren().addAll(btnDestDir);
 
 		btnSedjaConsole = new Button("Choose \"sedja-console\"...");
 		btnSedjaConsole.setOnAction(new SedjaDirFcButtonListener());
 		btnSedjaConsole.setMnemonicParsing(true);
 		btnSedjaConsole.setDisable(true);
-		prefsButtonsTP.getChildren().addAll(btnSedjaConsole);
+		settingsButtonsTP.getChildren().addAll(btnSedjaConsole);
 
 		// Settings
 
-		HBox settingsHb = new HBox(10);
-		settingsHb.setAlignment(Pos.CENTER_LEFT);
 		TilePane settingsOptionsTP = new TilePane();
-		// settingsOptionsTP.setAlignment(Pos.CENTER);
-
-		Label lblOptions = new Label("Options:");
-		lblOptions.setTextFill(Color.DARKSLATEBLUE);
-		lblOptions.setFont(Font.font("Calibri", FontWeight.NORMAL, 14));
-		lblOptions.setPrefWidth(100);
-		lblOptions.setMinWidth(100);
+		settingsOptionsTP.setAlignment(Pos.CENTER_LEFT);
 
 		// http://docs.oracle.com/javafx/2/ui_controls/checkbox.htm
 		chkNoDate = new CheckBox("Create date-free PDFs (extra copy)");
-		chkNoDate.setSelected(preferences.getProperty(DAR.prefCreateNoDatePDF).equals("true"));
 		chkNoDate.setOnAction(new chkBoxListener());
+		chkNoDate.setSelected(preferences.getProperty(DAR.prefCreateNoDatePDF).equals("true"));
+
+		toggleChangeSettings = new ToggleButton("Change settings");
+		toggleChangeSettings.setSelected(false);
+		toggleChangeSettings.setOnAction(new ChkBoxSettingsListener());
+		settingsButtons = new ButtonBase[] { btnDestDir, btnMasterDAR, chkNoDate };
 
 		settingsOptionsTP.getChildren().addAll(chkNoDate);
 
-		settingsHb.getChildren().addAll(lblOptions, settingsOptionsTP);
+		settingsVb.getChildren().addAll(settingsButtonsTP, settingsOptionsTP);
 
-		buttons = new ButtonBase[] { btnDestDir, btnMasterDAR, btnExit, btnSplitDAR, chkNoDate };
+		VBox settingsLblVb = new VBox(10);
+		settingsLblVb.getChildren().addAll(lblPrefs, toggleChangeSettings);
+		settingsLblVb.setMinWidth(150);
+		settingsLblVb.setPrefWidth(150);
+		
+		HBox settingsHb = new HBox(10);
+		settingsHb.getChildren().addAll(settingsLblVb, settingsVb);
+
+		buttons = new ButtonBase[] { btnExit, btnSplitDAR, toggleChangeSettings };
 
 		// Status message text
 		programUpdatesFX = new TextDAR();
@@ -272,12 +282,14 @@ public class DAR extends Application {
 		programUpdatesFX.setMaxHeight(150);
 
 		// Status message text
-		Text statusFX = createTextFX(Font.font("Calibri", FontWeight.NORMAL, 14), Color.DARKSLATEBLUE, "", "");
-		statusFX.setText("Status at");
-		statusFX.setWrappingWidth(0);
-
-		clockFX = createTextFX(Font.font("Consolas", FontWeight.NORMAL, 12), Color.DARKSLATEBLUE, "", "");
-		clockFX.setWrappingWidth(0);
+		// Text statusFX = createTextFX(Font.font("Calibri", FontWeight.NORMAL,
+		// 14), Color.DARKSLATEBLUE, "", "");
+		// statusFX.setText("Status at");
+		// statusFX.setWrappingWidth(0);
+		//
+		// clockFX = createTextFX(Font.font("Consolas", FontWeight.NORMAL, 12),
+		// Color.DARKSLATEBLUE, "", "");
+		// clockFX.setWrappingWidth(0);
 
 		// had to disable to prevent problems with java.lang.Void, return null,
 		// call() and hanging threads :(
@@ -285,9 +297,9 @@ public class DAR extends Application {
 		// pin.setProgress(-1);
 		// pin.setVisible(false);
 		//
-		HBox clockHb = new HBox(10);
-		clockHb.setAlignment(Pos.CENTER_LEFT);
-		clockHb.getChildren().addAll(statusFX, clockFX);
+		// HBox clockHb = new HBox(10);
+		// clockHb.setAlignment(Pos.CENTER_LEFT);
+		// clockHb.getChildren().addAll(statusFX, clockFX);
 
 		// Source location
 		masterUsefulDARFX = createTextFX("Master " + DARType.DAILY_FULL.toString() + " DAR", prefMasterUsefulDAR);
@@ -302,7 +314,7 @@ public class DAR extends Application {
 		// http://stackoverflow.com/questions/19968012/javafx-update-ui-label-asynchronously-with-messages-while-application-different
 
 		// Separator
-		int idx = 4;
+		int idx = 3;
 		int counter = 0;
 		Separator sep[] = new Separator[idx];
 
@@ -315,57 +327,64 @@ public class DAR extends Application {
 		VBox vbox = new VBox(15);
 		vbox.setPadding(new Insets(25, 25, 25, 25));
 
-		vbox.getChildren().addAll(lblDAR, sep[counter++], actionsHb, sep[counter++], preferencesHb, sep[counter++],
-				settingsHb, sep[counter++], programUpdatesFX, clockHb, masterUsefulDARFX, masterUselessDARFX,
-				destinationDirFX, sedjaDARFX, ecoHb);
+		vbox.getChildren().addAll(lblDAR, sep[counter++], actionsHb, sep[counter++], settingsHb, sep[counter++],
+				programUpdatesFX, masterUsefulDARFX, masterUselessDARFX, destinationDirFX, sedjaDARFX, ecoHb);
+
+		// vbox.getChildren().addAll(lblDAR, sep[counter++], actionsHb,
+		// sep[counter++], preferencesHb, sep[counter++],
+		// settingsHb, sep[counter++], programUpdatesFX, clockHb,
+		// masterUsefulDARFX, masterUselessDARFX,
+		// destinationDirFX, sedjaDARFX, ecoHb);
 
 		// Create and display idle/working
-		Timeline statusUpdateEvt = new Timeline(new KeyFrame(Duration.millis(500), new EventHandler<ActionEvent>() {
 
-			private int dots = 0;
-
-			// TODO Eliminate the use of message boxes. They cause the
-			// odd failure when using this action event.
-			@Override
-			public void handle(ActionEvent event) {
-				// DL.methodBegin();
-				DateFormat dateFormat = new SimpleDateFormat("HH:mm");
-				Date date = new Date(System.currentTimeMillis());
-				String workingS = "idle";
-				
-				//TODO Remove and remove the block on delete master DAR
-//				try {
-//					Thread.sleep(2000);
-//				} catch (InterruptedException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
-				if (DAR.working) {
-					char ca[] = new String("|/-\\").toCharArray();
-					int numDots = ca.length;
-
-					workingS = "processing " + ca[dots % numDots];
-					// pin.setVisible(true);
-					// int numDots = 5;
-					// workingS = "processing [";
-					// for (int i = 0; i < dots % numDots; i++)
-					// workingS += "=";
-					// workingS += ">";
-					// for (int i = 0; i < numDots - dots % numDots; i++)
-					// workingS += " ";
-					// workingS += "]";
-					dots++;
-				}
-				// else
-				// pin.setVisible(false);
-
-				clockFX.setText(dateFormat.format(date) + ": " + workingS);
-				// DL.methodEnd();
-			}
-		}));
-
-		statusUpdateEvt.setCycleCount(Timeline.INDEFINITE);
-		statusUpdateEvt.play();
+		// Timeline statusUpdateEvt = new Timeline(new
+		// KeyFrame(Duration.millis(500), new EventHandler<ActionEvent>() {
+		//
+		// private int dots = 0;
+		//
+		// // TODO Eliminate the use of message boxes. They cause the
+		// // odd failure when using this action event.
+		// @Override
+		// public void handle(ActionEvent event) {
+		// // DL.methodBegin();
+		// DateFormat dateFormat = new SimpleDateFormat("HH:mm");
+		// Date date = new Date(System.currentTimeMillis());
+		// String workingS = "idle";
+		//
+		// //TODO Remove and remove the block on delete master DAR
+		//// try {
+		//// Thread.sleep(2000);
+		//// } catch (InterruptedException e) {
+		//// // TODO Auto-generated catch block
+		//// e.printStackTrace();
+		//// }
+		// if (DAR.working) {
+		// char ca[] = new String("|/-\\").toCharArray();
+		// int numDots = ca.length;
+		//
+		// workingS = "processing " + ca[dots % numDots];
+		// // pin.setVisible(true);
+		// // int numDots = 5;
+		// // workingS = "processing [";
+		// // for (int i = 0; i < dots % numDots; i++)
+		// // workingS += "=";
+		// // workingS += ">";
+		// // for (int i = 0; i < numDots - dots % numDots; i++)
+		// // workingS += " ";
+		// // workingS += "]";
+		// dots++;
+		// }
+		// // else
+		// // pin.setVisible(false);
+		//
+		// clockFX.setText(dateFormat.format(date) + ": " + workingS);
+		// // DL.methodEnd();
+		// }
+		// }));
+		//
+		// statusUpdateEvt.setCycleCount(Timeline.INDEFINITE);
+		// statusUpdateEvt.play();
 
 		// Scrolling
 		// http://stackoverflow.com/questions/30971407/javafx-is-it-possible-to-have-a-scroll-bar-in-vbox
@@ -390,6 +409,11 @@ public class DAR extends Application {
 		primaryStage.show();
 
 		// Trigger split button
+		// ChkBoxSettingsListener c = new ChkBoxSettingsListener();
+		// c.handle(new ActionEvent());
+		// c = null;
+
+		toggleChangeSettings.fireEvent(new ActionEvent());
 		btnSplitDAR.fire();
 
 		DL.methodEnd();
@@ -423,6 +447,8 @@ public class DAR extends Application {
 					for (ButtonBase button : buttons) {
 						button.setDisable(true);
 					}
+					toggleChangeSettings.fireEvent(new ActionEvent());
+
 					DL.println("Buttons disabled");
 
 					// TODO: Determine why TextArea (TextDAR) is not updating if
@@ -484,6 +510,7 @@ public class DAR extends Application {
 							msgBoxError("Error encountered",
 									"An error was encountered at the start of the split process.", e.getMessage());
 						}
+						toggleChangeSettings.setSelected(true);
 						e.printStackTrace();
 					}
 					if (r != null)
@@ -492,6 +519,8 @@ public class DAR extends Application {
 					for (ButtonBase button : buttons) {
 						button.setDisable(false);
 					}
+
+					toggleChangeSettings.fireEvent(new ActionEvent());
 					DL.println("Buttons enabled");
 
 					DL.methodEnd();
@@ -499,7 +528,7 @@ public class DAR extends Application {
 					return null;
 				}
 			};
-			
+
 			task.messageProperty()
 					.addListener((obs, oldMessage, newMessage) -> programUpdatesFX.prependTextWithDate(newMessage));
 			new Thread(task).start();
@@ -532,6 +561,20 @@ public class DAR extends Application {
 		@Override
 		public void handle(ActionEvent e) {
 			System.exit(0);
+		}
+	}
+
+	private class ChkBoxSettingsListener implements EventHandler<ActionEvent> {
+		@Override
+		public void handle(ActionEvent e) {
+			DL.methodBegin();
+			DL.println(e.toString());
+			DL.println("" + e.getSource());
+			for (ButtonBase button : settingsButtons) {
+				boolean setDisabled = toggleChangeSettings.isDisabled() || !toggleChangeSettings.isSelected();
+				button.setDisable(setDisabled);
+			}
+			DL.methodEnd();
 		}
 	}
 
@@ -647,7 +690,7 @@ public class DAR extends Application {
 				alert.setHeaderText(header);
 				alert.setContentText(content);
 
-				//TODO Testing .show vs .showAndWait
+				// TODO Testing .show vs .showAndWait
 				alert.show();
 
 				DL.methodEnd();
@@ -669,7 +712,8 @@ public class DAR extends Application {
 					alert.setHeaderText(header);
 					alert.setContentText(content);
 
-					//TODO Testing .show vs. .showAndWait for thread hanging purposes.
+					// TODO Testing .show vs. .showAndWait for thread hanging
+					// purposes.
 					alert.show();
 				}
 			});

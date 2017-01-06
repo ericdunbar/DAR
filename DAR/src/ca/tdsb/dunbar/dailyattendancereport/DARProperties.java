@@ -36,7 +36,7 @@ public class DARProperties {
 
 		// lazy fix for null pointer errors
 		if (getProperty(DAR.prefCreateNoDatePDF)==null) {
-			setProperty(DAR.prefCreateNoDatePDF, "" + false);		
+			setProperty(DAR.prefCreateNoDatePDF, "" + true);		
 		}
 	}
 

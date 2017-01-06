@@ -265,11 +265,8 @@ public class Prob extends Application {
 	 */
 	public class TextLbl extends Text {
 		private String prefDescriptor;
-		private String pref;
-
 		public TextLbl(String descriptor, String pref) {
 			this.prefDescriptor = descriptor;
-			this.pref = pref;
 			initialize();
 		}
 
