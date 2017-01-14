@@ -27,7 +27,7 @@ public class DL {
 
 		PrintStream ps = null;
 		try {
-			String fileName = System.getProperty("java.io.tmpdir") + "\\" + "DAR"+DAR.versionDAR+"_log.txt";
+			String fileName = System.getProperty("java.io.tmpdir") + "\\" + "DAR"+AttendanceReport.versionDAR+"_log.txt";
 
 			File fSize = new File(fileName);
 			boolean append = true;

@@ -6,15 +6,11 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import ca.tdsb.dunbar.dailyattendancereport.SejdaSupport;
 import ca.tdsb.dunbar.dailyattendancereport.DL;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.event.EventHandler;
-import javafx.event.EventType;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
@@ -43,36 +39,35 @@ import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
 /**
  * This class manages the separation of a single PDF of the daily attendance
- * record into individual PDFs representing each teacher's DAR. Two types of DAR
- * as produced by Trillium are supported. A so-called "useful" one and a
- * so-called "useless" one. This convention is arbitrarily (and cheekily)
- * chosen. The useful DAR contains phone numbers and class attendance while the
- * useless DAR contains only a comment about the reason for an absence.
+ * record into individual PDFs representing each teacher's DAR. Two types of
+ * attendance report as produced by Trillium are supported. A DAR "useful" and a
+ * TCAR "useless" one. This convention is arbitrarily (and cheekily) chosen. The
+ * useful report contains phone numbers and class attendance while the useless
+ * report contains only a comment about the reason for an absence.
  * 
  * @author ED
- * @date 2016-12-31
+ * @date 2017-01-13
  *
  */
-public class DAR extends Application {
+public class AttendanceReport extends Application {
 
 	// ||||||||||||||||||||||||||||||
 	// __________PREFERENCES
 	// ||||||||||||||||||||||||||||||
 	/** Instance of a preferences-management program that tracks preferences */
-	static DARProperties preferences = new DARProperties("DAR.config");
+	static DARProperties preferences = new DARProperties("AttendanceReport.config");
 
 	/** Destination for successfully split individual PDFs */
 	public final static String prefOutputPath = "output_path";
 
 	/**
-	 * Full path and name for the original "useful" type of DAR. Contains all
+	 * Full path and name for the original "useful" type of AR. Contains all
 	 * teacher DARs in a single file.
 	 */
-	public final static String prefMasterUsefulDAR = "master_useful_DAR_PowerBuilder";
+	public final static String prefMasterDAR = "master_DAR_PowerBuilder";
 
 	/**
 	 * Should a no-date PDF be created. Adds a third copy procedure to the split
@@ -81,10 +76,10 @@ public class DAR extends Application {
 	public final static String prefCreateNoDatePDF = "no_date_pdf";
 
 	/**
-	 * Full path and name for the original "useless" type of DAR. Contains all
+	 * Full path and name for the original "useless" type of AR. Contains all
 	 * teacher DARs in a single file.
 	 */
-	public final static String prefMasterUselessDAR = "master_useless_DAR_Teacher_Class_Attendance_";
+	public final static String prefMasterTCAR = "master_TCAR_Teacher_Class_Attendance_";
 
 	/** Directory in which sejda-console will run. */
 	public final static String prefSejdaDirectory = "sejda";
@@ -97,18 +92,18 @@ public class DAR extends Application {
 	// ||||||||||||||||||||||||||||||
 	private TextDAR programUpdatesFX;
 	private TextLbl destinationDirFX;
-	private TextLbl masterUsefulDARFX;
-	private TextLbl masterUselessDARFX;
-	public static final String versionDAR = "20170101";
+	private TextLbl masterDARFX;
+	private TextLbl masterTCARFX;
+	public static final String versionDAR = "20170113";
 
 	private static final String formTitleFX = "Daily Attendance Report processor version " + versionDAR;
 
 	// private TextLbl clockFX;
 	private TextLbl sedjaDARFX;
-	private Button btnMasterDAR;
-	private Button btnDestDir;
-	private Button btnSedjaConsole;
-	private Button btnSplitDAR;
+	private Button btnChooseMasterReports;
+	private Button btnChooseDestDir;
+	private Button btnChooseSedjaConsole;
+	private Button btnSplitReports;
 	private Button btnExit;
 
 	private ButtonBase[] buttons;
@@ -120,13 +115,14 @@ public class DAR extends Application {
 
 	// GENERAL
 	/**
-	 * The two types of daily attendance record PDF.
+	 * The two types of daily attendance record PDF. DAR is the Daily Attendance
+	 * Report. TCAR is the Teacher Class Attendance Report.
 	 * 
 	 * @author ED
 	 *
 	 */
-	enum DARType {
-		DAILY_FULL, CLASS_LIMITED
+	enum ReportType {
+		DAR, TCAR
 	}
 
 	// CLASS fields
@@ -138,12 +134,13 @@ public class DAR extends Application {
 		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		Date date = new Date(System.currentTimeMillis());
 		DL.println("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
-		DL.println("DAR Splitter launched: " + dateFormat.format(date));
+		DL.println(" AR Splitter launched: " + dateFormat.format(date));
 		DL.println("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
 	}
 
 	public static void main(String[] args) {
-		DL.startLogging(false, true, false);
+		// change to ttf for compile
+		DL.startLogging(true, true, false);
 		DL.methodBegin();
 
 		announceProgram();
@@ -165,7 +162,7 @@ public class DAR extends Application {
 		// http://www.java2s.com/Code/Java/JavaFX/LoadajpgimagewithImageanduseImageViewtodisplay.htm
 		// http://schoolweb.tdsb.on.ca/Portals/westway/images/eco%20icon.png
 		ImageView ecoSchools = new ImageView();
-		Image imgEcoschools = new Image(DAR.class.getResourceAsStream("eco_icon.png"));
+		Image imgEcoschools = new Image(AttendanceReport.class.getResourceAsStream("eco_icon.png"));
 		ecoSchools.setImage(imgEcoschools);
 		ecoSchools.setFitHeight(80);
 		ecoSchools.setPreserveRatio(true);
@@ -203,10 +200,10 @@ public class DAR extends Application {
 		lblActions.setMinWidth(100);
 		actionsHb.getChildren().addAll(lblActions);
 
-		btnSplitDAR = new Button("_Split master DAR");
-		btnSplitDAR.setOnAction(new SplitDARFcButtonListener());
-		btnSplitDAR.setMnemonicParsing(true);
-		actionButtonsTP.getChildren().addAll(btnSplitDAR);
+		btnSplitReports = new Button("_Split reports");
+		btnSplitReports.setOnAction(new SplitDARFcButtonListener());
+		btnSplitReports.setMnemonicParsing(true);
+		actionButtonsTP.getChildren().addAll(btnSplitReports);
 
 		btnExit = new Button("E_xit");
 		btnExit.setOnAction(new ExitFcButtonListener());
@@ -227,21 +224,21 @@ public class DAR extends Application {
 		lblPrefs.setPrefWidth(100);
 		lblPrefs.setMinWidth(100);
 
-		btnMasterDAR = new Button("Choose master DAR files...");
-		btnMasterDAR.setOnAction(new SingleFcButtonListener());
-		btnMasterDAR.setMnemonicParsing(true);
-		settingsButtonsTP.getChildren().addAll(btnMasterDAR);
+		btnChooseMasterReports = new Button("Choose master report files...");
+		btnChooseMasterReports.setOnAction(new SingleFcButtonListener());
+		btnChooseMasterReports.setMnemonicParsing(true);
+		settingsButtonsTP.getChildren().addAll(btnChooseMasterReports);
 
-		btnDestDir = new Button("Choose destination directory...");
-		btnDestDir.setOnAction(new DestinationDirFcButtonListener());
-		btnDestDir.setMnemonicParsing(true);
-		settingsButtonsTP.getChildren().addAll(btnDestDir);
+		btnChooseDestDir = new Button("Choose destination directory...");
+		btnChooseDestDir.setOnAction(new DestinationDirFcButtonListener());
+		btnChooseDestDir.setMnemonicParsing(true);
+		settingsButtonsTP.getChildren().addAll(btnChooseDestDir);
 
-		btnSedjaConsole = new Button("Choose \"sedja-console\"...");
-		btnSedjaConsole.setOnAction(new SedjaDirFcButtonListener());
-		btnSedjaConsole.setMnemonicParsing(true);
-		btnSedjaConsole.setDisable(true);
-		settingsButtonsTP.getChildren().addAll(btnSedjaConsole);
+		btnChooseSedjaConsole = new Button("Choose \"sedja-console\"...");
+		btnChooseSedjaConsole.setOnAction(new SedjaDirFcButtonListener());
+		btnChooseSedjaConsole.setMnemonicParsing(true);
+		btnChooseSedjaConsole.setDisable(true);
+		settingsButtonsTP.getChildren().addAll(btnChooseSedjaConsole);
 
 		// Settings
 
@@ -251,12 +248,12 @@ public class DAR extends Application {
 		// http://docs.oracle.com/javafx/2/ui_controls/checkbox.htm
 		chkNoDate = new CheckBox("Create date-free PDFs (extra copy)");
 		chkNoDate.setOnAction(new chkBoxListener());
-		chkNoDate.setSelected(preferences.getProperty(DAR.prefCreateNoDatePDF).equals("true"));
+		chkNoDate.setSelected(preferences.getProperty(AttendanceReport.prefCreateNoDatePDF).equals("true"));
 
 		toggleChangeSettings = new ToggleButton("Change settings");
 		toggleChangeSettings.setSelected(false);
 		toggleChangeSettings.setOnAction(new ChkBoxSettingsListener());
-		settingsButtons = new ButtonBase[] { btnDestDir, btnMasterDAR, chkNoDate };
+		settingsButtons = new ButtonBase[] { btnChooseDestDir, btnChooseMasterReports, chkNoDate };
 
 		settingsOptionsTP.getChildren().addAll(chkNoDate);
 
@@ -266,11 +263,11 @@ public class DAR extends Application {
 		settingsLblVb.getChildren().addAll(lblPrefs, toggleChangeSettings);
 		settingsLblVb.setMinWidth(150);
 		settingsLblVb.setPrefWidth(150);
-		
+
 		HBox settingsHb = new HBox(10);
 		settingsHb.getChildren().addAll(settingsLblVb, settingsVb);
 
-		buttons = new ButtonBase[] { btnExit, btnSplitDAR, toggleChangeSettings };
+		buttons = new ButtonBase[] { btnExit, btnSplitReports, toggleChangeSettings };
 
 		// Status message text
 		programUpdatesFX = new TextDAR();
@@ -302,8 +299,8 @@ public class DAR extends Application {
 		// clockHb.getChildren().addAll(statusFX, clockFX);
 
 		// Source location
-		masterUsefulDARFX = createTextFX("Master " + DARType.DAILY_FULL.toString() + " DAR", prefMasterUsefulDAR);
-		masterUselessDARFX = createTextFX("Master " + DARType.CLASS_LIMITED.toString() + " DAR", prefMasterUselessDAR);
+		masterDARFX = createTextFX("Master " + ReportType.DAR.toString() + " DAR", prefMasterDAR);
+		masterTCARFX = createTextFX("Master " + ReportType.TCAR.toString() + " DAR", prefMasterTCAR);
 
 		// Destination location
 		destinationDirFX = createTextFX("Destination directory", prefOutputPath);
@@ -328,7 +325,7 @@ public class DAR extends Application {
 		vbox.setPadding(new Insets(25, 25, 25, 25));
 
 		vbox.getChildren().addAll(lblDAR, sep[counter++], actionsHb, sep[counter++], settingsHb, sep[counter++],
-				programUpdatesFX, masterUsefulDARFX, masterUselessDARFX, destinationDirFX, sedjaDARFX, ecoHb);
+				programUpdatesFX, masterDARFX, masterTCARFX, destinationDirFX, sedjaDARFX, ecoHb);
 
 		// vbox.getChildren().addAll(lblDAR, sep[counter++], actionsHb,
 		// sep[counter++], preferencesHb, sep[counter++],
@@ -414,7 +411,7 @@ public class DAR extends Application {
 		// c = null;
 
 		toggleChangeSettings.fireEvent(new ActionEvent());
-		btnSplitDAR.fire();
+		btnSplitReports.fire();
 
 		DL.methodEnd();
 	}
@@ -455,7 +452,7 @@ public class DAR extends Application {
 					// prefs file failure occurs too early in program launch
 
 					// Solves problem with invisible but selectable text
-					if (DAR.firstRun) {
+					if (AttendanceReport.firstRun) {
 						firstRun = false;
 
 						try {
@@ -499,7 +496,7 @@ public class DAR extends Application {
 					try {
 						r = new SejdaSupport(preferences, programUpdatesFX);
 					} catch (Exception e) {
-						btnSedjaConsole.setDisable(false);
+						btnChooseSedjaConsole.setDisable(false);
 						if (e.getMessage() == null) {
 							String msg = "Possible problem with preferences. Please set them.";
 							programUpdatesFX.prependTextWithDate(msg);
@@ -632,7 +629,7 @@ public class DAR extends Application {
 
 			if (update)
 				updateS = " (update)";
-			s = prefDescriptor + updateS + ": " + DAR.preferences.getProperty(pref);
+			s = prefDescriptor + updateS + ": " + AttendanceReport.preferences.getProperty(pref);
 			this.setText(s);
 		}
 
@@ -720,7 +717,7 @@ public class DAR extends Application {
 			DL.methodEnd();
 		}
 
-		public File DARFileChooser(String DARFileName, DARType dT) {
+		public File DARFileChooser(String DARFileName, ReportType dT) {
 			DL.methodBegin();
 			FileChooser fileChooser = new FileChooser();
 			fileChooser.setInitialDirectory(new File(System.getenv("userprofile")));
@@ -737,17 +734,17 @@ public class DAR extends Application {
 	private void showDARFileChooser() {
 		File selectedFile, selectedFile2;
 		DARFileChooserClass dfc = new DARFileChooserClass();
-		selectedFile = dfc.DARFileChooser("PowerBuilder.pdf", DARType.DAILY_FULL);
+		selectedFile = dfc.DARFileChooser("PowerBuilder.pdf", ReportType.DAR);
 		if (selectedFile != null) {
-			preferences.setProperty(prefMasterUsefulDAR, selectedFile.getAbsolutePath());
-			masterUsefulDARFX.update();
+			preferences.setProperty(prefMasterDAR, selectedFile.getAbsolutePath());
+			masterDARFX.update();
 		}
 
 		dfc = new DARFileChooserClass();
-		selectedFile2 = dfc.DARFileChooser("Teacher Class Attendance .pdf", DARType.CLASS_LIMITED);
+		selectedFile2 = dfc.DARFileChooser("Teacher Class Attendance .pdf", ReportType.TCAR);
 		if (selectedFile2 != null) {
-			preferences.setProperty(prefMasterUselessDAR, selectedFile2.getAbsolutePath());
-			masterUselessDARFX.update();
+			preferences.setProperty(prefMasterTCAR, selectedFile2.getAbsolutePath());
+			masterTCARFX.update();
 		}
 
 		// TODO: MESSY. AM TOO TIRED TO FIX
@@ -764,7 +761,7 @@ public class DAR extends Application {
 
 		if (!errorMsg.equals("")) {
 			dfc.msgBox2("Confirm selected PDF", "Unexpected file(s) chosen",
-					errorMsg + " \n\nConfirm that the correct files were chosen. If they weren't, please use the \"Choose master DAR files...\" to choose the correct files.",
+					errorMsg + " \n\nConfirm that the correct files were chosen. If they weren't, please use the \"Choose master report files...\" to choose the correct files.",
 					Alert.AlertType.WARNING);
 		}
 	}

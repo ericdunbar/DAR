@@ -11,8 +11,8 @@ import java.util.List;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 
-import ca.tdsb.dunbar.dailyattendancereport.DAR.DARType;
-import ca.tdsb.dunbar.dailyattendancereport.DAR.TextDAR;
+import ca.tdsb.dunbar.dailyattendancereport.AttendanceReport.ReportType;
+import ca.tdsb.dunbar.dailyattendancereport.AttendanceReport.TextDAR;
 
 public class SejdaSupport {
 
@@ -36,7 +36,7 @@ public class SejdaSupport {
 			throw new IOException("Please set preferences. Without valid preferences this program is not useful.");
 
 		// Check for the preference sejda-console
-		String sejdaFS = prefs.getProperty(DAR.prefSejdaLocation);
+		String sejdaFS = prefs.getProperty(AttendanceReport.prefSejdaLocation);
 		String sejdaInfo = "The file will be located in this set of directories: sejda-console-2.10.4-bin\\sejda-console-2.10.4\\bin\\sejda-console.\n\nThis program was developed using sejda-console v. 2.10.4. A newer version may work. For downloads, visit http://www.sejda.org/download/";
 		if (sejdaFS == null)
 			throw new IOException(
@@ -51,7 +51,7 @@ public class SejdaSupport {
 							+ sejdaInfo);
 		}
 
-		String outPath = preferences.getProperty(DAR.prefOutputPath);
+		String outPath = preferences.getProperty(AttendanceReport.prefOutputPath);
 		if (outPath == null)
 			throw new IOException(
 					"Please set destination (output) directory using the \"Choose destination directory...\" button.");
@@ -61,7 +61,6 @@ public class SejdaSupport {
 					"Destination directory unavailable or has been moved.\n\nThis could be caused by a network error in which case changing destination directory won't do anything. "
 							+ "\n\nIf the network is functioning properly, please set destination (output) directory using the \"Choose destination directory...\" button.");
 		}
-
 	}
 
 	TextDAR messageFX; // display status updates here
@@ -69,13 +68,13 @@ public class SejdaSupport {
 	DARProperties preferences;
 
 	/**
-	 * Splits the DAR.
+	 * Splits the report.
 	 * 
 	 * @throws IOException
 	 */
-	public void splitDAR(DARType whichDAR) throws IOException {
+	public void splitReport(ReportType whichReport) throws IOException {
 		DL.methodBegin();
-		DL.println("whichDAR = " + whichDAR.toString());
+		DL.println("whichReport = " + whichReport.toString());
 
 		/*
 		 * List of tasks to do: 1. prepare temporary directory by emptying it 2.
@@ -84,43 +83,43 @@ public class SejdaSupport {
 		 * dateVar to file 6. delete PDF
 		 */
 
-		String sejdaS = preferences.getProperty(DAR.prefSejdaLocation);
+		String sejdaS = preferences.getProperty(AttendanceReport.prefSejdaLocation);
 
 		// 0. PREPARE SEDJA
 
 		// 1. TEXT COORDINATES & type of preferences file
 		// String c[] = {"--top", "--left", "--width", "--height"};
 
-		String localPrefMasteDAR;
+		String localPrefMasterReport;
 
 		String teacherNameCoordinates[];
 
-		String describeDAR = whichDAR.toString();
+		String describeReport = whichReport.toString();
 
-		if (whichDAR == DARType.DAILY_FULL) {
-			localPrefMasteDAR = DAR.prefMasterUsefulDAR;
+		if (whichReport == ReportType.DAR) {
+			localPrefMasterReport = AttendanceReport.prefMasterDAR;
 
-			// USEFUL split by TEACHERNAME
+			// DAR split by TEACHERNAME
 			teacherNameCoordinates = new String[] { "86", "84", "200", "22" };
 		} else {
-			localPrefMasteDAR = DAR.prefMasterUselessDAR;
+			localPrefMasterReport = AttendanceReport.prefMasterTCAR;
 
-			// USELESS split by TEACHERNAME
+			// TCAR split by TEACHERNAME
 			teacherNameCoordinates = new String[] { "105", "71", "200", "22" };
 		}
 
 		// SOURCE FILE
-		String sourceFile = preferences.getProperty(localPrefMasteDAR);
+		String sourceFile = preferences.getProperty(localPrefMasterReport);
 
 		// DATE
-		String dateForDAR = getPDFDate(sourceFile, whichDAR);
+		String dateForReport = getPDFDate(sourceFile, whichReport);
 
-		File tFile = new File(dateForDAR);
+		File tFile = new File(dateForReport);
 		if (tFile.getName().equalsIgnoreCase("date_error")) {
 			throw new IOException(
-					"The source PDF(s) are reversed or incorrect/invalid PDF(s) were chosen for one or both DAR types. Please use the \"Choose Master DAR Files...\" button to choose the correct file(s).");
+					"The source PDF(s) are missing, reversed or incorrect/invalid PDF(s) were chosen for one or both report types. Please use the \"Choose master report files...\" button to choose the correct file(s).");
 		}
-		DL.println("THE DATE: " + dateForDAR);
+		DL.println("THE DATE: " + dateForReport);
 
 		// DESTINATION DIRECTORY
 		// Prepare temporary directory
@@ -139,42 +138,43 @@ public class SejdaSupport {
 				"--width", teacherNameCoordinates[2], "--height", teacherNameCoordinates[3], "-o",
 				quotesWrap(destinationDirectory), "-p", "[TEXT]", "--existingOutput", "overwrite");
 
-		sejdaSplitDAR(cmdAndArgs, tempDir);
+		sejdaSplitReport(cmdAndArgs, tempDir);
 
-		boolean simpleCopy = preferences.getProperty(DAR.prefCreateNoDatePDF).equals("true") ? true : false;
+		boolean simpleCopy = preferences.getProperty(AttendanceReport.prefCreateNoDatePDF).equals("true") ? true
+				: false;
 
 		DL.println("simpleCOPY: " + simpleCopy);
-		
+
 		// CREATE DIRECTORIES, if missing
 		// Attempted fix for constantly refreshing archive directory
-		File archiveDir = new File(preferences.getProperty(DAR.prefOutputPath) + "\\Archive\\");
+		File archiveDir = new File(preferences.getProperty(AttendanceReport.prefOutputPath) + "\\Archive\\");
 		archiveDir.mkdir();
-		archiveDir = new File(preferences.getProperty(DAR.prefOutputPath) + "\\Archive\\" + dateForDAR);
+		archiveDir = new File(preferences.getProperty(AttendanceReport.prefOutputPath) + "\\Archive\\" + dateForReport);
 		archiveDir.mkdir();
 
-		File simpleDir = new File(preferences.getProperty(DAR.prefOutputPath) + "\\No Date\\");
+		File simpleDir = new File(preferences.getProperty(AttendanceReport.prefOutputPath) + "\\No Date\\");
 		if (simpleCopy) {
 			simpleDir.mkdir();
 		}
 		// DELETE EXISTING FILES
 		// http://stackoverflow.com/questions/5751335/using-file-listfiles-with-filenameextensionfilter
-		File ftbd = new File(preferences.getProperty(DAR.prefOutputPath));
+		File ftbd = new File(preferences.getProperty(AttendanceReport.prefOutputPath));
 
-		int delF = deleteFilesOfDARType(ftbd, whichDAR, ".pdf");
+		int delF = deleteFilesOfReportType(ftbd, whichReport, ".pdf");
 
 		messageFX.prependTextWithDate(
-				"Cleaned up destination by removing " + delF + " " + whichDAR.toString() + " files.");
+				"Cleaned up destination by removing " + delF + " " + whichReport.toString() + " files.");
 
-		ftbd = new File(preferences.getProperty(DAR.prefOutputPath) + "\\No Date\\");
-		
-		if(!simpleCopy && ftbd.exists()) {
+		ftbd = new File(preferences.getProperty(AttendanceReport.prefOutputPath) + "\\No Date\\");
+
+		if (!simpleCopy && ftbd.exists()) {
 			deleteDir(ftbd);
 		}
-		
+
 		if (ftbd.exists()) {
-			int delG = deleteFilesOfDARType(ftbd, whichDAR, ".pdf");
+			int delG = deleteFilesOfReportType(ftbd, whichReport, ".pdf");
 			messageFX.prependTextWithDate(
-					"Cleaned up destination NO DATE by removing " + delG + " " + whichDAR.toString() + " files.");
+					"Cleaned up destination NO DATE by removing " + delG + " " + whichReport.toString() + " files.");
 		}
 
 		// MOVE and COPY PDFs
@@ -193,35 +193,38 @@ public class SejdaSupport {
 		}
 
 		DL.println("Start: MOVE and ARCHIVE NEW FILES");
+		messageFX.prependTextWithDate("Will now move and create archives for " + newFileList.length + " "
+				+ whichReport.toString() + " files in " + preferences.getProperty(AttendanceReport.prefOutputPath));
 		for (String s : newFileList) {
 			String oldFile = tempDir.getAbsolutePath() + "\\" + s;
 
-			String newName = FilenameUtils.getBaseName(s) + " " + describeDAR + ".pdf";
-			String newArchivalName = FilenameUtils.getBaseName(s) + " " + describeDAR + " " + dateForDAR + ".pdf";
+			String newName = FilenameUtils.getBaseName(s) + " " + describeReport + ".pdf";
+			String newArchivalName = FilenameUtils.getBaseName(s) + " " + describeReport + " " + dateForReport + ".pdf";
 
 			if (simpleCopy) {
 				String simpleFile = simpleDir.getAbsolutePath() + "\\" + newName;
-				darCopyFile(oldFile, simpleFile);
+				reportCopyFile(oldFile, simpleFile);
 			}
 
 			newName = newArchivalName; // yes, got lazy!
 
-			String newFile = preferences.getProperty(DAR.prefOutputPath) + "\\" + newName;
+			String newFile = preferences.getProperty(AttendanceReport.prefOutputPath) + "\\" + newName;
 			String newArchivalFile = archiveDir.getAbsolutePath() + "\\" + newArchivalName;
 
-			darMoveFile(oldFile, newFile, newArchivalFile);
+			reportMoveFile(oldFile, newFile, newArchivalFile);
 		}
 
 		messageFX.prependTextWithDate(
-				"Moved " + newFileList.length + " new " + whichDAR.toString() + " teacher DAR PDF files to: "
-						+ preferences.getProperty(DAR.prefOutputPath) + " for " + dateForDAR + ".");
+				"Moved " + newFileList.length + " new " + whichReport.toString() + " teacher report PDF files " + "for "
+						+ dateForReport + " to: " + preferences.getProperty(AttendanceReport.prefOutputPath));
 
-		// MOVE master DAR to ARCHIVE
-		String FROM = preferences.getProperty(localPrefMasteDAR);
-		String TO = preferences.getProperty(DAR.prefOutputPath) + "\\Archive\\Masters\\" + "Master_DAR_" + describeDAR
-				+ "_" + dateForDAR + ".pdf";
-		darMoveFile(FROM, TO);
-		messageFX.prependTextWithDate("Archived the master DAR PDF for " + describeDAR + " for " + dateForDAR + ".");
+		// MOVE master REPORT to ARCHIVE
+		String FROM = preferences.getProperty(localPrefMasterReport);
+		String TO = preferences.getProperty(AttendanceReport.prefOutputPath) + "\\Archive\\Masters\\" + "Master_Report_"
+				+ describeReport + "_" + dateForReport + ".pdf";
+		reportMoveFile(FROM, TO);
+		messageFX.prependTextWithDate(
+				"Archived the master report PDF for " + describeReport + " for " + dateForReport + ".");
 		DL.methodEnd();
 	}
 
@@ -235,7 +238,7 @@ public class SejdaSupport {
 	 * @param baseDir directory in which sejda is run
 	 * @throws IOException thrown if directory missing or console failed
 	 */
-	private void sejdaSplitDAR(List<String> cmdAndArgs, File baseDir) throws IOException {
+	private void sejdaSplitReport(List<String> cmdAndArgs, File baseDir) throws IOException {
 		DL.methodBegin();
 		// troubleshooting
 
@@ -246,7 +249,7 @@ public class SejdaSupport {
 
 		// call the sejda processor
 		ProcessBuilder pb = new ProcessBuilder(cmdAndArgs);
-		pb.directory(new File(FilenameUtils.getFullPath(preferences.getProperty(DAR.prefSejdaLocation))));
+		pb.directory(new File(FilenameUtils.getFullPath(preferences.getProperty(AttendanceReport.prefSejdaLocation))));
 		Process p = pb.start();
 
 		// process the console output to prevent application from hanging
@@ -313,8 +316,8 @@ public class SejdaSupport {
 	 * @param newFile Full pathname of new location
 	 * @throws IOException
 	 */
-	private void darMoveFile(String oldFile, String newFile) throws IOException {
-		darMoveFile(oldFile, newFile, null);
+	private void reportMoveFile(String oldFile, String newFile) throws IOException {
+		reportMoveFile(oldFile, newFile, null);
 	}
 
 	/**
@@ -327,32 +330,56 @@ public class SejdaSupport {
 	 * @param secondNewFile Full pathname of second new location
 	 * @throws IOException
 	 */
-	private void darMoveFile(String oldFile, String firstNewFile, String secondNewFile) throws IOException {
+	private void reportMoveFile(String oldFile, String firstNewFile, String secondNewFile) throws IOException {
+		DL.methodBegin();
 		new File(firstNewFile).delete();
 
 		if (secondNewFile != null) {
 			new File(secondNewFile).delete();
-			FileUtils.copyFile(FileUtils.getFile(oldFile), FileUtils.getFile(secondNewFile));
+			reportCopyFile(oldFile, secondNewFile);
 		}
+
+		// TODO Correct for network timeout error
 		FileUtils.moveFile(FileUtils.getFile(oldFile), FileUtils.getFile(firstNewFile));
+		DL.methodEnd();
 	}
 
-	private void darCopyFile(String oldFile, String newFile) throws IOException {
+	/**
+	 * Copies a file successfully across the network, I hope.
+	 * 
+	 * @param oldFile
+	 * @param newFile
+	 * @throws IOException
+	 */
+	private void reportCopyFile(String oldFile, String newFile) throws IOException {
+		DL.methodBegin();
 		new File(newFile).delete();
 
-		FileUtils.copyFile(FileUtils.getFile(oldFile), FileUtils.getFile(newFile));
+		DL.println("Copy file:");
+		DL.println("  oldFile: \"" + oldFile + "\"");
+		DL.println("  newFile: \"" + newFile + "\"");
+		try {
+			FileUtils.copyFile(FileUtils.getFile(oldFile), FileUtils.getFile(newFile));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			throw new IOException(e.getMessage() + " Try again. The network may be working against you.");
+		}
+		DL.methodEnd();
 	}
 
-	private int deleteFilesOfDARType(File dirToBeCleaned, DARType whichDAR, String extension) {
+	private int deleteFilesOfReportType(File dirToBeCleaned, ReportType whichReport, String extension) {
 		DL.methodBegin();
 
 		String filesToBeDeletedList[] = dirToBeCleaned.list(new FilenameFilter() {
 			public boolean accept(File dir, String name) {
 				name = name.toLowerCase();
-				return name.contains(whichDAR.toString().toLowerCase()) && name.toLowerCase().endsWith(extension);
+				return name.contains(whichReport.toString().toLowerCase()) && name.toLowerCase().endsWith(extension);
 			}
 		});
 
+		messageFX.prependTextWithDate("Will now delete " + filesToBeDeletedList.length + " " + whichReport.toString()
+				+ " files from " + dirToBeCleaned.getAbsolutePath());
 		for (String string : filesToBeDeletedList) {
 			new File(dirToBeCleaned.getAbsolutePath() + "\\" + string).delete();
 		}
@@ -360,25 +387,25 @@ public class SejdaSupport {
 		return filesToBeDeletedList.length;
 	}
 
-	public String getPDFDate(String sourceFile, DARType darT) throws IOException {
+	public String getPDFDate(String sourceFile, ReportType reportT) throws IOException {
 		DL.methodBegin();
 		File tempDir = createTempDir("sejda_date_extraction");
 		if (tempDir == null)
 			throw new IOException(
 					"Temp date directory could not be created. Try again. If error persists logout and login or restart.");
 
-		String sejdaS = preferences.getProperty(DAR.prefSejdaLocation);
+		String sejdaS = preferences.getProperty(AttendanceReport.prefSejdaLocation);
 
 		// PREPARE SEDJA
 		// TEXT COORDINATES:
 		// String c[] = {"--top", "--left", "--width", "--height"};
 		String c[];
 
-		if (darT == DARType.DAILY_FULL)
-			c = new String[] { "514", "61", "75", "22" }; // coords for USEFUL
+		if (reportT == ReportType.DAR)
+			c = new String[] { "514", "61", "75", "22" }; // coords for DAR
 															// split by DATE
 		else
-			c = new String[] { "340", "55", "75", "22" }; // coords for USELESS
+			c = new String[] { "340", "55", "75", "22" }; // coords for TCAR
 		// split by DATE
 
 		// DESTINATION DIRECTORY
@@ -391,7 +418,7 @@ public class SejdaSupport {
 				quotesWrap(sourceFile), "--top", c[0], "--left", c[1], "--width", c[2], "--height", c[3], "-o",
 				quotesWrap(destinationDirectory), "-p", "[TEXT]", "--existingOutput", "overwrite");
 
-		sejdaSplitDAR(cmdAndArgs, tempDir);
+		sejdaSplitReport(cmdAndArgs, tempDir);
 
 		File fL[] = tempDir.listFiles();
 
@@ -426,121 +453,145 @@ public class SejdaSupport {
 
 	void runMe(TextDAR errorStatusFX) {
 		DL.methodBegin();
-		DAR.working = true;
+		AttendanceReport.working = true;
+		errorStatusFX.prependTextWithDate("Start \"Split reports\"");
+		boolean missing[] = { true, true };
+		final int tcar = 0;
+		final int dar = 1;
+		String commonMsg = "\n\nNote: if you press Cancel to one of the \"Choose master report files...\" dialog boxes the relevant preference will not be changed but you can still set the other preference.";
 
 		try {
-			boolean missing[] = { false, false };
-			final int useless = 0;
-			final int useful = 1;
 
-			missing[useless] = attemptSplit(DARType.CLASS_LIMITED);
+			missing[tcar] = attemptSplit(ReportType.TCAR);
 
-			missing[useful] = attemptSplit(DARType.DAILY_FULL);
+			missing[dar] = attemptSplit(ReportType.DAR);
 
-			DL.println("Check to see if no, one or two missing DAR files and whether to THROW exception");
+			DL.println("Check to see if no, one or two missing report files and whether to THROW exception");
 			// THROW EXCEPTIONS
-			String commonMsg = "\n\nNote: if you press Cancel to one of the \"Choose master DAR...\" dialog boxes the relevant preference will not be changed but you can still set the other preference.";
 
-			if (missing[useless] && missing[useful]) {
-				String msg = ("Both master DAR PDF files unavailable. \n\n" + generateMissingMsg(DARType.CLASS_LIMITED)
-						+ " \n\n" + generateMissingMsg(DARType.DAILY_FULL) + " " + commonMsg);
-				DAR.msgBoxError("Two missing DAR", "A problem was encountered with both DAR files", msg);
+			if (missing[tcar] && missing[dar]) {
+				String msg = ("Both master report PDF files unavailable. \n\n" + generateMissingMsg(ReportType.TCAR)
+						+ " \n\n" + generateMissingMsg(ReportType.DAR) + " " + commonMsg);
+				AttendanceReport.msgBoxError("Two missing reports", "A problem was encountered with both report files",
+						msg);
 				throw new IOException(msg);
-			} else if (!missing[useless] ^ !missing[useful]) {
+			} else if (!missing[tcar] ^ !missing[dar]) {
 				Desktop desktop = Desktop.getDesktop();
-				desktop.open(new File(preferences.getProperty(DAR.prefOutputPath)));
+				desktop.open(new File(preferences.getProperty(AttendanceReport.prefOutputPath)));
 				errorStatusFX
 						.prependTextWithDate("Windows File Explorer opened because files should have been generated.");
 
-				DARType dM = missing[useless] ? DARType.CLASS_LIMITED : DARType.DAILY_FULL;
+				ReportType dM = missing[tcar] ? ReportType.TCAR : ReportType.DAR;
 
-				String msg = ("Only one DAR processed. " + generateMissingMsg(dM) + commonMsg);
-				DAR.msgBoxError("Problem with a DAR", "A problem was encountered with one DAR file", msg);
+				String msg = ("Only one report processed. " + generateMissingMsg(dM) + commonMsg);
+				AttendanceReport.msgBoxError("Problem with a report", "A problem was encountered with one report file",
+						msg);
 				throw new IOException(msg);
 			} else {
-				DL.println("Completed check to see if no, one or two missing DAR files. THROW IOException not used.");
+				DL.println(
+						"Completed check to see if no, one or two missing report files. THROW IOException not used.");
 
 				Desktop desktop = Desktop.getDesktop();
-				desktop.open(new File(preferences.getProperty(DAR.prefOutputPath)));
+				desktop.open(new File(preferences.getProperty(AttendanceReport.prefOutputPath)));
 
-				DAR.msgBoxInfo("Success", "Both DARs successfully processed",
+				AttendanceReport.msgBoxInfo("Success", "Both reports successfully processed",
 						"Please check the destination directory that opened to confirm that the files were successfully processed.");
 
-				errorStatusFX.prependTextWithDate("Both DARs successfully processed.");
+				errorStatusFX.prependTextWithDate("Both reports successfully processed.");
 			}
 		} catch (Exception e1) {
-			DL.println("TRY..CATCH (RM1): one or two missing DAR Exception: e1.getMessage() = " + e1.getMessage());
+			DL.methodBegin();
+			DL.println("TRY..CATCH (RM1): one or two missing report exception: e1.getMessage() = " + e1.getMessage());
 
 			e1.printStackTrace();
 
+			DL .println("I'm here");
+			if (!missing[tcar] ^ !missing[dar]) {
+				Desktop desktop = Desktop.getDesktop();
+				try {
+					desktop.open(new File(preferences.getProperty(AttendanceReport.prefOutputPath)));
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				errorStatusFX
+						.prependTextWithDate("Windows File Explorer opened because files should have been generated.");
+
+				ReportType dM = missing[tcar] ? ReportType.TCAR : ReportType.DAR;
+
+				String msg = ("Only one report processed. " + generateMissingMsg(dM) + commonMsg);
+				errorStatusFX.prependTextWithDate(msg);
+			}
+
 			errorStatusFX.prependTextWithDate(e1.getMessage());
+			DL.methodEnd();
 		}
 
-		DAR.working = false;
+		AttendanceReport.working = false;
 		DL.methodEnd();
 	}
 
-	private String generateMissingMsg(DARType d) {
+	private String generateMissingMsg(ReportType d) {
 		DL.methodBegin(d.toString());
 		String prefKey = null;
 
-		if (d == DARType.DAILY_FULL)
-			prefKey = DAR.prefMasterUsefulDAR;
-		else if (d == DARType.CLASS_LIMITED)
-			prefKey = DAR.prefMasterUselessDAR;
+		if (d == ReportType.DAR)
+			prefKey = AttendanceReport.prefMasterDAR;
+		else if (d == ReportType.TCAR)
+			prefKey = AttendanceReport.prefMasterTCAR;
 
-		String pathToMasterDAR = preferences.getProperty(prefKey);
+		String pathToMasterReport = preferences.getProperty(prefKey);
 
 		String s = "";
-		if (pathToMasterDAR == null) {
-			s = "The preference for " + d.toString() + " DAR master has not been set. "
-					+ "Use CutePDF to print a master DAR of that type, and click \"Choose master DAR Files...\" to set the file location. ";
+		if (pathToMasterReport == null) {
+			s = "The preference for " + d.toString() + " report file has not been set. "
+					+ "Use CutePDF to print a report of that type, and click \"Choose master report files...\" to set the file location. ";
 		} else {
-			File masterDAR = new File(pathToMasterDAR);
-			if (!masterDAR.exists())
-				s = "The master DAR file (" + masterDAR.getName() + ") for " + d.toString() + " is missing. "
-						+ "Use CutePDF to print a new master DAR of that type. Ensure the location for the master DAR PDF is set correctly. If the location is incorrect, click \"Choose master DAR Files...\" to set the file location. ";
+			File masterReport = new File(pathToMasterReport);
+			if (!masterReport.exists())
+				s = "The master file (" + masterReport.getName() + ") for the " + d.toString() + " report is missing. "
+						+ "Use CutePDF to print a new master for this report. Ensure the location for the file is set correctly. If the location is incorrect, click \"Choose master report files...\" to set the file location. ";
 			else
-				s = "A master DAR file became available (i.e. was created) after the splitter ran. Click \"Split master DAR\" to complete the process.";
+				s = "A master report file became available (i.e. was created) after the splitter ran. Click \"Split reports\" to complete the process.";
 		}
 		DL.methodEnd();
 		return s;
 	}
 
-	private boolean attemptSplit(DARType d) throws IOException {
+	private boolean attemptSplit(ReportType d) throws IOException {
 		DL.methodBegin();
-		DL.println("DARType." + d.toString());
+		DL.println("ReportType." + d.toString());
 
-		File masterDAR = new File("[FYI No_" + d.toString() + " file of type PDF has been selected]");
+		File masterReport = new File("[FYI No_" + d.toString() + " file of type PDF has been selected]");
 
 		String prefKey = null;
 
-		if (d == DARType.DAILY_FULL)
-			prefKey = DAR.prefMasterUsefulDAR;
-		else if (d == DARType.CLASS_LIMITED)
-			prefKey = DAR.prefMasterUselessDAR;
+		if (d == ReportType.DAR)
+			prefKey = AttendanceReport.prefMasterDAR;
+		else if (d == ReportType.TCAR)
+			prefKey = AttendanceReport.prefMasterTCAR;
 
-		String pathToMasterDAR = preferences.getProperty(prefKey);
+		String pathToMasterReport = preferences.getProperty(prefKey);
 
 		boolean missing = false;
 
-		DL.println("pathToMasterDAR = " + pathToMasterDAR);
+		DL.println("pathToMasterReport = " + pathToMasterReport);
 
 		// TODO Is this try..catch block redundant?
 		try {
-			masterDAR = new File(pathToMasterDAR);
+			masterReport = new File(pathToMasterReport);
 		} catch (Exception e) {
-			DL.println("TRY..CATCH (AS1): Failure. \"masterDAR = new File(pathToMasterDAR);\". e.getMessage() = "
+			DL.println("TRY..CATCH (AS1): Failure. \"masterReport = new File(pathToMasterReport);\". e.getMessage() = "
 					+ e.getMessage());
 			missing = true;
 		}
 
 		// PERFORM SPLIT
-		DL.println("Try processing: " + pathToMasterDAR);
+		DL.println("Try processing: " + pathToMasterReport);
 
-		if (masterDAR.exists()) {
-			// Process the DAR
-			splitDAR(d);
+		if (masterReport.exists()) {
+			// Process the report
+			splitReport(d);
 		} else
 			missing = true;
 

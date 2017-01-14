@@ -117,7 +117,7 @@ public class Prob extends Application {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				if (DAR.working) {
+				if (AttendanceReport.working) {
 					char ca[] = new String("|/-\\").toCharArray();
 					int numDots = ca.length;
 
@@ -198,7 +198,7 @@ public class Prob extends Application {
 					}
 
 					// Solves problem with invisible but selectable text
-					if (DAR.firstRun) {
+					if (AttendanceReport.firstRun) {
 						firstRun = false;
 						try {
 							Thread.sleep(2000);
