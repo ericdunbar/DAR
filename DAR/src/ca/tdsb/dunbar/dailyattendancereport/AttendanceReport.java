@@ -76,6 +76,11 @@ public class AttendanceReport extends Application {
 	public final static String prefCreateNoDatePDF = "no_date_pdf";
 
 	/**
+	 * Should files be archived in a folder with the teacher's name?
+	 */
+	public final static String prefArchiveByTeacher = "archive_by_teacher";
+
+	/**
 	 * Full path and name for the original "useless" type of AR. Contains all
 	 * teacher DARs in a single file.
 	 */
@@ -110,6 +115,7 @@ public class AttendanceReport extends Application {
 	private ButtonBase[] settingsButtons;
 
 	private CheckBox chkNoDate;
+	private CheckBox chkArchiveByTeacher;
 
 	private ToggleButton toggleChangeSettings;
 
@@ -126,7 +132,6 @@ public class AttendanceReport extends Application {
 	}
 
 	// CLASS fields
-	static boolean working = false; // disable buttons while processing
 	protected static boolean firstRun = true; // prevents invisible text
 
 	private static void announceProgram() {
@@ -137,6 +142,9 @@ public class AttendanceReport extends Application {
 		DL.println(" AR Splitter launched: " + dateFormat.format(date));
 		DL.println("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
 	}
+
+	// TODO
+	// http://stackoverflow.com/questions/13786968/java-fx-thread-safe-pause-sleep
 
 	public static void main(String[] args) {
 		// change to ttf for compile
@@ -246,16 +254,20 @@ public class AttendanceReport extends Application {
 		settingsOptionsTP.setAlignment(Pos.CENTER_LEFT);
 
 		// http://docs.oracle.com/javafx/2/ui_controls/checkbox.htm
-		chkNoDate = new CheckBox("Create date-free PDFs (extra copy)");
-		chkNoDate.setOnAction(new chkBoxListener());
+		chkNoDate = new CheckBox("Create a date-free PDF (extra copy)");
+		chkNoDate.setOnAction(new ChkBoxNoDateListener());
 		chkNoDate.setSelected(preferences.getProperty(AttendanceReport.prefCreateNoDatePDF).equals("true"));
+
+		chkArchiveByTeacher = new CheckBox("Archive to folders with teacher name");
+		chkArchiveByTeacher.setOnAction(new ChkBoxArchiveByTeacherListener());
+		chkArchiveByTeacher.setSelected(preferences.getProperty(AttendanceReport.prefArchiveByTeacher).equals("true"));
 
 		toggleChangeSettings = new ToggleButton("Change settings");
 		toggleChangeSettings.setSelected(false);
 		toggleChangeSettings.setOnAction(new ChkBoxSettingsListener());
-		settingsButtons = new ButtonBase[] { btnChooseDestDir, btnChooseMasterReports, chkNoDate };
+		settingsButtons = new ButtonBase[] { btnChooseDestDir, btnChooseMasterReports, chkNoDate, chkArchiveByTeacher };
 
-		settingsOptionsTP.getChildren().addAll(chkNoDate);
+		settingsOptionsTP.getChildren().addAll(chkNoDate, chkArchiveByTeacher);
 
 		settingsVb.getChildren().addAll(settingsButtonsTP, settingsOptionsTP);
 
@@ -299,8 +311,8 @@ public class AttendanceReport extends Application {
 		// clockHb.getChildren().addAll(statusFX, clockFX);
 
 		// Source location
-		masterDARFX = createTextFX("Master " + ReportType.DAR.toString() + " DAR", prefMasterDAR);
-		masterTCARFX = createTextFX("Master " + ReportType.TCAR.toString() + " DAR", prefMasterTCAR);
+		masterDARFX = createTextFX(ReportType.DAR.toString() + " report file", prefMasterDAR);
+		masterTCARFX = createTextFX(ReportType.TCAR.toString() + " report file", prefMasterTCAR);
 
 		// Destination location
 		destinationDirFX = createTextFX("Destination directory", prefOutputPath);
@@ -433,7 +445,7 @@ public class AttendanceReport extends Application {
 		// http://stackoverflow.com/questions/26554814/javafx-updating-gui
 		// http://stackoverflow.com/questions/19968012/javafx-update-ui-label-asynchronously-with-messages-while-application-different
 
-		// TODO
+		// TODO Correct for the false missing in runMe
 		@Override
 		public void handle(ActionEvent e) {
 			Task<Void> task = new Task<Void>() {
@@ -550,7 +562,7 @@ public class AttendanceReport extends Application {
 	private class SedjaDirFcButtonListener implements EventHandler<ActionEvent> {
 		@Override
 		public void handle(ActionEvent e) {
-			showSedjaChooser();
+			showSejdaChooser();
 		}
 	}
 
@@ -575,7 +587,14 @@ public class AttendanceReport extends Application {
 		}
 	}
 
-	private class chkBoxListener implements EventHandler<ActionEvent> {
+	private class ChkBoxArchiveByTeacherListener implements EventHandler<ActionEvent> {
+		@Override
+		public void handle(ActionEvent e) {
+			preferences.setProperty(prefArchiveByTeacher, "" + chkArchiveByTeacher.isSelected());
+		}
+	}
+
+	private class ChkBoxNoDateListener implements EventHandler<ActionEvent> {
 		@Override
 		public void handle(ActionEvent e) {
 			preferences.setProperty(prefCreateNoDatePDF, "" + chkNoDate.isSelected());
@@ -634,21 +653,26 @@ public class AttendanceReport extends Application {
 		}
 
 		/**
-		 * Set the initial Text contents to forced value
+		 * Set the initial Text contents to value as stored in the preferences
+		 * file.
 		 */
 		public void initialize() {
 			setTextValue(false);
 		}
 
 		/**
-		 * Force an update to the forced value of the Text contents
+		 * Force an update to the value of the Text contents and indicate that
+		 * an update was forced.
 		 */
 		public void update() {
 			setTextValue(true);
 		}
 	}
 
-	private void showSedjaChooser() {
+	/**
+	 * Choose the sejda-console application.
+	 */
+	private void showSejdaChooser() {
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setInitialDirectory(new File(System.getenv("userprofile")));
 		fileChooser.setTitle(
@@ -659,9 +683,6 @@ public class AttendanceReport extends Application {
 		if (selectedFile != null) {
 			preferences.setProperty(prefSejdaDirectory, selectedFile.getParent());
 			preferences.setProperty(prefSejdaLocation, selectedFile.getAbsolutePath());
-			// sedjaDARFX.setText("sejda application" + " (updated):\n " +
-			// preferences.getProperty(prefSejdaDirectory)
-			// + "\n " + preferences.getProperty(prefSejdaLocation));
 			sedjaDARFX.update();
 		}
 	}
@@ -722,7 +743,7 @@ public class AttendanceReport extends Application {
 			FileChooser fileChooser = new FileChooser();
 			fileChooser.setInitialDirectory(new File(System.getenv("userprofile")));
 			File selectedFile = null;
-			fileChooser.setTitle("Open " + dT.toString() + " DAR, likely called \"" + DARFileName + "\"");
+			fileChooser.setTitle("Open " + dT.toString() + " attendance report, likely called \"" + DARFileName + "\"");
 
 			selectedFile = fileChooser.showOpenDialog(null);
 
@@ -772,7 +793,7 @@ public class AttendanceReport extends Application {
 	 */
 	private void showDestinationDirChooser() {
 		DirectoryChooser chooser = new DirectoryChooser();
-		chooser.setTitle("Pick destination directory for split DARs. Hint: use folder on TeacherShare.");
+		chooser.setTitle("Pick destination directory for split DARs. Hint: use a folder on TeacherShare.");
 		File defaultDirectory = new File(System.getenv("userprofile") + "\\Desktop");
 		chooser.setInitialDirectory(defaultDirectory);
 		File selectedDirectory = chooser.showDialog(null);

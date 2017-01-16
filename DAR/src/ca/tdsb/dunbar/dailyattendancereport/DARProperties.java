@@ -35,9 +35,10 @@ public class DARProperties {
 		prefsFile = System.getenv("APPDATA") + "\\" + file;
 
 		// lazy fix for null pointer errors
-		if (getProperty(AttendanceReport.prefCreateNoDatePDF)==null) {
+		if (getProperty(AttendanceReport.prefCreateNoDatePDF)==null) 
 			setProperty(AttendanceReport.prefCreateNoDatePDF, "" + true);		
-		}
+		if (getProperty(AttendanceReport.prefArchiveByTeacher)==null) 
+			setProperty(AttendanceReport.prefArchiveByTeacher, "" + true);
 	}
 
 	public String getPreferencesFileName() {
