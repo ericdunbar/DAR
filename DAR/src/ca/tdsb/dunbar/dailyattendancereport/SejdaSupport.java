@@ -218,7 +218,6 @@ public class SejdaSupport {
 
 				String byTeacherDirName = preferences.getProperty(AttendanceReport.prefOutputPath) + "\\By Teacher\\";
 
-				String newFile = preferences.getProperty(AttendanceReport.prefOutputPath) + "\\" + fileNameDateAndType;
 				String newArchivalFile = byTeacherDirName + newBaseName + "\\" + fileNameDateAndType;
 
 				try {
@@ -635,8 +634,6 @@ public class SejdaSupport {
 				}
 				errorStatusFX
 						.prependTextWithDate("Windows File Explorer opened because files should have been generated.");
-
-				ReportType dM = missing[tcar] ? ReportType.TCAR : ReportType.DAR;
 
 				String msg = ("Only one report was processed.");
 				errorStatusFX.prependTextWithDate(msg);

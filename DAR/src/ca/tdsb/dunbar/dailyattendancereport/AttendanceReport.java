@@ -134,6 +134,10 @@ public class AttendanceReport extends Application {
 	// CLASS fields
 	protected static boolean firstRun = true; // prevents invisible text
 
+	/**
+	 * Used for logging purposes. Prints the current date and time to the
+	 * console to indicate the launch of the application.
+	 */
 	private static void announceProgram() {
 		// https://www.mkyong.com/java/java-how-to-get-current-date-time-date-and-calender/
 		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
@@ -254,11 +258,11 @@ public class AttendanceReport extends Application {
 		settingsOptionsTP.setAlignment(Pos.CENTER_LEFT);
 
 		// http://docs.oracle.com/javafx/2/ui_controls/checkbox.htm
-		chkNoDate = new CheckBox("Create a date-free PDF (extra copy)");
+		chkNoDate = new CheckBox("Create extra copy without date in name");
 		chkNoDate.setOnAction(new ChkBoxNoDateListener());
 		chkNoDate.setSelected(preferences.getProperty(AttendanceReport.prefCreateNoDatePDF).equals("true"));
 
-		chkArchiveByTeacher = new CheckBox("Archive to folders with teacher name");
+		chkArchiveByTeacher = new CheckBox("Create one folder for each teacher");
 		chkArchiveByTeacher.setOnAction(new ChkBoxArchiveByTeacherListener());
 		chkArchiveByTeacher.setSelected(preferences.getProperty(AttendanceReport.prefArchiveByTeacher).equals("true"));
 
@@ -413,7 +417,6 @@ public class AttendanceReport extends Application {
 		// http://www.java2s.com/Code/Java/JavaFX/GetScreensize.htm
 		if (primaryScreenBounds.getHeight() < 720) {
 			primaryStage.setMaximized(true);
-			;
 		}
 		primaryStage.show();
 
@@ -640,7 +643,8 @@ public class AttendanceReport extends Application {
 		 * Sets the Text contents to the description (similar to the key) of the
 		 * property using the key (pref) and the value of the property.
 		 * 
-		 * @param update whether to include the notice (update)
+		 * @param update
+		 *            whether to include the notice (update)
 		 */
 		private void setTextValue(boolean update) {
 			String s = "";
