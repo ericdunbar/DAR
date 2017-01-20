@@ -96,15 +96,15 @@ public class AttendanceReport extends Application {
 	// __JavaFX objects and fields
 	// ||||||||||||||||||||||||||||||
 	private TextDAR programUpdatesFX;
-	private TextLbl destinationDirFX;
-	private TextLbl masterDARFX;
-	private TextLbl masterTCARFX;
+	private SettingsText destinationDirFX;
+	private SettingsText masterDARFX;
+	private SettingsText masterTCARFX;
 	public static final String versionDAR = "20170113";
 
 	private static final String formTitleFX = "Daily Attendance Report processor version " + versionDAR;
 
 	// private TextLbl clockFX;
-	private TextLbl sedjaDARFX;
+	private SettingsText sedjaDARFX;
 	private Button btnChooseMasterReports;
 	private Button btnChooseDestDir;
 	private Button btnChooseSedjaConsole;
@@ -230,7 +230,7 @@ public class AttendanceReport extends Application {
 		actionsHb.getChildren().addAll(lblActions);
 
 		btnSplitReports = new Button("_Split reports");
-		btnSplitReports.setOnAction(new SplitDARFcButtonListener());
+		btnSplitReports.setOnAction(new SplitAttendanceFcButtonListener());
 		btnSplitReports.setMnemonicParsing(true);
 		actionButtonsTP.getChildren().addAll(btnSplitReports);
 
@@ -261,12 +261,12 @@ public class AttendanceReport extends Application {
 		settingsButtonsTP.getChildren().addAll(btnChooseMasterReports);
 
 		btnChooseDestDir = new Button("Choose destination directory...");
-		btnChooseDestDir.setOnAction(new DestinationDirFcButtonListener());
+		btnChooseDestDir.setOnAction(new SetDestinationDirFcButtonListener());
 		btnChooseDestDir.setMnemonicParsing(true);
 		settingsButtonsTP.getChildren().addAll(btnChooseDestDir);
 
 		btnChooseSedjaConsole = new Button("Choose \"sedja-console\"...");
-		btnChooseSedjaConsole.setOnAction(new SedjaConsoleFcButtonListener());
+		btnChooseSedjaConsole.setOnAction(new SetSedjaConsoleFcButtonListener());
 		btnChooseSedjaConsole.setMnemonicParsing(true);
 		btnChooseSedjaConsole.setDisable(true);
 		settingsButtonsTP.getChildren().addAll(btnChooseSedjaConsole);
@@ -283,7 +283,7 @@ public class AttendanceReport extends Application {
 		chkNoDate.setOnAction(new ChkBoxNoDateListener());
 		chkNoDate.setSelected(preferences.getProperty(AttendanceReport.prefCreateNoDatePDF).equals("true"));
 
-		chkArchiveByTeacher = new CheckBox("Create one folder for each teacher");
+		chkArchiveByTeacher = new CheckBox("Create separate folder for each teacher");
 		chkArchiveByTeacher.setOnAction(new ChkBoxArchiveByTeacherListener());
 		chkArchiveByTeacher.setSelected(preferences.getProperty(AttendanceReport.prefArchiveByTeacher).equals("true"));
 
@@ -307,7 +307,7 @@ public class AttendanceReport extends Application {
 		buttons = new ButtonBase[] { btnExit, btnSplitReports, toggleChangeSettings };
 
 		// ||||||||||||||||||||||||||||||
-		// Status Updates: Labels
+		// Status Updates
 		// ||||||||||||||||||||||||||||||
 
 		programUpdatesFX = new TextDAR();
@@ -338,6 +338,10 @@ public class AttendanceReport extends Application {
 		// clockHb.setAlignment(Pos.CENTER_LEFT);
 		// clockHb.getChildren().addAll(statusFX, clockFX);
 
+		// ||||||||||||||||||||||||||||||
+		// Settings Information
+		// ||||||||||||||||||||||||||||||
+
 		// Source location
 		masterDARFX = createTextFX(ReportType.DAR.toString() + " report file", prefMasterDAR);
 		masterTCARFX = createTextFX(ReportType.TCAR.toString() + " report file", prefMasterTCAR);
@@ -351,7 +355,7 @@ public class AttendanceReport extends Application {
 		// http://stackoverflow.com/questions/19968012/javafx-update-ui-label-asynchronously-with-messages-while-application-different
 
 		// ||||||||||||||||||||||||||||||
-		// Separators
+		// Overall Layout: Separators
 		// ||||||||||||||||||||||||||||||
 
 		int idx = 3;
@@ -372,13 +376,9 @@ public class AttendanceReport extends Application {
 		vbox.getChildren().addAll(lblDAR, sep[counter++], actionsHb, sep[counter++], settingsHb, sep[counter++],
 				programUpdatesFX, masterDARFX, masterTCARFX, destinationDirFX, sedjaDARFX, ecoHb);
 
-		// vbox.getChildren().addAll(lblDAR, sep[counter++], actionsHb,
-		// sep[counter++], preferencesHb, sep[counter++],
-		// settingsHb, sep[counter++], programUpdatesFX, clockHb,
-		// masterUsefulDARFX, masterUselessDARFX,
-		// destinationDirFX, sedjaDARFX, ecoHb);
-
+		// ||||||||||||||||||||||||||||||
 		// Create and display idle/working
+		// ||||||||||||||||||||||||||||||
 
 		// Timeline statusUpdateEvt = new Timeline(new
 		// KeyFrame(Duration.millis(500), new EventHandler<ActionEvent>() {
@@ -476,24 +476,33 @@ public class AttendanceReport extends Application {
 		DL.methodEnd();
 	}
 
-	private TextLbl createTextFX(String descriptor, String prefString) {
+	private SettingsText createTextFX(String descriptor, String prefString) {
 		return createTextFX(Font.font("Calibri", FontWeight.NORMAL, 14), Color.DARKGREEN, descriptor, prefString);
 	}
 
-	private TextLbl createTextFX(Font f, Color c, String descriptor, String prefString) {
-		TextLbl newTextFX = new TextLbl(descriptor, prefString);
+	private SettingsText createTextFX(Font f, Color c, String descriptor, String prefString) {
+		SettingsText newTextFX = new SettingsText(descriptor, prefString);
 		newTextFX.setFont(f);
 		newTextFX.setFill(c);
-		newTextFX.setWrappingWidth(699); // 699 avoid a horizontal scroll bar
+		// set width to 699 to avoid a horizontal scroll bar
+		newTextFX.setWrappingWidth(699);
 		return newTextFX;
 	}
 
-	// TODO Describe SplitDARFcB
-	private class SplitDARFcButtonListener implements EventHandler<ActionEvent> {
+	/**
+	 * Initiates the splitting of the attendance reports. Attempts to split both
+	 * types--DAR and TCAR--and reports successes and failures. Responsible for
+	 * disabling and enabling buttons and check boxes during the actual
+	 * splitting of the reports to prevent changes from happening to the
+	 * preferences while the split operation is being performed.
+	 * 
+	 */
+	private class SplitAttendanceFcButtonListener implements EventHandler<ActionEvent> {
 		// http://stackoverflow.com/questions/26554814/javafx-updating-gui
 		// http://stackoverflow.com/questions/19968012/javafx-update-ui-label-asynchronously-with-messages-while-application-different
 
 		// TODO Correct for the false missing in runMe
+
 		@Override
 		public void handle(ActionEvent e) {
 			Task<Void> task = new Task<Void>() {
@@ -501,17 +510,21 @@ public class AttendanceReport extends Application {
 				public Void call() {
 					// http://stackoverflow.com/questions/10839042/what-is-the-difference-between-java-lang-void-and-void
 					DL.methodBegin();
+
+					// ||||||||||||||||||||||||||||||
+					// Disable buttons and check boxes
+					// ||||||||||||||||||||||||||||||
+
 					for (ButtonBase button : buttons) {
 						button.setDisable(true);
 					}
 					toggleChangeSettings.fireEvent(new ActionEvent());
 
-					DL.println("Buttons disabled");
-
 					// TODO: Determine why TextArea (TextDAR) is not updating if
 					// prefs file failure occurs too early in program launch
 
-					// Solves problem with invisible but selectable text
+					// If statement reduces likelihood of problem with invisible
+					// but selectable text (a thread problem)
 					if (AttendanceReport.firstRun) {
 						firstRun = false;
 
@@ -552,6 +565,7 @@ public class AttendanceReport extends Application {
 						 */
 
 					}
+
 					SejdaSupport r = null;
 					try {
 						r = new SejdaSupport(preferences, programUpdatesFX);
@@ -563,9 +577,9 @@ public class AttendanceReport extends Application {
 							msgBoxError("Preferences Problem Detected", "Possible problem with preferences.", msg);
 							e.printStackTrace();
 						} else {
-							programUpdatesFX.prependTextWithDate(e.getMessage());
-							msgBoxError("Error encountered",
-									"An error was encountered at the start of the split process.", e.getMessage());
+							String msg = "An error was encountered at the start of the split process." + e.getMessage();
+							programUpdatesFX.prependTextWithDate(msg);
+							msgBoxError("Error", "An error was encountered at the start of the split process.", msg);
 						}
 						toggleChangeSettings.setSelected(true);
 						e.printStackTrace();
@@ -573,19 +587,26 @@ public class AttendanceReport extends Application {
 					if (r != null)
 						r.runMe(programUpdatesFX);
 
+					// ||||||||||||||||||||||||||||||
+					// Enable buttons and check boxes
+					// ||||||||||||||||||||||||||||||
+
 					for (ButtonBase button : buttons) {
 						button.setDisable(false);
 					}
 
 					toggleChangeSettings.fireEvent(new ActionEvent());
-					DL.println("Buttons enabled");
 
 					DL.methodEnd();
-					// could this be the cause of status update headaches?
+					// could 'return null' be the cause of status update/thread
+					// headaches?
 					return null;
 				}
 			};
 
+			// TODO How often does a new listener get added? How many listeners
+			// are there after a while? Move elsewhere to prevent being called
+			// multiple times? Is it even a problem?
 			task.messageProperty()
 					.addListener((obs, oldMessage, newMessage) -> programUpdatesFX.prependTextWithDate(newMessage));
 			new Thread(task).start();
@@ -596,18 +617,18 @@ public class AttendanceReport extends Application {
 	private class SingleFcButtonListener implements EventHandler<ActionEvent> {
 		@Override
 		public void handle(ActionEvent e) {
-			showDARFileChooser();
+			showAttendanceReportFileChooser();
 		}
 	}
 
-	private class DestinationDirFcButtonListener implements EventHandler<ActionEvent> {
+	private class SetDestinationDirFcButtonListener implements EventHandler<ActionEvent> {
 		@Override
 		public void handle(ActionEvent e) {
 			showDestinationDirChooser();
 		}
 	}
 
-	private class SedjaConsoleFcButtonListener implements EventHandler<ActionEvent> {
+	private class SetSedjaConsoleFcButtonListener implements EventHandler<ActionEvent> {
 		@Override
 		public void handle(ActionEvent e) {
 			showSejdaChooser();
@@ -669,17 +690,15 @@ public class AttendanceReport extends Application {
 	}
 
 	/**
-	 * Class that displays preference values in a pre-determined format in a
-	 * JavaFX Text field.
+	 * JavaFX Text Node that displays preference values in a consistent manner.
 	 * 
-	 * @author ED
-	 *
 	 */
-	public class TextLbl extends Text {
+	public class SettingsText extends javafx.scene.text.Text {
 		private String prefDescriptor;
 		private String pref;
+		private final boolean updateNoteEnabled = true;
 
-		public TextLbl(String descriptor, String pref) {
+		public SettingsText(String descriptor, String pref) {
 			this.prefDescriptor = descriptor;
 			this.pref = pref;
 			initialize();
@@ -690,7 +709,7 @@ public class AttendanceReport extends Application {
 		 * property using the key (pref) and the value of the property.
 		 * 
 		 * @param update
-		 *            whether to include the notice (update)
+		 *            whether to include the text "(update)"
 		 */
 		private void setTextValue(boolean update) {
 			String s = "";
@@ -707,7 +726,7 @@ public class AttendanceReport extends Application {
 		 * file.
 		 */
 		public void initialize() {
-			setTextValue(false);
+			setTextValue(!updateNoteEnabled);
 		}
 
 		/**
@@ -715,7 +734,7 @@ public class AttendanceReport extends Application {
 		 * an update was forced.
 		 */
 		public void update() {
-			setTextValue(true);
+			setTextValue(updateNoteEnabled);
 		}
 	}
 
@@ -802,7 +821,7 @@ public class AttendanceReport extends Application {
 		}
 	}
 
-	private void showDARFileChooser() {
+	private void showAttendanceReportFileChooser() {
 		File selectedFile, selectedFile2;
 		DARFileChooserClass dfc = new DARFileChooserClass();
 		selectedFile = dfc.DARFileChooser("PowerBuilder.pdf", ReportType.DAR);
