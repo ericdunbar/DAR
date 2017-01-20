@@ -119,9 +119,12 @@ public class AttendanceReport extends Application {
 
 	private ToggleButton toggleChangeSettings;
 
+	// ||||||||||||||||||||||||||||||
 	// GENERAL
+	// ||||||||||||||||||||||||||||||
+
 	/**
-	 * The two types of daily attendance record PDF. DAR is the Daily Attendance
+	 * Defines the two types of attendance report. DAR is the Daily Attendance
 	 * Report. TCAR is the Teacher Class Attendance Report.
 	 * 
 	 * @author ED
@@ -131,8 +134,11 @@ public class AttendanceReport extends Application {
 		DAR, TCAR
 	}
 
-	// CLASS fields
-	protected static boolean firstRun = true; // prevents invisible text
+	// ||||||||||||||||||||||||||||||
+	// CLASS Fields
+	// ||||||||||||||||||||||||||||||
+
+	protected static boolean firstRun = true; // prevents invisible text/threads
 
 	/**
 	 * Used for logging purposes. Prints the current date and time to the
@@ -151,8 +157,12 @@ public class AttendanceReport extends Application {
 	// http://stackoverflow.com/questions/13786968/java-fx-thread-safe-pause-sleep
 
 	public static void main(String[] args) {
-		// change to ttf for compile
-		DL.startLogging(true, true, false);
+		boolean stdErrorToFile = true;
+		boolean consoleActive = true;
+		boolean muteSysOut = true;
+
+		DL.startLogging(stdErrorToFile, consoleActive, !muteSysOut);
+
 		DL.methodBegin();
 
 		announceProgram();
@@ -169,7 +179,9 @@ public class AttendanceReport extends Application {
 
 		primaryStage.setTitle(formTitleFX);
 
+		// ||||||||||||||||||||||||||||||
 		// Images
+		// ||||||||||||||||||||||||||||||
 
 		// http://www.java2s.com/Code/Java/JavaFX/LoadajpgimagewithImageanduseImageViewtodisplay.htm
 		// http://schoolweb.tdsb.on.ca/Portals/westway/images/eco%20icon.png
@@ -182,7 +194,9 @@ public class AttendanceReport extends Application {
 		ecoHb.setAlignment(Pos.CENTER_RIGHT);
 		ecoHb.getChildren().addAll(ecoSchools);
 
+		// ||||||||||||||||||||||||||||||
 		// Daily Attendance Report Title
+		// ||||||||||||||||||||||||||||||
 		Label lblDAR = new Label("Daily Attendance Report");
 		lblDAR.setTextFill(Color.DARKSLATEBLUE);
 		lblDAR.setFont(Font.font("Calibri", FontWeight.BOLD, 36));
@@ -197,7 +211,10 @@ public class AttendanceReport extends Application {
 		labelHb.setAlignment(Pos.CENTER);
 		labelHb.getChildren().add(lblDAR);
 
-		// Actions
+		// ||||||||||||||||||||||||||||||
+		// Action Controls
+		// ||||||||||||||||||||||||||||||
+
 		HBox actionsHb = new HBox(10);
 		actionsHb.setAlignment(Pos.CENTER_LEFT);
 
@@ -223,7 +240,9 @@ public class AttendanceReport extends Application {
 		actionButtonsTP.getChildren().addAll(btnExit);
 		actionsHb.getChildren().addAll(actionButtonsTP);
 
-		// Settings
+		// ||||||||||||||||||||||||||||||
+		// Settings Controls: Buttons
+		// ||||||||||||||||||||||||||||||
 
 		VBox settingsVb = new VBox(10);
 
@@ -247,12 +266,14 @@ public class AttendanceReport extends Application {
 		settingsButtonsTP.getChildren().addAll(btnChooseDestDir);
 
 		btnChooseSedjaConsole = new Button("Choose \"sedja-console\"...");
-		btnChooseSedjaConsole.setOnAction(new SedjaDirFcButtonListener());
+		btnChooseSedjaConsole.setOnAction(new SedjaConsoleFcButtonListener());
 		btnChooseSedjaConsole.setMnemonicParsing(true);
 		btnChooseSedjaConsole.setDisable(true);
 		settingsButtonsTP.getChildren().addAll(btnChooseSedjaConsole);
 
-		// Settings
+		// ||||||||||||||||||||||||||||||
+		// Settings Controls: Check Boxes
+		// ||||||||||||||||||||||||||||||
 
 		TilePane settingsOptionsTP = new TilePane();
 		settingsOptionsTP.setAlignment(Pos.CENTER_LEFT);
@@ -285,7 +306,10 @@ public class AttendanceReport extends Application {
 
 		buttons = new ButtonBase[] { btnExit, btnSplitReports, toggleChangeSettings };
 
-		// Status message text
+		// ||||||||||||||||||||||||||||||
+		// Status Updates: Labels
+		// ||||||||||||||||||||||||||||||
+
 		programUpdatesFX = new TextDAR();
 		programUpdatesFX.setFont(Font.font("Calibri", FontWeight.NORMAL, 14));
 		programUpdatesFX.setText("");
@@ -326,7 +350,10 @@ public class AttendanceReport extends Application {
 
 		// http://stackoverflow.com/questions/19968012/javafx-update-ui-label-asynchronously-with-messages-while-application-different
 
-		// Separator
+		// ||||||||||||||||||||||||||||||
+		// Separators
+		// ||||||||||||||||||||||||||||||
+
 		int idx = 3;
 		int counter = 0;
 		Separator sep[] = new Separator[idx];
@@ -336,7 +363,9 @@ public class AttendanceReport extends Application {
 			sep[i].setOrientation(Orientation.HORIZONTAL);
 		}
 
-		// Vbox
+		// ||||||||||||||||||||||||||||||
+		// Overall Layout: VBox
+		// ||||||||||||||||||||||||||||||
 		VBox vbox = new VBox(15);
 		vbox.setPadding(new Insets(25, 25, 25, 25));
 
@@ -399,7 +428,10 @@ public class AttendanceReport extends Application {
 		// statusUpdateEvt.setCycleCount(Timeline.INDEFINITE);
 		// statusUpdateEvt.play();
 
+		// ||||||||||||||||||||||||||||||
 		// Scrolling
+		// ||||||||||||||||||||||||||||||
+
 		// http://stackoverflow.com/questions/30971407/javafx-is-it-possible-to-have-a-scroll-bar-in-vbox
 		// http://stackoverflow.com/questions/30390986/how-to-disable-horizontal-scrolling-in-scrollbar-javafx/30392217#30392217
 
@@ -408,7 +440,10 @@ public class AttendanceReport extends Application {
 		// scrollTheVBox.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
 		scrollTheVBox.setContent(vbox);
 
-		// Scene
+		// ||||||||||||||||||||||||||||||
+		// Setting the Scene
+		// ||||||||||||||||||||||||||||||
+
 		Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
 
 		Scene scene = new Scene(scrollTheVBox, 800, 700); // w x h
@@ -420,12 +455,22 @@ public class AttendanceReport extends Application {
 		}
 		primaryStage.show();
 
-		// Trigger split button
-		// ChkBoxSettingsListener c = new ChkBoxSettingsListener();
-		// c.handle(new ActionEvent());
-		// c = null;
+		// ||||||||||||||||||||||||||||||
+		// Disable Settings Buttons
+		// ||||||||||||||||||||||||||||||
 
+		// Additional reading:
+		// http://stackoverflow.com/questions/27416758/how-to-emit-and-handle-custom-events
+
+		// disable buttons at start to prevent accidental settings changes and
+		// streamline interface
 		toggleChangeSettings.fireEvent(new ActionEvent());
+
+		// ||||||||||||||||||||||||||||||
+		// Trigger Split Button
+		// ||||||||||||||||||||||||||||||
+
+		// attempt split of attendance reports
 		btnSplitReports.fire();
 
 		DL.methodEnd();
@@ -562,7 +607,7 @@ public class AttendanceReport extends Application {
 		}
 	}
 
-	private class SedjaDirFcButtonListener implements EventHandler<ActionEvent> {
+	private class SedjaConsoleFcButtonListener implements EventHandler<ActionEvent> {
 		@Override
 		public void handle(ActionEvent e) {
 			showSejdaChooser();
@@ -576,17 +621,18 @@ public class AttendanceReport extends Application {
 		}
 	}
 
+	/**
+	 * Changes the disabled status for settings buttons to prevent accidental
+	 * changing of settings and to simplify the user interface somewhat by
+	 * reducing the number of enabled buttons.
+	 */
 	private class ChkBoxSettingsListener implements EventHandler<ActionEvent> {
 		@Override
 		public void handle(ActionEvent e) {
-			DL.methodBegin();
-			DL.println(e.toString());
-			DL.println("" + e.getSource());
 			for (ButtonBase button : settingsButtons) {
-				boolean setDisabled = toggleChangeSettings.isDisabled() || !toggleChangeSettings.isSelected();
-				button.setDisable(setDisabled);
+				boolean disabled = toggleChangeSettings.isDisabled() || !toggleChangeSettings.isSelected();
+				button.setDisable(disabled);
 			}
-			DL.methodEnd();
 		}
 	}
 

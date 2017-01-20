@@ -17,10 +17,11 @@ public class DL {
 	 * Opens a file to log <code>System.Out</code>, and optionally logs
 	 * exceptions from standard error. The console can also be disabled.
 	 * 
-	 * @param logStdError true to send exceptions to a file
+	 * @param logStdErrorToFile true to send exceptions to a file
 	 * @param consoleActive true to display System.Out on console
+	 * @param muteSysOut true to prevent text from being written to System.Out
 	 */
-	public static PrintStream startLogging(boolean logStdError, boolean consoleActive, boolean muteSysOut) {
+	public static PrintStream startLogging(boolean logStdErrorToFile, boolean consoleActive, boolean muteSysOut) {
 		// CONFIGURE LOGGING
 		// http://stackoverflow.com/questions/8043356/file-write-printstream-append
 		// http://stackoverflow.com/questions/12053075/how-do-i-write-the-exception-from-printstacktrace-into-a-text-file-in-java
@@ -41,7 +42,7 @@ public class DL {
 
 			ps = new PrintStream(new FileOutputStream(fileName, append));
 
-			if (logStdError) {
+			if (logStdErrorToFile) {
 				System.setErr(ps);
 			}
 
