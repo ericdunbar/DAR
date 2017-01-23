@@ -95,7 +95,7 @@ public class AttendanceReport extends Application {
 	// ||||||||||||||||||||||||||||||
 	// __JavaFX objects and fields
 	// ||||||||||||||||||||||||||||||
-	private TextDAR programUpdatesFX;
+	private TextDateAndTime programUpdatesFX;
 	private SettingsText destinationDirFX;
 	private SettingsText masterDARFX;
 	private SettingsText masterTCARFX;
@@ -310,7 +310,7 @@ public class AttendanceReport extends Application {
 		// Status Updates
 		// ||||||||||||||||||||||||||||||
 
-		programUpdatesFX = new TextDAR();
+		programUpdatesFX = new TextDateAndTime();
 		programUpdatesFX.setFont(Font.font("Calibri", FontWeight.NORMAL, 14));
 		programUpdatesFX.setText("");
 		// http://stackoverflow.com/questions/19167750/control-keyboard-input-into-javafx-textfield
@@ -672,13 +672,11 @@ public class AttendanceReport extends Application {
 	}
 
 	/**
-	 * Class that extends TextArea to include a method to prepend date & time to
+	 * A TextArea Node that provides a method to prepend date & time to
 	 * the text.
-	 * 
-	 * @author ED
 	 *
 	 */
-	public class TextDAR extends TextArea {
+	public class TextDateAndTime extends TextArea {
 		public final void prependTextWithDate(String s) {
 			// https://www.mkyong.com/java/java-how-to-get-current-date-time-date-and-calender/
 			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

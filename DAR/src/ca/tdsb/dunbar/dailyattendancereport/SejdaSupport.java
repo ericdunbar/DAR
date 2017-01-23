@@ -12,7 +12,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 
 import ca.tdsb.dunbar.dailyattendancereport.AttendanceReport.ReportType;
-import ca.tdsb.dunbar.dailyattendancereport.AttendanceReport.TextDAR;
+import ca.tdsb.dunbar.dailyattendancereport.AttendanceReport.TextDateAndTime;
 
 public class SejdaSupport {
 
@@ -26,7 +26,7 @@ public class SejdaSupport {
 	 * @param msgFX A TextArea (TextDAR) JavaFX node for status updates.
 	 * @throws IOException File not found
 	 */
-	public SejdaSupport(DARProperties prefs, TextDAR msgFX) throws IOException {
+	public SejdaSupport(DARProperties prefs, TextDateAndTime msgFX) throws IOException {
 		// Initialize variables
 		this.preferences = prefs;
 		this.messageFX = msgFX;
@@ -63,7 +63,7 @@ public class SejdaSupport {
 		}
 	}
 
-	TextDAR messageFX; // display status updates here
+	TextDateAndTime messageFX; // display status updates here
 	File sejdaF; // sejda-console
 	DARProperties preferences;
 
@@ -487,7 +487,7 @@ public class SejdaSupport {
 
 	//// http://stackoverflow.com/questions/26554814/javafx-updating-gui
 
-	void runMe(TextDAR errorStatusFX) {
+	void runMe(TextDateAndTime errorStatusFX) {
 		DL.methodBegin();
 
 		errorStatusFX.prependTextWithDate("Try splitting the report(s).");
@@ -546,7 +546,7 @@ public class SejdaSupport {
 		DL.methodEnd();
 	}
 
-	private void openDesktopFolder(TextDAR errorStatusFX) {
+	private void openDesktopFolder(TextDateAndTime errorStatusFX) {
 		Desktop desktop = Desktop.getDesktop();
 		DL.println(preferences.getProperty(AttendanceReport.prefOutputPath) + "\\Current");
 		try {
@@ -562,7 +562,7 @@ public class SejdaSupport {
 		}
 	}
 
-	void backupToRunMe(TextDAR errorStatusFX) {
+	void backupToRunMe(TextDateAndTime errorStatusFX) {
 		DL.methodBegin();
 
 		errorStatusFX.prependTextWithDate("Try splitting the report...");
