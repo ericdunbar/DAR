@@ -38,35 +38,14 @@ public class SejdaSupport {
 		//TODO To copy sejda to the correct location
 
 		//TODO Logic of copying sejda
-		// 1. If file is null try copying the sejda directory to //APPDATA and set preference
+		// 1. If file is null try copying the sejda directory to //LOCALAPPDATA and set preference
 		// 2. If copy fails or file not found tell user to manually set the sejda location
 		
 		// Check for the preference sejda-console
 		String sejdaFS = prefs.getProperty(AttendanceReport.prefSejdaLocation);
 		String sejdaInfo = "The file will be located in this set of directories: sejda-console-2.10.4-bin\\sejda-console-2.10.4\\bin\\sejda-console.\n\nThis program was developed using sejda-console v. 2.10.4. A newer version may work. For downloads, visit http://www.sejda.org/download/";
 		if (sejdaFS == null){
-			// 1. file location is null so try copying \sejda-console to \\APPDATA
-			
-			File masterSejdaDir = new File("sejda-console-2.10.4");
-			System.out.println("DELETE ME!!! " + masterSejdaDir.getAbsolutePath());
-			File destDir = new File(System.getenv("APPDATA") + "\\" + masterSejdaDir.getName());
-			
-			// 1. a. Recurse through the directory and copy each file
-			FileUtils.copyDirectory(masterSejdaDir, destDir);
-			
-			sejdaFS = destDir.getAbsolutePath() + "\\bin\\sejda-console";
-			
-			System.out.println("DELETE ME!!! " + sejdaFS);
-			
-			prefs.setProperty(AttendanceReport.prefSejdaLocation, sejdaFS);
-			
-			// 2. set location preference if copy successful
-			
-			// 3. if file copy fails throw the following exception
-			
-//			throw new IOException(
-//					"Set the location of the \"sejda-console\" application using the \"Choose sedja-console...\" button."
-//							+ "\n\n" + sejdaInfo);
+			sejdaFS = copySejdaToLocalAppData(prefs);
 		}
 			
 		// Check for the existence of sejda-console or whether the chosen file is sejda-console
@@ -87,6 +66,29 @@ public class SejdaSupport {
 					"Destination directory unavailable or has been moved.\n\nThis could be caused by a network error in which case changing destination directory won't do anything. "
 							+ "\n\nIf the network is functioning properly, please set destination (output) directory using the \"Choose destination directory...\" button.");
 		}
+	}
+
+	private String copySejdaToLocalAppData(DARProperties prefs) throws IOException {
+		// 1. file location is null so try copying \sejda-console to \\LOCALAPPDATA
+		
+		File masterSejdaDir = new File("sejda-console-2.10.4");
+
+		File destDir = new File(System.getenv("LOCALAPPDATA") + "\\" + masterSejdaDir.getName());
+		
+		// 1. a. Recurse through the directory and copy each file
+		FileUtils.copyDirectory(masterSejdaDir, destDir);
+		
+		String sejdaFS = destDir.getAbsolutePath() + "\\bin\\sejda-console";
+		prefs.setProperty(AttendanceReport.prefSejdaLocation, sejdaFS);
+		return sejdaFS;
+		
+		// 2. set location preference if copy successful
+		
+		// 3. if file copy fails throw the following exception
+		
+//		throw new IOException(
+//				"Set the location of the \"sejda-console\" application using the \"Choose sedja-console...\" button."
+//						+ "\n\n" + sejdaInfo);
 	}
 
 	TextDateAndTime messageFX; // display status updates here
