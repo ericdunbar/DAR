@@ -35,6 +35,8 @@ public class SejdaSupport {
 		if (!this.preferences.exists())
 			throw new IOException("Please set preferences. Without valid preferences this program is not useful.");
 
+		//TODO To copy sejda to the correct location
+		
 		// Check for the preference sejda-console
 		String sejdaFS = prefs.getProperty(AttendanceReport.prefSejdaLocation);
 		String sejdaInfo = "The file will be located in this set of directories: sejda-console-2.10.4-bin\\sejda-console-2.10.4\\bin\\sejda-console.\n\nThis program was developed using sejda-console v. 2.10.4. A newer version may work. For downloads, visit http://www.sejda.org/download/";
