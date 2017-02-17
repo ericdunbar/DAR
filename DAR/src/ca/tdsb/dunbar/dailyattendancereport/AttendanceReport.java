@@ -576,9 +576,9 @@ public class AttendanceReport extends Application {
 							msgBoxError("Preferences Problem Detected", "Possible problem with preferences.", msg);
 							e.printStackTrace();
 						} else {
-							String msg = "An error was encountered at the start of the split process." + e.getMessage();
+							String msg = "An MINOR problem happened at the start of the split process. " + e.getMessage();
 							programUpdatesFX.prependTextWithDate(msg);
-							msgBoxError("Error", "An error was encountered at the start of the split process.", msg);
+							msgBoxError("Error", "A MINOR problem happened at the start of the split process.", msg);
 						}
 						toggleChangeSettings.setSelected(true);
 						e.printStackTrace();
