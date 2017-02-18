@@ -33,62 +33,90 @@ public class SejdaSupport {
 
 		// Check for the existence of the preferences file
 		if (!this.preferences.exists())
-			throw new IOException("Please set preferences. Without valid preferences this program is not useful.");
+			throw new IOException(
+					"Please set preferences. Without valid preferences this program is not useful.");
 
-		//TODO To copy sejda to the correct location
+		// TODO To copy sejda to the correct location
 
-		//TODO Logic of copying sejda
-		// 1. If file is null try copying the sejda directory to //LOCALAPPDATA and set preference
-		// 2. If copy fails or file not found tell user to manually set the sejda location
-		
+		// TODO Logic of copying sejda
+		// 1. If file is null try copying the sejda directory to //LOCALAPPDATA
+		// and set preference
+		// 2. If copy fails or file not found tell user to manually set the
+		// sejda location
+
 		// Check for the preference sejda-console
 		String sejdaFS = prefs.getProperty(AttendanceReport.prefSejdaLocation);
-		String sejdaInfo = "The file will be located in this set of directories: sejda-console-2.10.4-bin\\sejda-console-2.10.4\\bin\\sejda-console.\n\nThis program was developed using sejda-console v. 2.10.4. A newer version may work. For downloads, visit http://www.sejda.org/download/";
-		if (sejdaFS == null){
-			sejdaFS = copySejdaToLocalAppData(prefs);
+		String sejdaInfo = "The file will be located at the end of this path: sejda-console-2.10.4\\bin\\sejda-console.\n\nThis program was developed using sejda-console v. 2.10.4. A newer version may work. For downloads, visit http://www.sejda.org/download/";
+		if (sejdaFS == null) {
+			sejdaFS = copySejdaToLocalAppData();
 		}
-			
-		// Check for the existence of sejda-console or whether the chosen file is sejda-console
+
+		// Check for the existence of sejda-console or whether the chosen file
+		// is sejda-console.
 		File sejdaF = new File(sejdaFS);
+
 		if (!sejdaF.exists() || !sejdaF.getName().equals("sejda-console")) {
-			throw new IOException(
-					"\"sejda-console\" is unavailable. Specify its location using the \"Choose sedja-console...\" button. \n\n"
-							+ sejdaInfo);
+			sejdaFS = copySejdaToLocalAppData();
+
+			sejdaF = new File(sejdaFS);
+
+			// The following is likely dead code since the above line will take
+			// care of setting the preference and throw an exception
+			// if the copy fails
+			if (!sejdaF.exists() || !sejdaF.getName().equals("sejda-console")) {
+				throw new IOException(
+						"\"sejda-console\" is unavailable. Specify its location using the \"Choose sedja-console...\" button. \n\n"
+								+ sejdaInfo);
+			}
 		}
 
 		String outPath = preferences.getProperty(AttendanceReport.prefOutputPath);
-		if (outPath == null)
-			throw new IOException(
-					"Please set destination (output) directory using the \"Choose destination directory...\" button.");
 
+		// Set the default hard-coded destination directory
+		if (outPath == null) {
+			outPath = "\\\\Tdsbshares\\schadmin$\\1392\\1392-TCH\\Admin\\Daily Attendance";
+			preferences.setProperty(AttendanceReport.prefOutputPath, outPath);
+		}
+
+		// Check to see if the destination directory exists and warn user if it
+		// doesn't
 		if (!(new File(outPath).exists())) {
 			throw new IOException(
-					"Destination directory unavailable or has been moved.\n\nThis could be caused by a network error in which case changing destination directory won't do anything. "
-							+ "\n\nIf the network is functioning properly, please set destination (output) directory using the \"Choose destination directory...\" button.");
+					"Destination directory unavailable.\n\nIf the directory is correct (confirm the dir) you will want to wait until TeacherShare becomes available. "
+							+ "\n\nIf the network is functioning properly or you do not wish to use a network directory, please set the destination (output) directory using the \"Choose destination directory...\" button.");
 		}
+
+		// Check to see if the daily attendance report settings have been set
+
 	}
 
-	private String copySejdaToLocalAppData(DARProperties prefs) throws IOException {
-		// 1. file location is null so try copying \sejda-console to \\LOCALAPPDATA
+	private String copySejdaToLocalAppData() throws IOException {
+		// 1. file location is null so try copying \sejda-console to
+		// \\LOCALAPPDATA
 		
+		messageFX.prependTextWithDate("Copying support files. This only happens the first time the program is run.");
+
 		File masterSejdaDir = new File("sejda-console-2.10.4");
 
+		// allow for flexibility in future versions of sejda provided the
+		// version number is removed
+		if (!masterSejdaDir.exists())
+			masterSejdaDir = new File("sejda-console");
+
+		// throw exception if sejda-console missing
+		if (!masterSejdaDir.exists())
+			throw new IOException(
+					"sejda-console or sejda-console-2.10.4. Please download sejda-console and make sure the uncompressed sejda-console or sejda-console-2.10.4 directory is in the same directory as this application");
+
 		File destDir = new File(System.getenv("LOCALAPPDATA") + "\\" + masterSejdaDir.getName());
-		
+
 		// 1. a. Recurse through the directory and copy each file
 		FileUtils.copyDirectory(masterSejdaDir, destDir);
-		
+
 		String sejdaFS = destDir.getAbsolutePath() + "\\bin\\sejda-console";
-		prefs.setProperty(AttendanceReport.prefSejdaLocation, sejdaFS);
+		preferences.setProperty(AttendanceReport.prefSejdaLocation, sejdaFS);
+
 		return sejdaFS;
-		
-		// 2. set location preference if copy successful
-		
-		// 3. if file copy fails throw the following exception
-		
-//		throw new IOException(
-//				"Set the location of the \"sejda-console\" application using the \"Choose sedja-console...\" button."
-//						+ "\n\n" + sejdaInfo);
 	}
 
 	TextDateAndTime messageFX; // display status updates here
@@ -163,10 +191,11 @@ public class SejdaSupport {
 		// http://stackoverflow.com/questions/357315/get-list-of-passed-arguments-in-windows-batch-script-bat
 		// http://stackoverflow.com/questions/19103570/run-batch-file-from-java-code
 
-		List<String> cmdAndArgs = Arrays.asList("cmd", "/c", "call", quotesWrap(sejdaS), "splitbytext", "-f",
-				quotesWrap(sourceFile), "--top", teacherNameCoordinates[0], "--left", teacherNameCoordinates[1],
-				"--width", teacherNameCoordinates[2], "--height", teacherNameCoordinates[3], "-o",
-				quotesWrap(destinationDirectory), "-p", "[TEXT]", "--existingOutput", "overwrite");
+		List<String> cmdAndArgs = Arrays.asList("cmd", "/c", "call", quotesWrap(sejdaS),
+				"splitbytext", "-f", quotesWrap(sourceFile), "--top", teacherNameCoordinates[0],
+				"--left", teacherNameCoordinates[1], "--width", teacherNameCoordinates[2],
+				"--height", teacherNameCoordinates[3], "-o", quotesWrap(destinationDirectory), "-p",
+				"[TEXT]", "--existingOutput", "overwrite");
 
 		sejdaSplitReport(cmdAndArgs, tempDir);
 
@@ -177,12 +206,15 @@ public class SejdaSupport {
 
 		// CREATE DIRECTORIES, if missing
 		// Attempted fix for constantly refreshing archive directory
-		File archiveDir = new File(preferences.getProperty(AttendanceReport.prefOutputPath) + "\\Archive\\");
+		File archiveDir = new File(
+				preferences.getProperty(AttendanceReport.prefOutputPath) + "\\Archive\\");
 		archiveDir.mkdir();
-		archiveDir = new File(preferences.getProperty(AttendanceReport.prefOutputPath) + "\\Archive\\" + dateForReport);
+		archiveDir = new File(preferences.getProperty(AttendanceReport.prefOutputPath)
+				+ "\\Archive\\" + dateForReport);
 		archiveDir.mkdir();
 
-		File currentDir = new File(preferences.getProperty(AttendanceReport.prefOutputPath) + "\\Current\\");
+		File currentDir = new File(
+				preferences.getProperty(AttendanceReport.prefOutputPath) + "\\Current\\");
 		currentDir.mkdir();
 
 		// DELETE EXISTING FILES
@@ -192,8 +224,8 @@ public class SejdaSupport {
 		//
 		int delF = deleteFilesOfReportType(currentDir, whichReport, ".pdf");
 
-		messageFX.prependTextWithDate("Cleaned up " + currentDir.getAbsolutePath() + " by removing " + delF + " "
-				+ whichReport.toString() + " files.");
+		messageFX.prependTextWithDate("Cleaned up " + currentDir.getAbsolutePath() + " by removing "
+				+ delF + " " + whichReport.toString() + " files.");
 
 		// ftbd = new
 		// File(preferences.getProperty(AttendanceReport.prefOutputPath) + "\\No
@@ -226,13 +258,15 @@ public class SejdaSupport {
 		}
 
 		DL.println("Start: MOVE and ARCHIVE NEW FILES");
-		messageFX.prependTextWithDate("Will move and create archives for " + newFileList.length + " "
-				+ whichReport.toString() + " files in " + preferences.getProperty(AttendanceReport.prefOutputPath));
+		messageFX.prependTextWithDate("Will move and create archives for " + newFileList.length
+				+ " " + whichReport.toString() + " files in "
+				+ preferences.getProperty(AttendanceReport.prefOutputPath));
 		for (String s : newFileList) {
 			String oldFile = tempDir.getAbsolutePath() + "\\" + s;
 
 			String simpleFileName = FilenameUtils.getBaseName(s) + " " + describeReport + ".pdf";
-			String fileNameDateAndType = FilenameUtils.getBaseName(s) + " " + describeReport + " " + dateForReport + ".pdf";
+			String fileNameDateAndType = FilenameUtils.getBaseName(s) + " " + describeReport + " "
+					+ dateForReport + ".pdf";
 
 			// if (simpleCopy) {
 			// String simpleFile = simpleDir.getAbsolutePath() + "\\" +
@@ -244,9 +278,11 @@ public class SejdaSupport {
 			if (preferences.getProperty(AttendanceReport.prefArchiveByTeacher).equals("true")) {
 				String newBaseName = FilenameUtils.getBaseName(s).toUpperCase();
 
-				String byTeacherDirName = preferences.getProperty(AttendanceReport.prefOutputPath) + "\\By Teacher\\";
+				String byTeacherDirName = preferences.getProperty(AttendanceReport.prefOutputPath)
+						+ "\\By Teacher\\";
 
-				String newArchivalFile = byTeacherDirName + newBaseName + "\\" + fileNameDateAndType;
+				String newArchivalFile = byTeacherDirName + newBaseName + "\\"
+						+ fileNameDateAndType;
 
 				try {
 					reportCopyFile(oldFile, newArchivalFile);
@@ -254,8 +290,8 @@ public class SejdaSupport {
 
 					File byTeacherDir = new File(byTeacherDirName);
 					byTeacherDir.mkdir();
-					byTeacherDir = new File(
-							preferences.getProperty(AttendanceReport.prefOutputPath) + "\\By Teacher\\" + newBaseName);
+					byTeacherDir = new File(preferences.getProperty(AttendanceReport.prefOutputPath)
+							+ "\\By Teacher\\" + newBaseName);
 					byTeacherDir.mkdir();
 
 					reportCopyFile(oldFile, newArchivalFile);
@@ -264,7 +300,7 @@ public class SejdaSupport {
 				String simpleFile = byTeacherDirName + newBaseName + "\\" + simpleFileName;
 				reportCopyFile(oldFile, simpleFile);
 
-//				reportCopyFile(oldFile, newFile);
+				// reportCopyFile(oldFile, newFile);
 			}
 
 			// move into one folder where all teachers are listed
@@ -278,17 +314,19 @@ public class SejdaSupport {
 
 		}
 
-		messageFX.prependTextWithDate(
-				"Moved " + newFileList.length + " new " + whichReport.toString() + " teacher report PDF files " + "for "
-						+ dateForReport + " to: " + currentDir.getAbsolutePath() +", and to individual teacher directories.");
+		messageFX.prependTextWithDate("Moved " + newFileList.length + " new "
+				+ whichReport.toString() + " teacher report PDF files " + "for " + dateForReport
+				+ " to: " + currentDir.getAbsolutePath()
+				+ ", and to individual teacher directories.");
 
 		// MOVE master REPORT to ARCHIVE
 		String FROM = preferences.getProperty(localPrefMasterReport);
-		String TO = preferences.getProperty(AttendanceReport.prefOutputPath) + "\\Archive\\Masters\\" + "Master_Report_"
-				+ describeReport + "_" + dateForReport + ".pdf";
+		String TO = preferences.getProperty(AttendanceReport.prefOutputPath)
+				+ "\\Archive\\Masters\\" + "Master_Report_" + describeReport + "_" + dateForReport
+				+ ".pdf";
 		reportMoveFile(FROM, TO);
-		messageFX.prependTextWithDate(
-				"Archived the master report PDF for " + describeReport + " for " + dateForReport + ".");
+		messageFX.prependTextWithDate("Archived the master report PDF for " + describeReport
+				+ " for " + dateForReport + ".");
 		DL.methodEnd();
 	}
 
@@ -313,7 +351,8 @@ public class SejdaSupport {
 
 		// call the sejda processor
 		ProcessBuilder pb = new ProcessBuilder(cmdAndArgs);
-		pb.directory(new File(FilenameUtils.getFullPath(preferences.getProperty(AttendanceReport.prefSejdaLocation))));
+		pb.directory(new File(FilenameUtils
+				.getFullPath(preferences.getProperty(AttendanceReport.prefSejdaLocation))));
 		Process p = pb.start();
 
 		// process the console output to prevent application from hanging
@@ -394,7 +433,8 @@ public class SejdaSupport {
 	 * @param secondNewFile Full pathname of second new location
 	 * @throws IOException
 	 */
-	private void reportMoveFile(String oldFile, String firstNewFile, String secondNewFile) throws IOException {
+	private void reportMoveFile(String oldFile, String firstNewFile, String secondNewFile)
+			throws IOException {
 		DL.methodBegin();
 		new File(firstNewFile).delete();
 
@@ -427,23 +467,26 @@ public class SejdaSupport {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			throw new IOException(e.getMessage() + " Try again. The network may be working against you.");
+			throw new IOException(
+					e.getMessage() + " Try again. The network may be working against you.");
 		}
 		DL.methodEnd();
 	}
 
-	private int deleteFilesOfReportType(File dirToBeCleaned, ReportType whichReport, String extension) {
+	private int deleteFilesOfReportType(File dirToBeCleaned, ReportType whichReport,
+			String extension) {
 		DL.methodBegin();
 
 		String filesToBeDeletedList[] = dirToBeCleaned.list(new FilenameFilter() {
 			public boolean accept(File dir, String name) {
 				name = name.toLowerCase();
-				return name.contains(whichReport.toString().toLowerCase()) && name.toLowerCase().endsWith(extension);
+				return name.contains(whichReport.toString().toLowerCase())
+						&& name.toLowerCase().endsWith(extension);
 			}
 		});
 
-		messageFX.prependTextWithDate("Will now delete " + filesToBeDeletedList.length + " " + whichReport.toString()
-				+ " files from " + dirToBeCleaned.getAbsolutePath());
+		messageFX.prependTextWithDate("Will now delete " + filesToBeDeletedList.length + " "
+				+ whichReport.toString() + " files from " + dirToBeCleaned.getAbsolutePath());
 		for (String string : filesToBeDeletedList) {
 			new File(dirToBeCleaned.getAbsolutePath() + "\\" + string).delete();
 		}
@@ -478,9 +521,10 @@ public class SejdaSupport {
 		// http://stackoverflow.com/questions/357315/get-list-of-passed-arguments-in-windows-batch-script-bat
 		// http://stackoverflow.com/questions/19103570/run-batch-file-from-java-code
 
-		List<String> cmdAndArgs = Arrays.asList("cmd", "/c", "call", quotesWrap(sejdaS), "splitbytext", "-f",
-				quotesWrap(sourceFile), "--top", c[0], "--left", c[1], "--width", c[2], "--height", c[3], "-o",
-				quotesWrap(destinationDirectory), "-p", "[TEXT]", "--existingOutput", "overwrite");
+		List<String> cmdAndArgs = Arrays.asList("cmd", "/c", "call", quotesWrap(sejdaS),
+				"splitbytext", "-f", quotesWrap(sourceFile), "--top", c[0], "--left", c[1],
+				"--width", c[2], "--height", c[3], "-o", quotesWrap(destinationDirectory), "-p",
+				"[TEXT]", "--existingOutput", "overwrite");
 
 		sejdaSplitReport(cmdAndArgs, tempDir);
 
@@ -544,14 +588,16 @@ public class SejdaSupport {
 			msg += e2.getMessage() + " ";
 		}
 
-		DL.println("Check to see if no, one or two missing report files and whether to THROW exception");
+		DL.println(
+				"Check to see if no, one or two missing report files and whether to THROW exception");
 
 		// no master reports processed
 		if (!success[tcar] && !success[dar]) {
 
 			String details = "";
-			details = ("No report files processed. " + msg + "\n\nDetails:\n\n" + generateMissingMsg(ReportType.TCAR)
-					+ " \n\n" + generateMissingMsg(ReportType.DAR) + " " + commonCancelMsg);
+			details = ("No report files processed. " + msg + "\n\nDetails:\n\n"
+					+ generateMissingMsg(ReportType.TCAR) + " \n\n"
+					+ generateMissingMsg(ReportType.DAR) + " " + commonCancelMsg);
 			AttendanceReport.msgBoxError("No reports processed", msg, details);
 			errorStatusFX.prependTextWithDate(details);
 
@@ -561,8 +607,10 @@ public class SejdaSupport {
 			ReportType dM = !success[tcar] ? ReportType.TCAR : ReportType.DAR;
 
 			String details = "";
-			details = ("Only one report processed. \n\n" + msg + generateMissingMsg(dM) + commonCancelMsg);
-			AttendanceReport.msgBoxError("One report file processed", "Only one report processed", details);
+			details = ("Only one report processed. \n\n" + msg + generateMissingMsg(dM)
+					+ commonCancelMsg);
+			AttendanceReport.msgBoxError("One report file processed", "Only one report processed",
+					details);
 			errorStatusFX.prependTextWithDate(details);
 		} else {
 			DL.println("Both report files processed.");
@@ -578,9 +626,10 @@ public class SejdaSupport {
 		Desktop desktop = Desktop.getDesktop();
 		DL.println(preferences.getProperty(AttendanceReport.prefOutputPath) + "\\Current");
 		try {
-			desktop.open(new File(preferences.getProperty(AttendanceReport.prefOutputPath) + "\\Current"));
-			errorStatusFX
-					.prependTextWithDate("Windows File Explorer opened. Please confirm that files were generated.");
+			desktop.open(new File(
+					preferences.getProperty(AttendanceReport.prefOutputPath) + "\\Current"));
+			errorStatusFX.prependTextWithDate(
+					"Windows File Explorer opened. Please confirm that files were generated.");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -603,32 +652,38 @@ public class SejdaSupport {
 		try {
 
 			missing[tcar] = attemptSplit(ReportType.TCAR);
-			errorStatusFX.prependTextWithDate("Trouble shooting: " + ReportType.TCAR.toString() + " " + missing[tcar]);
+			errorStatusFX.prependTextWithDate(
+					"Trouble shooting: " + ReportType.TCAR.toString() + " " + missing[tcar]);
 
-			errorStatusFX.prependTextWithDate("Trouble shooting: " + ReportType.DAR.toString() + " " + missing[dar]);
+			errorStatusFX.prependTextWithDate(
+					"Trouble shooting: " + ReportType.DAR.toString() + " " + missing[dar]);
 			missing[dar] = attemptSplit(ReportType.DAR);
-			errorStatusFX.prependTextWithDate("Trouble shooting: " + ReportType.DAR.toString() + " " + missing[dar]);
+			errorStatusFX.prependTextWithDate(
+					"Trouble shooting: " + ReportType.DAR.toString() + " " + missing[dar]);
 
-			DL.println("Check to see if no, one or two missing report files and whether to THROW exception");
+			DL.println(
+					"Check to see if no, one or two missing report files and whether to THROW exception");
 			// THROW EXCEPTIONS
 
 			if (missing[tcar] && missing[dar]) {
-				String msg = ("No master report PDF files available. \n\n" + generateMissingMsg(ReportType.TCAR)
-						+ " \n\n" + generateMissingMsg(ReportType.DAR) + " " + commonMsg);
-				AttendanceReport.msgBoxError("Two missing reports", "A problem was encountered with both report files",
-						msg);
+				String msg = ("No master report PDF files available. \n\n"
+						+ generateMissingMsg(ReportType.TCAR) + " \n\n"
+						+ generateMissingMsg(ReportType.DAR) + " " + commonMsg);
+				AttendanceReport.msgBoxError("Two missing reports",
+						"A problem was encountered with both report files", msg);
 				throw new IOException(msg);
 			} else if (!missing[tcar] ^ !missing[dar]) {
 				Desktop desktop = Desktop.getDesktop();
 				desktop.open(new File(preferences.getProperty(AttendanceReport.prefOutputPath)));
-				errorStatusFX
-						.prependTextWithDate("Windows File Explorer opened because files should have been generated.");
+				errorStatusFX.prependTextWithDate(
+						"Windows File Explorer opened because files should have been generated.");
 
 				ReportType dM = missing[tcar] ? ReportType.TCAR : ReportType.DAR;
 
-				String msg = ("Only one report was processed. \n\n" + generateMissingMsg(dM) + commonMsg);
-				AttendanceReport.msgBoxError("Problem with a report", "A problem was encountered with one report file",
-						msg);
+				String msg = ("Only one report was processed. \n\n" + generateMissingMsg(dM)
+						+ commonMsg);
+				AttendanceReport.msgBoxError("Problem with a report",
+						"A problem was encountered with one report file", msg);
 				throw new IOException(msg);
 			} else {
 				DL.println(
@@ -647,7 +702,8 @@ public class SejdaSupport {
 			}
 		} catch (Exception e1) {
 			DL.methodBegin();
-			DL.println("TRY..CATCH (RM1): one or two missing report exception: e1.getMessage() = " + e1.getMessage());
+			DL.println("TRY..CATCH (RM1): one or two missing report exception: e1.getMessage() = "
+					+ e1.getMessage());
 
 			e1.printStackTrace();
 
@@ -655,13 +711,14 @@ public class SejdaSupport {
 			if (!missing[tcar] ^ !missing[dar]) {
 				Desktop desktop = Desktop.getDesktop();
 				try {
-					desktop.open(new File(preferences.getProperty(AttendanceReport.prefOutputPath)));
+					desktop.open(
+							new File(preferences.getProperty(AttendanceReport.prefOutputPath)));
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				errorStatusFX
-						.prependTextWithDate("Windows File Explorer opened because files should have been generated.");
+				errorStatusFX.prependTextWithDate(
+						"Windows File Explorer opened because files should have been generated.");
 
 				String msg = ("Only one report was processed.");
 				errorStatusFX.prependTextWithDate(msg);
@@ -692,7 +749,8 @@ public class SejdaSupport {
 		} else {
 			File masterReport = new File(pathToMasterReport);
 			if (!masterReport.exists())
-				s = "The report file (" + masterReport.getName() + ") for the " + d.toString() + " report is missing. "
+				s = "The report file (" + masterReport.getName() + ") for the " + d.toString()
+						+ " report is missing. "
 						+ "Use the PDF printer to print that report. Ensure the location for the file is set correctly. If the location is incorrect, click \"Choose master report files...\" to set the file location. ";
 			else
 				s = "A " + d.toString()
@@ -714,7 +772,8 @@ public class SejdaSupport {
 		DL.methodBegin();
 		DL.println("ReportType." + d.toString());
 
-		File masterReport = new File("[FYI No_" + d.toString() + " file of type PDF has been selected]");
+		File masterReport = new File(
+				"[FYI No_" + d.toString() + " file of type PDF has been selected]");
 
 		String prefKey = null;
 
@@ -731,8 +790,9 @@ public class SejdaSupport {
 		try {
 			masterReport = new File(pathToMasterReport);
 		} catch (Exception e) {
-			DL.println("TRY..CATCH (AS1): Failure. \"masterReport = new File(pathToMasterReport);\". e.getMessage() = "
-					+ e.getMessage());
+			DL.println(
+					"TRY..CATCH (AS1): Failure. \"masterReport = new File(pathToMasterReport);\". e.getMessage() = "
+							+ e.getMessage());
 		}
 
 		// PERFORM SPLIT
