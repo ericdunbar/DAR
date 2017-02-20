@@ -21,14 +21,16 @@ public class DL {
 	 * @param consoleActive true to display System.Out on console
 	 * @param muteSysOut true to prevent text from being written to System.Out
 	 */
-	public static PrintStream startLogging(boolean logStdErrorToFile, boolean consoleActive, boolean muteSysOut) {
+	public static PrintStream startLogging(boolean logStdErrorToFile, boolean consoleActive,
+			boolean muteSysOut) {
 		// CONFIGURE LOGGING
 		// http://stackoverflow.com/questions/8043356/file-write-printstream-append
 		// http://stackoverflow.com/questions/12053075/how-do-i-write-the-exception-from-printstacktrace-into-a-text-file-in-java
 
 		PrintStream ps = null;
 		try {
-			String fileName = System.getProperty("java.io.tmpdir") + "\\" + "DAR"+AttendanceReport.versionDAR+"_log.txt";
+			String fileName = System.getProperty("java.io.tmpdir") + "\\" + "DAR"
+					+ AttendanceReport.versionDAR + "_log.txt";
 
 			File fSize = new File(fileName);
 			boolean append = true;
@@ -89,36 +91,36 @@ public class DL {
 	}
 
 	/**
-	 * Reports the end of a method to <code>System.Out</code>, provided the method closes neatly and does
-	 * not throw an exception before it ends.
+	 * Reports the end of a method to <code>System.Out</code>, provided the
+	 * method closes neatly and does not throw an exception before it ends.
 	 * https://github.com/ericdunbar/g272u2/blob/master/Support/src/DisplayMethodDetails.java
 	 */
 	public static void methodEnd() {
 		StackTraceElement[] ste = Thread.currentThread().getStackTrace();
 		indent--;
-		println("Method end: " + ste[2].getMethodName() + " (" + ste[2].getFileName() + ":" + ste[2].getLineNumber()
-				+ ")");
+		println("Method end: " + ste[2].getMethodName() + " (" + ste[2].getFileName() + ":"
+				+ ste[2].getLineNumber() + ")");
 	}
 
-	public static void methodBegin(){
+	public static void methodBegin() {
 		StackTraceElement[] ste = Thread.currentThread().getStackTrace();
-		println("Method start: " + ste[2].getMethodName() + " (" + ste[2].getFileName() + ":" + ste[2].getLineNumber()
-				+ ")");
+		println("Method start: " + ste[2].getMethodName() + " (" + ste[2].getFileName() + ":"
+				+ ste[2].getLineNumber() + ")");
 		indent++;
 	}
-	
+
 	/**
 	 * Reports the initiation of a method to <code>System.Out</code>.
 	 * https://github.com/ericdunbar/g272u2/blob/master/Support/src/DisplayMethodDetails.java
 	 */
 	public static void methodBegin(String s) {
 		String append = "";
-		if (s!=null) {
-			append = " ["+s+"]";
+		if (s != null) {
+			append = " [" + s + "]";
 		}
 		StackTraceElement[] ste = Thread.currentThread().getStackTrace();
-		println("Method start: " + ste[2].getMethodName() + " (" + ste[2].getFileName() + ":" + ste[2].getLineNumber()
-				+ ")" + append);
+		println("Method start: " + ste[2].getMethodName() + " (" + ste[2].getFileName() + ":"
+				+ ste[2].getLineNumber() + ")" + append);
 		indent++;
 
 		// println(ste[2].getMethodName());

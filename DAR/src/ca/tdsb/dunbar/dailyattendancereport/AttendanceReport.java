@@ -98,7 +98,7 @@ public class AttendanceReport extends Application {
 	private SettingsText destinationDirFX;
 	private SettingsText masterDARFX;
 	private SettingsText masterTCARFX;
-	public static final String versionDAR = "20170113";
+	public static final String versionDAR = "20170220";
 
 	private static final String formTitleFX = "Daily Attendance Report processor version " + versionDAR;
 
@@ -130,14 +130,23 @@ public class AttendanceReport extends Application {
 	 *
 	 */
 	enum ReportType {
-		DAR, TCAR
+		DAR("PowerBuilder.pdf", "Daily Attendance Report"), TCAR("Teacher Class Attendance .pdf", "Teacher Class Attendance Report");
+		
+		public final String fileName;
+		public final String fullType;
+ 
+		ReportType(String fileN, String fullType){
+			this.fileName = fileN;
+			this.fullType = fullType;
+		}
 	}
 
 	// ||||||||||||||||||||||||||||||
 	// CLASS Fields
 	// ||||||||||||||||||||||||||||||
 
-	protected static boolean firstRun = true; // prevents invisible text/threads
+	// reduces invisible text/threads/thread collisions
+	protected static boolean firstRun = true; 
 
 	/**
 	 * Used for logging purposes. Prints the current date and time to the
@@ -156,11 +165,11 @@ public class AttendanceReport extends Application {
 	// http://stackoverflow.com/questions/13786968/java-fx-thread-safe-pause-sleep
 
 	public static void main(String[] args) {
-		boolean stdErrorToFile = true;
+		boolean stdErrorToFile = false;
 		boolean consoleActive = true;
-		boolean muteSysOut = true;
+		boolean muteSysOut = false;
 
-		DL.startLogging(stdErrorToFile, consoleActive, !muteSysOut);
+		DL.startLogging(stdErrorToFile, consoleActive, muteSysOut);
 
 		DL.methodBegin();
 
@@ -528,7 +537,7 @@ public class AttendanceReport extends Application {
 						firstRun = false;
 
 						try {
-							Thread.sleep(2000);
+							Thread.sleep(2003);
 						} catch (InterruptedException ex) {
 							Thread.currentThread().interrupt();
 						}
@@ -576,9 +585,9 @@ public class AttendanceReport extends Application {
 							msgBoxError("Preferences Problem Detected", "Possible problem with preferences.", msg);
 							e.printStackTrace();
 						} else {
-							String msg = "A MINOR problem was encountered. " + e.getMessage();
+							String msg = "A minor problem was encountered. " + e.getMessage();
 							programUpdatesFX.prependTextWithDate(msg);
-							msgBoxError("Error", "A MINOR problem was encountered.", msg);
+							msgBoxError("Error", "A minor problem was encountered.", msg);
 						}
 						toggleChangeSettings.setSelected(true);
 						e.printStackTrace();
