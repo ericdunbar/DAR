@@ -265,9 +265,10 @@ public class SejdaSupport {
 						+ fileNameDateAndType;
 
 				try {
+					// TODO place individual 'by teacher' archive code here
 					reportCopyFile(oldFile, newArchivalFile);
 				} catch (Exception e) {
-
+					// TODO place archive dir creation here
 					File byTeacherDir = new File(byTeacherDirName);
 					byTeacherDir.mkdir();
 					byTeacherDir = new File(preferences.getProperty(AttendanceReport.prefOutputPath)
@@ -723,7 +724,7 @@ public class SejdaSupport {
 		if (pathToMasterReport == null) {
 			s += "If you intended to process the " + d.fullType
 					+ " make sure you do the following: 1. Use the PDF printer to print that report, likely called \""
-					+ d.fileName + "\"; 2. Save it to the main level of (a) \"H:\\\", (b) \""
+					+ d.fileName + "\"; 2. Save it to the main level of (a) \"H:\", (b) \""
 					+ System.getenv("USERPROFILE")
 					+ "\" or (c) some other location that you specify. If you choose to use some other location click \"Choose master report files...\" to set the file location. ";
 		} else {
@@ -733,7 +734,7 @@ public class SejdaSupport {
 						+ " report is missing. ";
 				s += "If you intended to process the " + d.fullType
 						+ " make sure you do the following: 1. Use the PDF printer to print that report, likely called \""
-						+ d.fileName + "\"; 2. Save it to the main level of (a) \"H:\\\", (b) \""
+						+ d.fileName + "\"; 2. Save it to the main level of (a) \"H:\", (b) \""
 						+ System.getenv("USERPROFILE")
 						+ "\" or (c) some other location that you specify. If you choose to use some other location click \"Choose master report files...\" to set the file location. ";
 			} else
@@ -820,8 +821,6 @@ public class SejdaSupport {
 		DL.methodBegin();
 		DL.println("ReportType." + d.toString());
 
-		// File masterReport = new File("Z:\\NO FILE HAS BEEN SELECTED.pdf");
-
 		String prefKey = null;
 
 		if (d == ReportType.DAR)
@@ -833,31 +832,24 @@ public class SejdaSupport {
 
 		DL.println("Preferences path to report: " + pathToMasterReport);
 
-		if (pathToMasterReport == null)
+		if (pathToMasterReport == null) {
 			pathToMasterReport = "H:" + File.separator + d.fileName;
+			DL.println("   Adjusted path to report: " + pathToMasterReport);
+		}
 
-		DL.println("   Adjusted path to report: " + pathToMasterReport);
 		FileExists report = new FileExists(pathToMasterReport);
 
 		// PERFORM SPLIT
-		if (!report.checkExistence()) {
+		try {
+			report.checkExistence();
+		} catch (Exception e) {
 			if (!report.name.equals(d.fileName)) {
+				report = new FileExists(pathToMasterReport);
 				report.setName(d.fileName);
 				report.checkExistence();
-			}
+			} else
+				throw new IOException(e.getMessage());
 		}
-		;
-
-		// if (!report.exists()) {
-		// report.path = "H:";
-		// if (!report.exists()) {
-		// report.path = System.getenv("USERPROFILE");
-		// if (!report.exists())
-		// throw new IOException("\"" + report.getName() + "\" for the " +
-		// d.toString()
-		// + " report is missing (10013).");
-		// }
-		// }
 
 		messageFX.prependTextWithDate("Begin processing: " + report.getAbsolutePath());
 		splitReport(d, report.getFile());
