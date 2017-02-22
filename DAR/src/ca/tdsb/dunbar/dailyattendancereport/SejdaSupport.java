@@ -261,12 +261,13 @@ public class SejdaSupport {
 				String byTeacherDirName = preferences.getProperty(AttendanceReport.prefOutputPath)
 						+ "\\By Teacher\\";
 
-				String newArchivalFile = byTeacherDirName + newBaseName + "\\"
+				String newArchivalFile = byTeacherDirName + newBaseName + "\\Archive\\"
 						+ fileNameDateAndType;
 
 				try {
 					// TODO place individual 'by teacher' archive code here
 					reportCopyFile(oldFile, newArchivalFile);
+					DL.println("I did it");
 				} catch (Exception e) {
 					// TODO place archive dir creation here
 					File byTeacherDir = new File(byTeacherDirName);
@@ -274,6 +275,34 @@ public class SejdaSupport {
 					byTeacherDir = new File(preferences.getProperty(AttendanceReport.prefOutputPath)
 							+ "\\By Teacher\\" + newBaseName);
 					byTeacherDir.mkdir();
+
+					// Creates the archive DIR inside the BY TEACHER\TEACHER DIR
+					File archiveByTeacherDir = new File(preferences.getProperty(AttendanceReport.prefOutputPath)
+							+ "\\By Teacher\\Archive\\" + newBaseName);
+					archiveByTeacherDir.mkdir();
+
+					// Clear out the existing BY TEACHER\TEACHER DIR
+					// copy *.pdf|grep -SIMPLENAME.pdf to \Archive
+					
+					String archiveBTFileList[] = byTeacherDir.list(new FilenameFilter() {
+						public boolean accept(File dir, String name) {
+							name = name.toLowerCase();
+							return name.toLowerCase().endsWith(".pdf");
+						}
+					});
+					
+					for (String a : archiveBTFileList) {
+						String fileToBeArchived = byTeacherDir.getAbsolutePath() + "\\" + a;
+
+						DL.println(" here I am: a: " + a);
+						DL.println(" here I am: file to be archived: " + fileToBeArchived);
+						
+						if (!fileToBeArchived.equals(simpleFileName)) {
+							// move the file
+							String newLocation = archiveByTeacherDir.getAbsolutePath() + a;
+							reportMoveFile(fileToBeArchived, newLocation);
+						}
+					}
 
 					reportCopyFile(oldFile, newArchivalFile);
 				}
