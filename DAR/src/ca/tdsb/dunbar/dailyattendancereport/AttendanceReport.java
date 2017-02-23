@@ -98,7 +98,7 @@ public class AttendanceReport extends Application {
 	private SettingsText destinationDirFX;
 	private SettingsText masterDARFX;
 	private SettingsText masterTCARFX;
-	public static final String versionDAR = "20170220";
+	public static final String versionDAR = "20170222";
 
 	private static final String formTitleFX = "Daily Attendance Report processor version " + versionDAR;
 

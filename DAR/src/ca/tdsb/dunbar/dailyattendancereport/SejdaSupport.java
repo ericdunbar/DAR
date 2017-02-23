@@ -261,14 +261,65 @@ public class SejdaSupport {
 				String byTeacherDirName = preferences.getProperty(AttendanceReport.prefOutputPath)
 						+ "\\By Teacher\\";
 
-				String newArchivalFile = byTeacherDirName + newBaseName + "\\Archive\\"
+				String newArchivalFile = byTeacherDirName + newBaseName + "\\"
 						+ fileNameDateAndType;
 
 				try {
 					// TODO place individual 'by teacher' archive code here
-					reportCopyFile(oldFile, newArchivalFile);
-					DL.println("I did it");
+
+					// one time code to archive the contents of a teacher's
+					// folder
+					{
+						if (true) {// preferences.getProperty("oneTimeArchive")
+									// == null) {
+							File byTeacherDir = new File(byTeacherDirName);
+							byTeacherDir.mkdir();
+							byTeacherDir = new File(
+									preferences.getProperty(AttendanceReport.prefOutputPath)
+											+ "\\By Teacher\\" + newBaseName);
+							byTeacherDir.mkdir();
+
+							DL.println(byTeacherDir.getAbsolutePath());
+
+							// Creates the archive DIR inside the BY
+							// TEACHER\TEACHER DIR
+							String abtd = preferences.getProperty(AttendanceReport.prefOutputPath)
+									+ "\\By Teacher\\" + newBaseName + "\\Archive\\";
+							File archiveByTeacherDir = new File(abtd);
+							archiveByTeacherDir.mkdir();
+							DL.println(
+									"getAbsolutePath(): " + archiveByTeacherDir.getAbsolutePath());
+							DL.println("abtd archiveByTeacherDir: " + abtd);
+							// Clear out the existing BY TEACHER\TEACHER DIR
+							// copy *.pdf|grep -SIMPLENAME.pdf to \Archive
+
+							String archiveBTFileList[] = byTeacherDir.list(new FilenameFilter() {
+								public boolean accept(File dir, String name) {
+									name = name.toLowerCase();
+									return name.toLowerCase().endsWith(".pdf");
+								}
+							});
+
+							for (String a : archiveBTFileList) {
+								String fileToBeArchived = byTeacherDir.getAbsolutePath() + "\\" + a;
+
+								if (!a.equals(simpleFileName)) {
+									// move the file
+									String newLocation = archiveByTeacherDir.getAbsolutePath()
+											+ "\\" + a;
+									reportMoveFile(fileToBeArchived, newLocation);
+								}
+							}
+						}
+
+						// Copy the most recent archive file to the main level
+						// of the teacher folder
+						reportCopyFile(oldFile, newArchivalFile);
+						DL.println("");
+					}
+
 				} catch (Exception e) {
+					DL.println("An expection occurred. (1014)");
 					// TODO place archive dir creation here
 					File byTeacherDir = new File(byTeacherDirName);
 					byTeacherDir.mkdir();
@@ -277,32 +328,10 @@ public class SejdaSupport {
 					byTeacherDir.mkdir();
 
 					// Creates the archive DIR inside the BY TEACHER\TEACHER DIR
-					File archiveByTeacherDir = new File(preferences.getProperty(AttendanceReport.prefOutputPath)
-							+ "\\By Teacher\\Archive\\" + newBaseName);
+					File archiveByTeacherDir = new File(
+							preferences.getProperty(AttendanceReport.prefOutputPath)
+									+ "\\By Teacher\\Archive\\" + newBaseName);
 					archiveByTeacherDir.mkdir();
-
-					// Clear out the existing BY TEACHER\TEACHER DIR
-					// copy *.pdf|grep -SIMPLENAME.pdf to \Archive
-					
-					String archiveBTFileList[] = byTeacherDir.list(new FilenameFilter() {
-						public boolean accept(File dir, String name) {
-							name = name.toLowerCase();
-							return name.toLowerCase().endsWith(".pdf");
-						}
-					});
-					
-					for (String a : archiveBTFileList) {
-						String fileToBeArchived = byTeacherDir.getAbsolutePath() + "\\" + a;
-
-						DL.println(" here I am: a: " + a);
-						DL.println(" here I am: file to be archived: " + fileToBeArchived);
-						
-						if (!fileToBeArchived.equals(simpleFileName)) {
-							// move the file
-							String newLocation = archiveByTeacherDir.getAbsolutePath() + a;
-							reportMoveFile(fileToBeArchived, newLocation);
-						}
-					}
 
 					reportCopyFile(oldFile, newArchivalFile);
 				}
@@ -441,9 +470,10 @@ public class SejdaSupport {
 	private void reportMoveFile(String oldFile, String firstNewFile, String secondNewFile)
 			throws IOException {
 		DL.methodBegin();
-		DL.println("oldFile:      " + oldFile);
-		DL.println("firstNewFile: " + firstNewFile);
-		DL.println("secondNewFile: " + secondNewFile);
+		DL.println("Move oldFile   : " + oldFile);
+		DL.println("  To 1stNewFile: " + firstNewFile);
+		DL.println("  To 2ndNewFile: " + secondNewFile);
+
 		new File(firstNewFile).delete();
 
 		if (secondNewFile != null) {
@@ -451,6 +481,7 @@ public class SejdaSupport {
 			reportCopyFile(oldFile, secondNewFile);
 		}
 
+		DL.println("Now move to 1stNewFile...");
 		// TODO Correct for network timeout error
 		FileUtils.moveFile(FileUtils.getFile(oldFile), FileUtils.getFile(firstNewFile));
 		DL.methodEnd();
@@ -464,12 +495,9 @@ public class SejdaSupport {
 	 * @throws IOException
 	 */
 	private void reportCopyFile(String oldFile, String newFile) throws IOException {
-		DL.methodBegin();
 		new File(newFile).delete();
 
-		DL.println("Copy file:");
-		DL.println("  oldFile: \"" + oldFile + "\"");
-		DL.println("  newFile: \"" + newFile + "\"");
+		DL.println("Copy oldFile: \"" + oldFile + "\"" + " to  newFile: \"" + newFile + "\"");
 		try {
 			FileUtils.copyFile(FileUtils.getFile(oldFile), FileUtils.getFile(newFile));
 		} catch (IOException e) {
@@ -478,7 +506,6 @@ public class SejdaSupport {
 			throw new IOException(
 					e.getMessage() + " Try again. The network may be working against you.");
 		}
-		DL.methodEnd();
 	}
 
 	private int deleteFilesOfReportType(File dirToBeCleaned, ReportType whichReport,
