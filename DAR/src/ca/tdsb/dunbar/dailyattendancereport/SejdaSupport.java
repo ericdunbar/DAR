@@ -135,6 +135,7 @@ public class SejdaSupport {
 	 * 
 	 * @throws IOException
 	 */
+	@SuppressWarnings("unused")
 	public void splitReport(ReportType whichReport, File masterReport) throws IOException {
 		DL.methodBegin();
 		DL.println("whichReport = " + whichReport.toString());
@@ -207,6 +208,7 @@ public class SejdaSupport {
 
 		// CREATE DIRECTORIES, if missing
 		// Attempted fix for constantly refreshing archive directory
+		// Solution is likely redundant
 		File archiveDir = new File(preferences.getProperty(AttendanceReport.prefOutputPath) + "\\Archive\\");
 		archiveDir.mkdir();
 		archiveDir = new File(preferences.getProperty(AttendanceReport.prefOutputPath) + "\\Archive\\" + dateForReport);
@@ -232,31 +234,36 @@ public class SejdaSupport {
 			}
 		});
 
-		DL.println("FILE LIST FOR: " + tempDir.getAbsolutePath());
+		DL.println("File list for: " + tempDir.getAbsolutePath());
 		for (String string : newFileList)
 			DL.println("    " + tempDir.getAbsolutePath() + "\\" + string);
 
-		DL.println("Start: MOVE and ARCHIVE NEW FILES");
-		messageFX.prependTextWithDate("Will move and create archives for " + newFileList.length + " "
-				+ whichReport.toString() + " files in " + preferences.getProperty(AttendanceReport.prefOutputPath));
+		DL.println("");
+		DL.println("Start: MOVE and ARCHIVE of new files");
+		messageFX
+				.prependTextWithDate("Move and create archives for " + newFileList.length + " " + whichReport.toString()
+						+ " files in " + preferences.getProperty(AttendanceReport.prefOutputPath) + "...");
 
-		for (String s : newFileList) {
-			String oldFile = tempDir.getAbsolutePath() + "\\" + s;
+		for (String originalFileName : newFileList) {
+			String oldFilePath = tempDir.getAbsolutePath() + "\\" + originalFileName;
 
-			String simpleFileName = FilenameUtils.getBaseName(s) + " " + describeReport + ".pdf";
-			String simpleFileNameTCAR = FilenameUtils.getBaseName(s) + " " + ReportType.TCAR.toString() + ".pdf";
-			String simpleFileNameDAR = FilenameUtils.getBaseName(s) + " " + ReportType.DAR.toString() + ".pdf";
-
-			String fileNameDateAndType = FilenameUtils.getBaseName(s) + " " + describeReport + " " + dateForReport
+			String teacherFileName = FilenameUtils.getBaseName(originalFileName) + " " + describeReport + ".pdf";
+			String teacherFileNameTCAR = FilenameUtils.getBaseName(originalFileName) + " " + ReportType.TCAR.toString()
 					+ ".pdf";
+			String teacherFileNameDAR = FilenameUtils.getBaseName(originalFileName) + " " + ReportType.DAR.toString()
+					+ ".pdf";
+
+			String teacherDateAndTypeFileName = FilenameUtils.getBaseName(originalFileName) + " " + describeReport + " "
+					+ dateForReport + ".pdf";
 
 			// Move into folders named for teachers' names
 			if (preferences.getProperty(AttendanceReport.prefArchiveByTeacher).equals("true")) {
-				String newBaseName = FilenameUtils.getBaseName(s).toUpperCase();
+				String teacherBaseName = FilenameUtils.getBaseName(originalFileName).toUpperCase();
 
-				String byTeacherDirName = preferences.getProperty(AttendanceReport.prefOutputPath) + "\\By Teacher\\";
+				String byTeacherDirPath = preferences.getProperty(AttendanceReport.prefOutputPath) + "\\By Teacher\\";
 
-				String newArchivalFile = byTeacherDirName + newBaseName + "\\" + fileNameDateAndType;
+				String byTeacherArchiveFilePath = byTeacherDirPath + teacherBaseName + "\\"
+						+ teacherDateAndTypeFileName;
 
 				try {
 					// TODO place individual 'by teacher' archive code here
@@ -264,47 +271,41 @@ public class SejdaSupport {
 					// one time code to archive the contents of a teacher's
 					// folder
 					{
-						if (true) {// preferences.getProperty("oneTimeArchive")
-									// == null) {
-							File byTeacherDir = new File(byTeacherDirName);
+						{
+							File byTeacherDir = new File(byTeacherDirPath);
 							byTeacherDir.mkdir();
-							byTeacherDir = new File(preferences.getProperty(AttendanceReport.prefOutputPath)
-									+ "\\By Teacher\\" + newBaseName);
-							byTeacherDir.mkdir();
+							File teacherDir = new File(preferences.getProperty(AttendanceReport.prefOutputPath)
+									+ "\\By Teacher\\" + teacherBaseName);
+							teacherDir.mkdir();
 
-							DL.println(byTeacherDir.getAbsolutePath());
+							DL.println(teacherDir.getAbsolutePath());
 
 							// Creates the archive DIR inside the BY
 							// TEACHER\TEACHER DIR
-							String abtd = preferences.getProperty(AttendanceReport.prefOutputPath) + "\\By Teacher\\"
-									+ newBaseName + "\\Archive\\";
-							File archiveByTeacherDir = new File(abtd);
-							archiveByTeacherDir.mkdir();
-							DL.println("getAbsolutePath(): " + archiveByTeacherDir.getAbsolutePath());
-							DL.println("abtd archiveByTeacherDir: " + abtd);
+							String teacherArchiveDirPath = preferences.getProperty(AttendanceReport.prefOutputPath)
+									+ "\\By Teacher\\" + teacherBaseName + "\\Archive\\";
+							File teacherArchiveDir = new File(teacherArchiveDirPath);
+							teacherArchiveDir.mkdir();
+							DL.println("tAD.getAbsolutePath(): " + teacherArchiveDir.getAbsolutePath());
+							DL.println("teacherArchiveDirPath: " + teacherArchiveDirPath);
 							// Clear out the existing BY TEACHER\TEACHER DIR
 							// copy *.pdf|grep -SIMPLENAME.pdf to \Archive
 
-							String archiveBTFileList[] = byTeacherDir.list(new FilenameFilter() {
+							String teacherDirToBeArchivedFileList[] = teacherDir.list(new FilenameFilter() {
 								public boolean accept(File dir, String name) {
 									name = name.toLowerCase();
 									return name.toLowerCase().endsWith(".pdf");
 								}
 							});
 
-							for (String a : archiveBTFileList) {
-								String fileToBeArchived = byTeacherDir.getAbsolutePath() + "\\" + a;
+							for (String a : teacherDirToBeArchivedFileList) {
+								String fileToBeArchived = teacherDir.getAbsolutePath() + "\\" + a;
 
-								// a.equals(simpleFileName) is redundant
-								if (!a.equalsIgnoreCase(simpleFileName) && !a.equalsIgnoreCase(simpleFileNameDAR)
-										&& !a.equalsIgnoreCase(simpleFileNameTCAR)) {
+								// a.equals(teacherFileName) is redundant
+								if (!a.equalsIgnoreCase(teacherFileName) && !a.equalsIgnoreCase(teacherFileNameDAR)
+										&& !a.equalsIgnoreCase(teacherFileNameTCAR)) {
 									// move the file
-									DL.println("I ran");
-									DL.println("    a " + a);
-									DL.println("  SFN " + simpleFileName);
-									DL.println("    d " + simpleFileNameDAR);
-									DL.println("    t " + simpleFileNameTCAR);
-									String newLocation = archiveByTeacherDir.getAbsolutePath() + "\\" + a;
+									String newLocation = teacherArchiveDir.getAbsolutePath() + "\\" + a;
 									reportMoveFile(fileToBeArchived, newLocation);
 								}
 							}
@@ -312,37 +313,41 @@ public class SejdaSupport {
 
 						// Copy the most recent archive file to the main level
 						// of the teacher folder
-						reportCopyFile(oldFile, newArchivalFile);
+						reportCopyFile(oldFilePath, byTeacherArchiveFilePath);
 						DL.println("");
 					}
-
 				} catch (Exception e) {
-					DL.println("An expection occurred. (1014)");
-					// TODO place archive dir creation here
-					File byTeacherDir = new File(byTeacherDirName);
-					byTeacherDir.mkdir();
-					byTeacherDir = new File(
-							preferences.getProperty(AttendanceReport.prefOutputPath) + "\\By Teacher\\" + newBaseName);
-					byTeacherDir.mkdir();
 
-					// Creates the archive DIR inside the BY TEACHER\TEACHER DIR
-					File archiveByTeacherDir = new File(preferences.getProperty(AttendanceReport.prefOutputPath)
-							+ "\\By Teacher\\Archive\\" + newBaseName);
-					archiveByTeacherDir.mkdir();
+					if (true) {
+					} else {
+						DL.println("An expection occurred. (1014)");
+						// TODO place archive dir creation here
+						File byTeacherDir = new File(byTeacherDirPath);
+						byTeacherDir.mkdir();
+						byTeacherDir = new File(preferences.getProperty(AttendanceReport.prefOutputPath)
+								+ "\\By Teacher\\" + teacherBaseName);
+						byTeacherDir.mkdir();
 
-					reportCopyFile(oldFile, newArchivalFile);
+						// Creates the archive DIR inside the BY TEACHER\TEACHER
+						// DIR
+						File archiveByTeacherDir = new File(preferences.getProperty(AttendanceReport.prefOutputPath)
+								+ "\\By Teacher\\Archive\\" + teacherBaseName);
+						archiveByTeacherDir.mkdir();
+
+						reportCopyFile(oldFilePath, byTeacherArchiveFilePath);
+					}
 				}
 
-				String simpleFile = byTeacherDirName + newBaseName + "\\" + simpleFileName;
+				String simpleFile = byTeacherDirPath + teacherBaseName + "\\" + teacherFileName;
 
-				reportCopyFile(oldFile, simpleFile);
+				reportCopyFile(oldFilePath, simpleFile);
 			}
 
 			// move into one folder where all teachers are listed
-			String archivalFile = archiveDir.getAbsolutePath() + "\\" + fileNameDateAndType;
-			String currentFile = currentDir.getAbsolutePath() + "\\" + fileNameDateAndType;
+			String archivalFilePath = archiveDir.getAbsolutePath() + "\\" + teacherDateAndTypeFileName;
+			String currentFilePath = currentDir.getAbsolutePath() + "\\" + teacherDateAndTypeFileName;
 
-			reportMoveFile(oldFile, currentFile, archivalFile);
+			reportMoveFile(oldFilePath, currentFilePath, archivalFilePath);
 		}
 
 		messageFX.prependTextWithDate("Moved " + newFileList.length + " new " + whichReport.toString()
