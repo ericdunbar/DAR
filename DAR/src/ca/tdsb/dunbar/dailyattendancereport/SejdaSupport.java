@@ -96,6 +96,7 @@ public class SejdaSupport {
 	 * @throws IOException
 	 */
 	private String copySejdaToLocalAppData() throws IOException {
+		DL.methodBegin();
 		// 1. file location is null so try copying \sejda-console to
 		// \\LOCALAPPDATA
 
@@ -108,21 +109,31 @@ public class SejdaSupport {
 		if (!masterSejdaDir.exists())
 			masterSejdaDir = new File("sejda-console");
 		
-		messageFX.prependTextWithDate(masterSejdaDir.getAbsolutePath());
-		
 		// throw exception if sejda-console missing
 		if (!masterSejdaDir.exists())
 			throw new IOException(
 					"sejda-console or sejda-console-2.10.4 is missing. Please download sejda-console and make sure the uncompressed sejda-console or sejda-console-2.10.4 directory is in the same directory as this application");
 
-		File destDir = new File(System.getenv("LOCALAPPDATA") + "\\" + masterSejdaDir.getName());
+		messageFX.prependTextWithDate("From: " + masterSejdaDir.getAbsolutePath());
 
+		File destDir = new File(System.getenv("LOCALAPPDATA") + "\\def\\");// + masterSejdaDir.getName());
+
+		messageFX.prependTextWithDate("To:   " + destDir.getAbsolutePath());
+		
+		DL.println("begin copy");
 		// 1. a. Recurse through the directory and copy each file
-		FileUtils.copyDirectory(masterSejdaDir, destDir);
-
+		try {
+			FileUtils.copyDirectory(masterSejdaDir, destDir);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		DL.println("end copy");
+		
 		String sejdaFS = destDir.getAbsolutePath() + "\\bin\\sejda-console";
 		preferences.setProperty(AttendanceReport.prefSejdaLocation, sejdaFS);
 
+		DL.methodEnd();
 		return sejdaFS;
 	}
 
