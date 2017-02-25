@@ -112,6 +112,7 @@ public class AttendanceReport extends Application {
 	private Button btnSplitReports;
 	private Button btnExit;
 	private Button btnHelp;
+	private Button btnReset;
 	private Button btnLog;
 
 	private ButtonBase[] buttons;
@@ -289,6 +290,11 @@ public class AttendanceReport extends Application {
 		btnChooseSedjaConsole.setDisable(true);
 		settingsButtonsTP.getChildren().addAll(btnChooseSedjaConsole);
 
+		btnReset = new Button("_Reset");
+		btnReset.setOnAction(new ResetFcButtonListener());
+		btnReset.setMnemonicParsing(true);
+		settingsButtonsTP.getChildren().addAll(btnReset);
+
 		btnLog = new Button("_Log");
 		btnLog.setOnAction(new LogFcButtonListener());
 		btnLog.setMnemonicParsing(true);
@@ -314,7 +320,7 @@ public class AttendanceReport extends Application {
 		toggleChangeSettings = new ToggleButton("Change settings");
 		toggleChangeSettings.setSelected(false);
 		toggleChangeSettings.setOnAction(new ChkBoxSettingsListener());
-		settingsButtons = new ButtonBase[] { btnChooseDestDir, btnChooseMasterReports, btnLog, chkNoDate, chkArchiveByTeacher };
+		settingsButtons = new ButtonBase[] { btnChooseDestDir, btnChooseMasterReports, btnReset,btnLog, chkNoDate, chkArchiveByTeacher };
 
 		settingsOptionsTP.getChildren().addAll(chkNoDate, chkArchiveByTeacher);
 
@@ -663,6 +669,25 @@ public class AttendanceReport extends Application {
 		@Override
 		public void handle(ActionEvent e) {
 			System.exit(0);
+		}
+	}
+
+	private class ResetFcButtonListener implements EventHandler<ActionEvent> {
+		@Override
+		public void handle(ActionEvent e) {
+
+			// http://stackoverflow.com/questions/6192661/how-to-reference-a-resource-file-correctly-for-jar-and-debugging
+
+			// http://stackoverflow.com/questions/20517434/how-to-open-html-file-using-java
+
+			File htmlFile = new File(DL.logFileName);
+			DL.println(htmlFile.getAbsolutePath());
+			try {
+				Desktop.getDesktop().browse(htmlFile.toURI());
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}
 	}
 

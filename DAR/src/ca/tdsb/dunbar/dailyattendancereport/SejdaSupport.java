@@ -116,7 +116,7 @@ public class SejdaSupport {
 
 		messageFX.prependTextWithDate("From: " + masterSejdaDir.getAbsolutePath());
 
-		File destDir = new File(System.getenv("LOCALAPPDATA") + "\\def\\");// + masterSejdaDir.getName());
+		File destDir = new File(System.getenv("LOCALAPPDATA") + masterSejdaDir.getName());
 
 		messageFX.prependTextWithDate("To:   " + destDir.getAbsolutePath());
 		
