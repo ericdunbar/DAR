@@ -1,6 +1,8 @@
 package ca.tdsb.dunbar.dailyattendancereport;
 
+import java.awt.Desktop;
 import java.io.File;
+import java.io.IOException;
 import java.sql.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -109,6 +111,8 @@ public class AttendanceReport extends Application {
 	private Button btnChooseSedjaConsole;
 	private Button btnSplitReports;
 	private Button btnExit;
+	private Button btnHelp;
+	private Button btnLog;
 
 	private ButtonBase[] buttons;
 	private ButtonBase[] settingsButtons;
@@ -130,12 +134,13 @@ public class AttendanceReport extends Application {
 	 *
 	 */
 	enum ReportType {
-		DAR("PowerBuilder.pdf", "Daily Attendance Report"), TCAR("Teacher Class Attendance .pdf", "Teacher Class Attendance Report");
-		
+		DAR("PowerBuilder.pdf", "Daily Attendance Report"), TCAR("Teacher Class Attendance .pdf",
+				"Teacher Class Attendance Report");
+
 		public final String fileName;
 		public final String fullType;
- 
-		ReportType(String fileN, String fullType){
+
+		ReportType(String fileN, String fullType) {
 			this.fileName = fileN;
 			this.fullType = fullType;
 		}
@@ -146,7 +151,7 @@ public class AttendanceReport extends Application {
 	// ||||||||||||||||||||||||||||||
 
 	// reduces invisible text/threads/thread collisions
-	protected static boolean firstRun = true; 
+	protected static boolean firstRun = true;
 
 	/**
 	 * Used for logging purposes. Prints the current date and time to the
@@ -242,6 +247,11 @@ public class AttendanceReport extends Application {
 		btnSplitReports.setMnemonicParsing(true);
 		actionButtonsTP.getChildren().addAll(btnSplitReports);
 
+		btnHelp = new Button("_Help");
+		btnHelp.setOnAction(new HelpFcButtonListener());
+		btnHelp.setMnemonicParsing(true);
+		actionButtonsTP.getChildren().addAll(btnHelp);
+
 		btnExit = new Button("E_xit");
 		btnExit.setOnAction(new ExitFcButtonListener());
 		btnExit.setMnemonicParsing(true);
@@ -263,22 +273,28 @@ public class AttendanceReport extends Application {
 		lblPrefs.setPrefWidth(100);
 		lblPrefs.setMinWidth(100);
 
-		btnChooseMasterReports = new Button("Choose master report files...");
+		btnChooseMasterReports = new Button("Set report files...");
 		btnChooseMasterReports.setOnAction(new SingleFcButtonListener());
 		btnChooseMasterReports.setMnemonicParsing(true);
 		settingsButtonsTP.getChildren().addAll(btnChooseMasterReports);
 
-		btnChooseDestDir = new Button("Choose destination directory...");
+		btnChooseDestDir = new Button("Set destination...");
 		btnChooseDestDir.setOnAction(new SetDestinationDirFcButtonListener());
 		btnChooseDestDir.setMnemonicParsing(true);
 		settingsButtonsTP.getChildren().addAll(btnChooseDestDir);
 
-		btnChooseSedjaConsole = new Button("Choose \"sedja-console\"...");
+		btnChooseSedjaConsole = new Button("Set \"sedja-console\"...");
 		btnChooseSedjaConsole.setOnAction(new SetSedjaConsoleFcButtonListener());
 		btnChooseSedjaConsole.setMnemonicParsing(true);
 		btnChooseSedjaConsole.setDisable(true);
 		settingsButtonsTP.getChildren().addAll(btnChooseSedjaConsole);
 
+		btnLog = new Button("_Log");
+		btnLog.setOnAction(new LogFcButtonListener());
+		btnLog.setMnemonicParsing(true);
+		settingsButtonsTP.getChildren().addAll(btnLog);
+
+		
 		// ||||||||||||||||||||||||||||||
 		// Settings Controls: Check Boxes
 		// ||||||||||||||||||||||||||||||
@@ -298,7 +314,7 @@ public class AttendanceReport extends Application {
 		toggleChangeSettings = new ToggleButton("Change settings");
 		toggleChangeSettings.setSelected(false);
 		toggleChangeSettings.setOnAction(new ChkBoxSettingsListener());
-		settingsButtons = new ButtonBase[] { btnChooseDestDir, btnChooseMasterReports, chkNoDate, chkArchiveByTeacher };
+		settingsButtons = new ButtonBase[] { btnChooseDestDir, btnChooseMasterReports, btnLog, chkNoDate, chkArchiveByTeacher };
 
 		settingsOptionsTP.getChildren().addAll(chkNoDate, chkArchiveByTeacher);
 
@@ -312,7 +328,7 @@ public class AttendanceReport extends Application {
 		HBox settingsHb = new HBox(10);
 		settingsHb.getChildren().addAll(settingsLblVb, settingsVb);
 
-		buttons = new ButtonBase[] { btnExit, btnSplitReports, toggleChangeSettings };
+		buttons = new ButtonBase[] { btnExit, btnHelp, btnSplitReports, toggleChangeSettings };
 
 		// ||||||||||||||||||||||||||||||
 		// Status Updates
@@ -650,6 +666,44 @@ public class AttendanceReport extends Application {
 		}
 	}
 
+	private class LogFcButtonListener implements EventHandler<ActionEvent> {
+		@Override
+		public void handle(ActionEvent e) {
+
+			// http://stackoverflow.com/questions/6192661/how-to-reference-a-resource-file-correctly-for-jar-and-debugging
+
+			// http://stackoverflow.com/questions/20517434/how-to-open-html-file-using-java
+
+			File htmlFile = new File(DL.logFileName);
+			DL.println(htmlFile.getAbsolutePath());
+			try {
+				Desktop.getDesktop().browse(htmlFile.toURI());
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+	}
+
+	private class HelpFcButtonListener implements EventHandler<ActionEvent> {
+		@Override
+		public void handle(ActionEvent e) {
+
+			// http://stackoverflow.com/questions/6192661/how-to-reference-a-resource-file-correctly-for-jar-and-debugging
+
+			// http://stackoverflow.com/questions/20517434/how-to-open-html-file-using-java
+
+			File htmlFile = new File("AttendanceReportHelp.html");
+			DL.println(htmlFile.getAbsolutePath());
+			try {
+				Desktop.getDesktop().browse(htmlFile.toURI());
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+	}
+
 	/**
 	 * Changes the disabled status for settings buttons to prevent accidental
 	 * changing of settings and to simplify the user interface somewhat by
@@ -680,8 +734,8 @@ public class AttendanceReport extends Application {
 	}
 
 	/**
-	 * A TextArea Node that provides a method to prepend date & time to
-	 * the text.
+	 * A TextArea Node that provides a method to prepend date & time to the
+	 * text.
 	 *
 	 */
 	public class TextDateAndTime extends TextArea {
@@ -714,8 +768,7 @@ public class AttendanceReport extends Application {
 		 * Sets the Text contents to the description (similar to the key) of the
 		 * property using the key (pref) and the value of the property.
 		 * 
-		 * @param update
-		 *            whether to include the text "(update)"
+		 * @param update whether to include the text "(update)"
 		 */
 		private void setTextValue(boolean update) {
 			String s = "";
@@ -857,7 +910,7 @@ public class AttendanceReport extends Application {
 
 		if (!errorMsg.equals("")) {
 			dfc.msgBox2("Confirm selected PDF", "Unexpected file(s) chosen",
-					errorMsg + " \n\nConfirm that the correct files were chosen. If they weren't, please use the \"Choose master report files...\" to choose the correct files.",
+					errorMsg + " \n\nConfirm that the correct files were chosen. If they weren't, please use the \"Set report files...\" to choose the correct files.",
 					Alert.AlertType.WARNING);
 		}
 	}

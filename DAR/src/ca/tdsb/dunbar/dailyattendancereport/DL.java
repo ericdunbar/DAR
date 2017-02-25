@@ -12,6 +12,7 @@ public class DL {
 	private static boolean duplicateOutput = false;
 	private static PrintStream printStream;
 	private static boolean muteSysOut = false;
+	public static String logFileName;
 
 	/**
 	 * Opens a file to log <code>System.Out</code>, and optionally logs
@@ -29,10 +30,10 @@ public class DL {
 
 		PrintStream ps = null;
 		try {
-			String fileName = System.getProperty("java.io.tmpdir") + "\\" + "DAR"
+			logFileName = System.getProperty("java.io.tmpdir") + "\\" + "DAR"
 					+ AttendanceReport.versionDAR + "_log.txt";
 
-			File fSize = new File(fileName);
+			File fSize = new File(logFileName);
 			boolean append = true;
 
 			if (fSize.length() > 1e7) {
@@ -42,7 +43,7 @@ public class DL {
 				append = false;
 			}
 
-			ps = new PrintStream(new FileOutputStream(fileName, append));
+			ps = new PrintStream(new FileOutputStream(logFileName, append));
 
 			if (logStdErrorToFile) {
 				System.setErr(ps);

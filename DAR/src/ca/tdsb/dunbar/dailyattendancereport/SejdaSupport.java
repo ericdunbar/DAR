@@ -64,7 +64,7 @@ public class SejdaSupport {
 			// if the copy fails
 			if (!sejdaF.exists() || !sejdaF.getName().equals("sejda-console")) {
 				throw new IOException(
-						"\"sejda-console\" is unavailable. Specify its location using the \"Choose sedja-console...\" button. \n\n"
+						"\"sejda-console\" is unavailable. Specify its location using the \"Set sedja-console...\" button. \n\n"
 								+ sejdaInfo);
 			}
 		}
@@ -107,11 +107,13 @@ public class SejdaSupport {
 		// version number is removed
 		if (!masterSejdaDir.exists())
 			masterSejdaDir = new File("sejda-console");
-
+		
+		messageFX.prependTextWithDate(masterSejdaDir.getAbsolutePath());
+		
 		// throw exception if sejda-console missing
 		if (!masterSejdaDir.exists())
 			throw new IOException(
-					"sejda-console or sejda-console-2.10.4. Please download sejda-console and make sure the uncompressed sejda-console or sejda-console-2.10.4 directory is in the same directory as this application");
+					"sejda-console or sejda-console-2.10.4 is missing. Please download sejda-console and make sure the uncompressed sejda-console or sejda-console-2.10.4 directory is in the same directory as this application");
 
 		File destDir = new File(System.getenv("LOCALAPPDATA") + "\\" + masterSejdaDir.getName());
 
@@ -596,7 +598,7 @@ public class SejdaSupport {
 		boolean success[] = { false, false };
 		final int tcar = 0;
 		final int dar = 1;
-		String commonCancelMsg = "\n\nNote: if you press Cancel to one of the \"Choose master report files...\" dialog boxes the relevant preference will not be changed but you can still set the other preference.";
+		String commonCancelMsg = "\n\nNote: if you press Cancel to one of the \"Set report files...\" dialog boxes the relevant preference will not be changed but you can still set the other preference.";
 		String msg = "";
 
 		// Split the TCAR
@@ -670,7 +672,7 @@ public class SejdaSupport {
 		boolean missing[] = { false, false };
 		final int tcar = 0;
 		final int dar = 1;
-		String commonMsg = "\n\nNote: if you press Cancel to one of the \"Choose master report files...\" dialog boxes the relevant preference will not be changed but you can still set the other preference.";
+		String commonMsg = "\n\nNote: if you press Cancel to one of the \"Set report files...\" dialog boxes the relevant preference will not be changed but you can still set the other preference.";
 
 		try {
 
@@ -763,7 +765,7 @@ public class SejdaSupport {
 					+ " make sure you do the following: 1. Use the PDF printer to print that report, likely called \""
 					+ d.fileName + "\"; 2. Save it to the main level of (a) \"H:\", (b) \""
 					+ System.getenv("USERPROFILE")
-					+ "\" or (c) some other location that you specify. If you choose to use some other location click \"Choose master report files...\" to set the file location. ";
+					+ "\" or (c) some other location that you specify. If you choose to use some other location click \"Set report files...\" to set the file location. ";
 		} else {
 			File masterReport = new File(pathToMasterReport);
 			if (!masterReport.exists()) {
@@ -773,7 +775,7 @@ public class SejdaSupport {
 						+ " make sure you do the following: 1. Use the PDF printer to print that report, likely called \""
 						+ d.fileName + "\"; 2. Save it to the main level of (a) \"H:\", (b) \""
 						+ System.getenv("USERPROFILE")
-						+ "\" or (c) some other location that you specify. If you choose to use some other location click \"Choose master report files...\" to set the file location. ";
+						+ "\" or (c) some other location that you specify. If you choose to use some other location click \"Set report files...\" to set the file location. ";
 			} else
 				s = "A " + d.toString()
 						+ " report file was available but was not processed. Confirm that it is the correct file for this report type. Click \"Split reports\" to try to complete the process if the report is of the correct type.";
