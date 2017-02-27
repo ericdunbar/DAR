@@ -127,7 +127,8 @@ public class SejdaSupport {
 		try {
 			FileUtils.copyDirectory(masterSejdaDir, destDir);
 		} catch (IOException e) {
-			DL.println("Houston, we have a copy problem in the copySejdaToLocalAppData method. Could not copy sejda to LOCALAPPDATA.");
+			DL.println(
+					"Houston, we have a copy problem in the copySejdaToLocalAppData method. Could not copy sejda to LOCALAPPDATA.");
 			e.printStackTrace();
 		}
 
@@ -284,6 +285,9 @@ public class SejdaSupport {
 
 					// one time code to archive the contents of a teacher's
 					// folder
+
+					// TODO Rethink how files are archived. Do a single archive
+					// and then change the code so it does not need to archive.
 					{
 						{
 							File byTeacherDir = new File(byTeacherDirPath);
@@ -333,7 +337,8 @@ public class SejdaSupport {
 				} catch (Exception e) {
 
 					if (true) {
-						DL.println("An exception occurred in the BY TEACHER archival code and was not handled or passed on (1013).");
+						DL.println(
+								"An exception occurred in the BY TEACHER archival code and was not handled or passed on (1013).");
 						DL.println(e.getMessage());
 					} else {
 						DL.println("An expection occurred. (1014)");
@@ -506,7 +511,7 @@ public class SejdaSupport {
 		}
 
 		DL.println("Now move to 1stNewFile...");
-		
+
 		// TODO Correct for network timeout error
 		FileUtils.moveFile(FileUtils.getFile(oldFile), FileUtils.getFile(firstNewFile));
 		DL.methodEnd();
