@@ -10,9 +10,9 @@ public class DL {
 
 	private static int indent = 0;
 	private static boolean duplicateOutput = false;
-	private static PrintStream printStream;
+	public static PrintStream printStream;
 	private static boolean muteSysOut = false;
-	public static String logFileName;
+	public static String logFilePath;
 
 	/**
 	 * Opens a file to log <code>System.Out</code>, and optionally logs
@@ -30,10 +30,10 @@ public class DL {
 
 		PrintStream ps = null;
 		try {
-			logFileName = System.getProperty("java.io.tmpdir") + "\\" + "DAR"
+			logFilePath = System.getProperty("java.io.tmpdir") + "\\" + "DAR"
 					+ AttendanceReport.versionDAR + "_log.txt";
 
-			File fSize = new File(logFileName);
+			File fSize = new File(logFilePath);
 			boolean append = true;
 
 			if (fSize.length() > 1e7) {
@@ -43,7 +43,7 @@ public class DL {
 				append = false;
 			}
 
-			ps = new PrintStream(new FileOutputStream(logFileName, append));
+			ps = new PrintStream(new FileOutputStream(logFilePath, append));
 
 			if (logStdErrorToFile) {
 				System.setErr(ps);

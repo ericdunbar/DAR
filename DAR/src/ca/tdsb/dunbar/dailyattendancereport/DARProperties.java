@@ -23,7 +23,7 @@ public class DARProperties {
 	}
 
 	// Universal
-	private String prefsFile;
+	private String prefsFilePath;
 
 	/**
 	 * Creates an instance to manage the storage and retrieval of preferences in
@@ -32,7 +32,7 @@ public class DARProperties {
 	 * @param file
 	 */
 	public DARProperties(String file) {
-		prefsFile = System.getenv("APPDATA") + "\\" + file;
+		prefsFilePath = System.getenv("APPDATA") + "\\" + file;
 
 		// lazy fix for null pointer errors
 		if (getProperty(AttendanceReport.prefCreateNoDatePDF)==null) 
@@ -41,8 +41,8 @@ public class DARProperties {
 			setProperty(AttendanceReport.prefArchiveByTeacher, "" + true);
 	}
 
-	public String getPreferencesFileName() {
-		return prefsFile;
+	public String getPreferencesFilePath() {
+		return prefsFilePath;
 	}
 
 	/**
@@ -51,7 +51,7 @@ public class DARProperties {
 	 * @return true if the preferences file exists
 	 */
 	public boolean exists() {
-		return new File(getPreferencesFileName()).exists();
+		return new File(getPreferencesFilePath()).exists();
 	}
 
 	/**
@@ -73,7 +73,7 @@ public class DARProperties {
 			// File characterFolder = new File(System.getenv("APPDATA") + "\\" +
 			// characterName);
 
-			output = new FileOutputStream(prefsFile);
+			output = new FileOutputStream(prefsFilePath);
 			e = prop.propertyNames();
 
 			// set the properties value
@@ -117,7 +117,7 @@ public class DARProperties {
 		InputStream input = null;
 
 		try {
-			input = new FileInputStream(prefsFile);
+			input = new FileInputStream(prefsFilePath);
 			prop.load(input);
 		} catch (Exception ex) {
 			ex.printStackTrace();

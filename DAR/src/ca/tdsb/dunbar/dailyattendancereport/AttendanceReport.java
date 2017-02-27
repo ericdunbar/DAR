@@ -100,7 +100,7 @@ public class AttendanceReport extends Application {
 	private SettingsText destinationDirFX;
 	private SettingsText masterDARFX;
 	private SettingsText masterTCARFX;
-	public static final String versionDAR = "20170222";
+	public static final String versionDAR = "20170226";
 
 	private static final String formTitleFX = "Daily Attendance Report processor version " + versionDAR;
 
@@ -167,7 +167,6 @@ public class AttendanceReport extends Application {
 		DL.println("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
 	}
 
-	// TODO
 	// http://stackoverflow.com/questions/13786968/java-fx-thread-safe-pause-sleep
 
 	public static void main(String[] args) {
@@ -189,7 +188,7 @@ public class AttendanceReport extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		DL.methodBegin();
-		DL.println("Preferences file: " + preferences.getPreferencesFileName());
+		DL.println("Preferences file: " + preferences.getPreferencesFilePath());
 
 		primaryStage.setTitle(formTitleFX);
 
@@ -253,6 +252,11 @@ public class AttendanceReport extends Application {
 		btnHelp.setMnemonicParsing(true);
 		actionButtonsTP.getChildren().addAll(btnHelp);
 
+		btnLog = new Button("_Log");
+		btnLog.setOnAction(new LogFcButtonListener());
+		btnLog.setMnemonicParsing(true);
+		actionButtonsTP.getChildren().addAll(btnLog);
+
 		btnExit = new Button("E_xit");
 		btnExit.setOnAction(new ExitFcButtonListener());
 		btnExit.setMnemonicParsing(true);
@@ -290,17 +294,11 @@ public class AttendanceReport extends Application {
 		btnChooseSedjaConsole.setDisable(true);
 		settingsButtonsTP.getChildren().addAll(btnChooseSedjaConsole);
 
-		btnReset = new Button("_Reset");
+		btnReset = new Button("Reset");
 		btnReset.setOnAction(new ResetFcButtonListener());
 		btnReset.setMnemonicParsing(true);
 		settingsButtonsTP.getChildren().addAll(btnReset);
 
-		btnLog = new Button("_Log");
-		btnLog.setOnAction(new LogFcButtonListener());
-		btnLog.setMnemonicParsing(true);
-		settingsButtonsTP.getChildren().addAll(btnLog);
-
-		
 		// ||||||||||||||||||||||||||||||
 		// Settings Controls: Check Boxes
 		// ||||||||||||||||||||||||||||||
@@ -320,7 +318,8 @@ public class AttendanceReport extends Application {
 		toggleChangeSettings = new ToggleButton("Change settings");
 		toggleChangeSettings.setSelected(false);
 		toggleChangeSettings.setOnAction(new ChkBoxSettingsListener());
-		settingsButtons = new ButtonBase[] { btnChooseDestDir, btnChooseMasterReports, btnReset,btnLog, chkNoDate, chkArchiveByTeacher };
+		settingsButtons = new ButtonBase[] { btnChooseDestDir, btnChooseMasterReports, btnReset, chkNoDate,
+				chkArchiveByTeacher };
 
 		settingsOptionsTP.getChildren().addAll(chkNoDate, chkArchiveByTeacher);
 
@@ -334,7 +333,7 @@ public class AttendanceReport extends Application {
 		HBox settingsHb = new HBox(10);
 		settingsHb.getChildren().addAll(settingsLblVb, settingsVb);
 
-		buttons = new ButtonBase[] { btnExit, btnHelp, btnSplitReports, toggleChangeSettings };
+		buttons = new ButtonBase[] { btnExit, btnHelp, btnLog, btnSplitReports, toggleChangeSettings };
 
 		// ||||||||||||||||||||||||||||||
 		// Status Updates
@@ -415,7 +414,7 @@ public class AttendanceReport extends Application {
 		//
 		// private int dots = 0;
 		//
-		// // TODO Eliminate the use of message boxes. They cause the
+		// // TDO Eliminate the use of message boxes. They cause the
 		// // odd failure when using this action event.
 		// @Override
 		// public void handle(ActionEvent event) {
@@ -424,11 +423,11 @@ public class AttendanceReport extends Application {
 		// Date date = new Date(System.currentTimeMillis());
 		// String workingS = "idle";
 		//
-		// //TODO Remove and remove the block on delete master DAR
+		// //TDO Remove and remove the block on delete master DAR
 		//// try {
 		//// Thread.sleep(2000);
 		//// } catch (InterruptedException e) {
-		//// // TODO Auto-generated catch block
+		//// // TDO Auto-generated catch block
 		//// e.printStackTrace();
 		//// }
 		// if (DAR.working) {
@@ -553,8 +552,8 @@ public class AttendanceReport extends Application {
 					// TODO: Determine why TextArea (TextDAR) is not updating if
 					// prefs file failure occurs too early in program launch
 
-					// If statement reduces likelihood of problem with invisible
-					// but selectable text (a thread problem)
+					// The firstRun if statement reduces likelihood of problem
+					// with invisible but selectable text (a thread problem?)
 					if (AttendanceReport.firstRun) {
 						firstRun = false;
 
@@ -680,14 +679,30 @@ public class AttendanceReport extends Application {
 
 			// http://stackoverflow.com/questions/20517434/how-to-open-html-file-using-java
 
-			File htmlFile = new File(DL.logFileName);
-			DL.println(htmlFile.getAbsolutePath());
-			try {
-				Desktop.getDesktop().browse(htmlFile.toURI());
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+			File delPrefs = new File(preferences.getPreferencesFilePath());
+			delPrefs.deleteOnExit();
+
+			File delLog = new File(DL.logFilePath);
+			DL.printStream.close();
+			delLog.deleteOnExit();
+
+			System.exit(0);
+
+			/*
+			 * File htmlFile = new File(DL.logFilePath);
+			 * 
+			 * DL.println(htmlFile.getAbsolutePath());
+			 * 
+			 * try {
+			 * 
+			 * Desktop.getDesktop().browse(htmlFile.toURI());
+			 * 
+			 * } catch (IOException e1) {
+			 * 
+			 * // TDO Auto-generated catch block
+			 * 
+			 * e1.printStackTrace(); }
+			 */
 		}
 	}
 
@@ -699,12 +714,11 @@ public class AttendanceReport extends Application {
 
 			// http://stackoverflow.com/questions/20517434/how-to-open-html-file-using-java
 
-			File htmlFile = new File(DL.logFileName);
+			File htmlFile = new File(DL.logFilePath);
 			DL.println(htmlFile.getAbsolutePath());
 			try {
 				Desktop.getDesktop().browse(htmlFile.toURI());
 			} catch (IOException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 		}
@@ -723,7 +737,6 @@ public class AttendanceReport extends Application {
 			try {
 				Desktop.getDesktop().browse(htmlFile.toURI());
 			} catch (IOException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 		}
@@ -793,7 +806,8 @@ public class AttendanceReport extends Application {
 		 * Sets the Text contents to the description (similar to the key) of the
 		 * property using the key (pref) and the value of the property.
 		 * 
-		 * @param update whether to include the text "(update)"
+		 * @param update
+		 *            whether to include the text "(update)"
 		 */
 		private void setTextValue(boolean update) {
 			String s = "";

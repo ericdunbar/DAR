@@ -21,10 +21,13 @@ public class SejdaSupport {
 	 * IOExceptions if preferences are missing or target files are missing. Null
 	 * is returned if any IOExceptions occur.
 	 * 
-	 * @param prefs An object of type DARProperties responsible for managing
-	 *            file locations preferences
-	 * @param msgFX A TextArea (TextDAR) JavaFX node for status updates.
-	 * @throws IOException File not found
+	 * @param prefs
+	 *            An object of type DARProperties responsible for managing file
+	 *            locations preferences
+	 * @param msgFX
+	 *            A TextArea (TextDAR) JavaFX node for status updates.
+	 * @throws IOException
+	 *             File not found
 	 */
 	public SejdaSupport(DARProperties prefs, TextDateAndTime msgFX) throws IOException {
 		// Initialize variables
@@ -108,7 +111,7 @@ public class SejdaSupport {
 		// version number is removed
 		if (!masterSejdaDir.exists())
 			masterSejdaDir = new File("sejda-console");
-		
+
 		// throw exception if sejda-console missing
 		if (!masterSejdaDir.exists())
 			throw new IOException(
@@ -116,20 +119,18 @@ public class SejdaSupport {
 
 		messageFX.prependTextWithDate("From: " + masterSejdaDir.getAbsolutePath());
 
-		File destDir = new File(System.getenv("LOCALAPPDATA") + masterSejdaDir.getName());
+		File destDir = new File(System.getenv("LOCALAPPDATA") + "\\" + masterSejdaDir.getName());
 
 		messageFX.prependTextWithDate("To:   " + destDir.getAbsolutePath());
-		
-		DL.println("begin copy");
+
 		// 1. a. Recurse through the directory and copy each file
 		try {
 			FileUtils.copyDirectory(masterSejdaDir, destDir);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			DL.println("Houston, we have a copy problem in the copySejdaToLocalAppData method. Could not copy sejda to LOCALAPPDATA.");
 			e.printStackTrace();
 		}
-		DL.println("end copy");
-		
+
 		String sejdaFS = destDir.getAbsolutePath() + "\\bin\\sejda-console";
 		preferences.setProperty(AttendanceReport.prefSejdaLocation, sejdaFS);
 
@@ -332,6 +333,8 @@ public class SejdaSupport {
 				} catch (Exception e) {
 
 					if (true) {
+						DL.println("An exception occurred in the BY TEACHER archival code and was not handled or passed on (1013).");
+						DL.println(e.getMessage());
 					} else {
 						DL.println("An expection occurred. (1014)");
 						// TODO place archive dir creation here
@@ -383,9 +386,12 @@ public class SejdaSupport {
 	 * IOException if a problem occurs when the console (cmd.exe) is run or the
 	 * given directory does not exist.
 	 * 
-	 * @param cmdAndArgs array of command line arguments
-	 * @param baseDir directory in which sejda is run
-	 * @throws IOException thrown if directory missing or console failed
+	 * @param cmdAndArgs
+	 *            array of command line arguments
+	 * @param baseDir
+	 *            directory in which sejda is run
+	 * @throws IOException
+	 *             thrown if directory missing or console failed
 	 */
 	private void sejdaSplitReport(List<String> cmdAndArgs, File baseDir) throws IOException {
 		DL.methodBegin();
@@ -420,7 +426,8 @@ public class SejdaSupport {
 	 * Creates or empties a temporary directory with the given name in the
 	 * system's temp directory structure.
 	 * 
-	 * @param name Name of temporary directory to create or empty
+	 * @param name
+	 *            Name of temporary directory to create or empty
 	 * @return File object pointing to the directory
 	 */
 	private File createTempDir(String name) {
@@ -451,7 +458,8 @@ public class SejdaSupport {
 	/**
 	 * Wrap given String in quotations. Helpful for DOS command line arguments.
 	 * 
-	 * @param s String to be wrapped in quotations
+	 * @param s
+	 *            String to be wrapped in quotations
 	 * @return String wrapped in quotations
 	 */
 	private String quotesWrap(String s) {
@@ -461,8 +469,10 @@ public class SejdaSupport {
 	/**
 	 * Move the old file to the new location.
 	 * 
-	 * @param oldFile Full pathname of file to be moved
-	 * @param newFile Full pathname of new location
+	 * @param oldFile
+	 *            Full pathname of file to be moved
+	 * @param newFile
+	 *            Full pathname of new location
 	 * @throws IOException
 	 */
 	private void reportMoveFile(String oldFile, String newFile) throws IOException {
@@ -474,9 +484,12 @@ public class SejdaSupport {
 	 * Effectively this is a move but with two destinations. Ensure that the
 	 * second new filename is null if only one new location is required.
 	 * 
-	 * @param oldFile Full pathname of file to be moved
-	 * @param firstNewFile Full pathname of first new location
-	 * @param secondNewFile Full pathname of second new location
+	 * @param oldFile
+	 *            Full pathname of file to be moved
+	 * @param firstNewFile
+	 *            Full pathname of first new location
+	 * @param secondNewFile
+	 *            Full pathname of second new location
 	 * @throws IOException
 	 */
 	private void reportMoveFile(String oldFile, String firstNewFile, String secondNewFile) throws IOException {
@@ -493,6 +506,7 @@ public class SejdaSupport {
 		}
 
 		DL.println("Now move to 1stNewFile...");
+		
 		// TODO Correct for network timeout error
 		FileUtils.moveFile(FileUtils.getFile(oldFile), FileUtils.getFile(firstNewFile));
 		DL.methodEnd();
@@ -512,7 +526,6 @@ public class SejdaSupport {
 		try {
 			FileUtils.copyFile(FileUtils.getFile(oldFile), FileUtils.getFile(newFile));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			throw new IOException(e.getMessage() + " Try again. The network may be working against you.");
 		}
@@ -586,7 +599,8 @@ public class SejdaSupport {
 	 * Recursively deletes the contents of a directory.
 	 * http://stackoverflow.com/questions/20281835/how-to-delete-a-folder-with-files-using-java
 	 * 
-	 * @param file directory to empty
+	 * @param file
+	 *            directory to empty
 	 * @return
 	 */
 	private boolean deleteDir(File file) {
@@ -667,7 +681,6 @@ public class SejdaSupport {
 			errorStatusFX
 					.prependTextWithDate("Windows File Explorer opened. Please confirm that files were generated.");
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			DL.println(preferences.getProperty(AttendanceReport.prefOutputPath) + "\\Current");
 			errorStatusFX.prependTextWithDate("Failed to open the destination folder: "
@@ -742,7 +755,6 @@ public class SejdaSupport {
 				try {
 					desktop.open(new File(preferences.getProperty(AttendanceReport.prefOutputPath)));
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				errorStatusFX
@@ -760,7 +772,6 @@ public class SejdaSupport {
 	}
 
 	private String generateMissingMsg(ReportType d) {
-		DL.methodBegin(d.toString());
 		String prefKey = null;
 
 		if (d == ReportType.DAR)
@@ -791,7 +802,6 @@ public class SejdaSupport {
 				s = "A " + d.toString()
 						+ " report file was available but was not processed. Confirm that it is the correct file for this report type. Click \"Split reports\" to try to complete the process if the report is of the correct type.";
 		}
-		DL.methodEnd();
 		return s;
 	}
 
@@ -837,7 +847,6 @@ public class SejdaSupport {
 		}
 
 		public String getAbsolutePath() {
-			// TODO Auto-generated method stub
 			return path + File.separator + name;
 		}
 
@@ -848,6 +857,9 @@ public class SejdaSupport {
 					this.path = System.getenv("USERPROFILE");
 					if (!this.exists()) {
 						throw new IOException("\"" + this.getName() + "\"" + " file not found (10013).");
+
+						// don't worry about initial name. Ideally would handle
+						// that but is adding mission creep.
 
 						// eliminate IOException here by returning false
 						// return false;
@@ -862,9 +874,11 @@ public class SejdaSupport {
 	 * Tries to split the given report type. Throws IOExceptions if an error is
 	 * encountered or if the master file for the report type is missing.
 	 * 
-	 * @param d the type of report as a ReportType
+	 * @param d
+	 *            the type of report as a ReportType
 	 * @return true if successful
-	 * @throws IOException if any number of failures are encountered
+	 * @throws IOException
+	 *             if any number of failures are encountered
 	 */
 	private boolean attemptSplit(ReportType d) throws IOException {
 		DL.methodBegin();
@@ -901,6 +915,7 @@ public class SejdaSupport {
 		}
 
 		messageFX.prependTextWithDate("Begin processing: " + report.getAbsolutePath());
+
 		splitReport(d, report.getFile());
 
 		DL.methodEnd();
